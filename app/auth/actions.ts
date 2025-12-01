@@ -31,3 +31,9 @@ export async function logIn(formData: FormData) {
 	}
 	redirect("/groups");
 }
+
+export async function signOut() {
+	const supabase = await createClient();
+	await supabase.auth.signOut();
+	redirect("/");
+}
