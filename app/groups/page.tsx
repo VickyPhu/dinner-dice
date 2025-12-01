@@ -1,3 +1,5 @@
-export function MyGroupsPage() {
-	<h1>All My Groups page</h1>;
+export default function MyGroupsPage() {
+	return(
+		<h1>Welcome User</h1>
+	)
 }
