@@ -1,21 +1,60 @@
 "use client";
 
-import { Container } from "@mui/material";
+import { Box, Container, TextField, Typography } from "@mui/material";
+import { useActionState } from "react";
 import { logIn } from "../app/auth/actions";
 
+type LoginFormState = {
+	error: null | {
+		email?: string[];
+		password?: string[];
+		form?: string;
+	};
+};
+
+function loginActionWrapper(prevState: LoginFormState, formData: FormData) {
+	return logIn(formData).then((result) => {
+		if (!result) return prevState;
+		const { error } = result as {
+			error?: string | Record<string, string[]>;
+		};
+		if (!error) return prevState;
+		if (typeof error === "string") return { error: { form: error } };
+		return { error } as LoginFormState;
+	});
+}
+
 export default function LandingPage() {
+	const initialState: LoginFormState = { error: null };
+
+	// server action helper (the form action) - keeps server-side validation working
+	const [state, formAction] = useActionState<LoginFormState, FormData>(
+		loginActionWrapper,
+		initialState
+	);
+
 	return (
 		<Container>
-			<form action={logIn} className="login-form">
-				<input name="email" type="email" placeholder="Email" required />
-				<input
+			<Box component="form" action={formAction}>
+				<TextField
+					name="email"
+					type="email"
+					placeholder="Email"
+					error={!!state.error?.email}
+					helperText={state.error?.email?.[0]}
+				/>
+				<TextField
 					name="password"
 					type="password"
 					placeholder="Password"
-					required
+					error={!!state.error?.password}
+					helperText={state.error?.password?.[0]}
 				/>
+				{state.error?.form && (
+					<Typography color="error">{state.error.form}</Typography>
+				)}
 				<button type="submit">Log in</button>
-			</form>
+			</Box>
 		</Container>
 	);
 }

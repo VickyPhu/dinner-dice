@@ -1,33 +1,42 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
+import { logInSchema, signUpSchema } from "@/utils/validation";
 import { redirect } from "next/navigation";
 
 export async function signUp(formData: FormData) {
+	const parsed = signUpSchema.safeParse({
+		email: formData.get("email"),
+		password: formData.get("password"),
+	});
+
+	if (!parsed.success) {
+		return { error: parsed.error.flatten().fieldErrors };
+	}
+
 	const supabase = await createClient();
-	const data = {
-		email: formData.get("email") as string,
-		password: formData.get("password") as string,
-	};
-	const { error } = await supabase.auth.signUp(data);
+	const { error } = await supabase.auth.signUp(parsed.data);
 	if (error) {
-		redirect("/error");
+		return { error: error.message };
 	}
 	redirect("/groups");
 }
 
 export async function logIn(formData: FormData) {
+	const parsed = logInSchema.safeParse({
+		email: formData.get("email"),
+		password: formData.get("password"),
+	});
+
+	if (!parsed.success) {
+		return { error: parsed.error.flatten().fieldErrors };
+	}
+
 	const supabase = await createClient();
-
-	const data = {
-		email: formData.get("email") as string,
-		password: formData.get("password") as string,
-	};
-
-	const { error } = await supabase.auth.signInWithPassword(data);
+	const { error } = await supabase.auth.signInWithPassword(parsed.data);
 
 	if (error) {
-		redirect("/error");
+		return { error: error.message };
 	}
 	redirect("/groups");
 }
