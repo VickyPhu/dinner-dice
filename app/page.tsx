@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Container, TextField, Typography } from "@mui/material";
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { logIn } from "../app/auth/actions";
 
 type LoginFormState = {
@@ -33,6 +33,8 @@ export default function LandingPage() {
 		initialState
 	);
 
+	const [email, setEmail] = useState("");
+
 	return (
 		<Container>
 			<Box component="form" action={formAction}>
@@ -40,6 +42,8 @@ export default function LandingPage() {
 					name="email"
 					type="email"
 					placeholder="Email"
+					value={email}
+					onChange={(e) => setEmail(e.target.value)}
 					error={!!state.error?.email}
 					helperText={state.error?.email?.[0]}
 				/>
