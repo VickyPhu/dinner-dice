@@ -11,7 +11,7 @@ import {
 	DialogTitle,
 } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
-import InviteMembersField from "./InviteMembersField";
+import InviteMembersField from "../create-group/InviteMembersField";
 
 type Props = {
 	open: boolean;
