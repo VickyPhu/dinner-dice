@@ -13,6 +13,7 @@ import {
 import { FormProvider, useForm } from "react-hook-form";
 import InviteMembersField from "../create-group/InviteMembersField";
 import FrequencySelect from "./frequencySelect";
+import WeekdayPicker from "./weekdayPicker";
 
 type Props = {
 	open: boolean;
@@ -51,6 +52,9 @@ export default function CreateGroupModal({ open, onClose }: Props) {
 
 						{/* Dropdown to chose sharing frequency */}
 						<FrequencySelect />
+
+						{/* Which days will the group share recipes, based on selected frequency */}
+						<WeekdayPicker />
 
 						{/* Textfield to add members */}
 						<InviteMembersField />
