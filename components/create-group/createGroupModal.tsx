@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
 import InviteMembersField from "../create-group/InviteMembersField";
+import FrequencySelect from "./frequencySelect";
 
 type Props = {
 	open: boolean;
@@ -47,6 +48,11 @@ export default function CreateGroupModal({ open, onClose }: Props) {
 				<form onSubmit={methods.handleSubmit(onSubmit)}>
 					<DialogContent>
 						{/* Add components to the form here */}
+
+						{/* Dropdown to chose sharing frequency */}
+						<FrequencySelect />
+
+						{/* Textfield to add members */}
 						<InviteMembersField />
 					</DialogContent>
 
