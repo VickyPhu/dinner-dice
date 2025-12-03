@@ -1,6 +1,6 @@
 "use client";
 
-import CreateGroupModal from "@/components/createGroupModal";
+import CreateGroupModal from "@/components/create-group/createGroupModal";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import { Container, IconButton, Typography } from "@mui/material";
 import { useState } from "react";
