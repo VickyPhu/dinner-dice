@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 export async function createGroup(formData: FormData) {
 	const parsed = createGroupSchema.safeParse({
 		name: formData.get("name"),
-		sharing_frequency: Number(formData.get("sharing frequency")),
+		sharing_frequency: Number(formData.get("sharing_frequency")),
 		weekdays: formData.getAll("weekdays"),
 		invited_emails: formData.get("invited_emails")
 			? (formData.get("invited_emails") as string)
