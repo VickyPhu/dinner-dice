@@ -13,6 +13,7 @@ import {
 import { FormProvider, useForm } from "react-hook-form";
 import InviteMembersField from "../create-group/InviteMembersField";
 import FrequencySelect from "./frequencySelect";
+import GroupNameField from "./groupNameField";
 import WeekdayPicker from "./weekdayPicker";
 
 type Props = {
@@ -31,14 +32,26 @@ export default function CreateGroupModal({ open, onClose }: Props) {
 		},
 	});
 
+	const {
+		control,
+		formState: { errors },
+	} = methods;
+
 	const onSubmit = async (data: createGroupData) => {
 		const formData = new FormData();
 		formData.append("name", data.name);
-		formData.append("sharing_frequency", String(data.sharing_frequency));
+		formData.append("sharing_frequency", data.sharing_frequency.toString());
 		data.weekdays.forEach((d) => formData.append("weekdays", d));
 		formData.append("invited_emails", (data.invited_emails ?? []).join(","));
 
-		await createGroup(formData);
+		const result = await createGroup(formData);
+
+		if (result?.error) {
+			console.error("Error creating group:", result.error);
+		} else {
+			methods.reset();
+			onClose();
+		}
 	};
 
 	return (
@@ -49,7 +62,7 @@ export default function CreateGroupModal({ open, onClose }: Props) {
 				<form onSubmit={methods.handleSubmit(onSubmit)}>
 					<DialogContent>
 						{/* Add components to the form here */}
-
+						<GroupNameField control={control} errors={errors} />
 						{/* Dropdown to chose sharing frequency */}
 						<FrequencySelect />
 
