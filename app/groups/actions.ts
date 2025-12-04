@@ -46,5 +46,5 @@ export async function createGroup(formData: FormData) {
 
 	if (memberError) return { error: memberError.message };
 
-	redirect("/groups");
+	return { success: true };
 }
