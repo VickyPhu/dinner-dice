@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 export async function createGroup(formData: FormData) {
 	const parsed = createGroupSchema.safeParse({
 		name: formData.get("name"),
-		sharing_frequency: Number(formData.get("sharing frequency")),
+		sharing_frequency: Number(formData.get("sharing_frequency")),
 		weekdays: formData.getAll("weekdays"),
 		invited_emails: formData.get("invited_emails")
 			? (formData.get("invited_emails") as string)
@@ -26,14 +26,25 @@ export async function createGroup(formData: FormData) {
 	} = await supabase.auth.getUser();
 	if (!user) redirect("/");
 
-	const { error } = await supabase.from("groups").insert({
-		...parsed.data,
-		created_by: user.id,
+	const { data: group, error: insertError } = await supabase
+		.from("groups")
+		.insert({
+			...parsed.data,
+			created_by: user.id,
+		})
+		.select()
+		.single();
+
+	if (insertError) return { error: insertError.message };
+
+	// Add the creator as the admin of the group
+	const { error: memberError } = await supabase.from("group_members").insert({
+		group_id: group.id,
+		user_id: user.id,
+		role: "admin",
 	});
 
-	if (error) {
-		return { error: error.message };
-	}
+	if (memberError) return { error: memberError.message };
 
-	redirect("/groups");
+	return { success: true };
 }
