@@ -46,5 +46,20 @@ export async function createGroup(formData: FormData) {
 
 	if (memberError) return { error: memberError.message };
 
+	// Create invites for each invited email
+	for (const email of parsed.data.invited_emails ?? []) {
+		const token = crypto.randomUUID();
+
+		const { error: inviteError } = await supabase.from("group_invites").insert({
+			group_id: group.id,
+			email,
+			token,
+		});
+
+		if (inviteError) {
+			console.error("Invite creation failed", inviteError);
+		}
+	}
+
 	return { success: true };
 }
