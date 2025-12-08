@@ -3,6 +3,11 @@
 import { createClient } from "@/utils/supabase/server";
 import { createGroupSchema } from "@/utils/validation";
 import { redirect } from "next/navigation";
+import { Resend } from "resend";
+import { InviteEmail } from "../emails/inviteEmail";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+const baseUrl = process.env.NEXT_PUBLIC_APP_URL!;
 
 export async function createGroup(formData: FormData) {
 	const parsed = createGroupSchema.safeParse({
@@ -45,6 +50,37 @@ export async function createGroup(formData: FormData) {
 	});
 
 	if (memberError) return { error: memberError.message };
+
+	// Create invites + send emails
+	for (const email of parsed.data.invited_emails ?? []) {
+		const token = crypto.randomUUID();
+
+		const { error: inviteError } = await supabase.from("group_invites").insert({
+			group_id: group.id,
+			email,
+			token,
+		});
+
+		if (inviteError) {
+			console.error("Invite creation failed", inviteError);
+		}
+
+		// Generate invite URL
+		const inviteUrl = `${baseUrl}/invite?token=${token}`;
+
+		// Send invite email
+		try {
+			const response = await resend.emails.send({
+				from: "DinnerDice <onboarding@resend.dev>", // Should be own domain later
+				to: email,
+				subject: `You're invited to join ${group.name}`,
+				react: InviteEmail({ groupName: group.name, inviteUrl }),
+			});
+			console.log("Email response:", response);
+		} catch (err) {
+			console.error("Email failed:", err);
+		}
+	}
 
 	return { success: true };
 }
