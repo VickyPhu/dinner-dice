@@ -69,15 +69,17 @@ export async function createGroup(formData: FormData) {
 		const inviteUrl = `${baseUrl}/invite?token=${token}`;
 
 		// Send invite email
-		await resend.emails.send({
-			from: "YourApp <noreply@yourdomain.com>",
-			to: email,
-			subject: `You're invited to join ${group.name}`,
-			react: InviteEmail({
-				groupName: group.name,
-				inviteUrl,
-			}),
-		});
+		try {
+			const response = await resend.emails.send({
+				from: "DinnerDice <onboarding@resend.dev>", // Should be own domain later
+				to: email,
+				subject: `You're invited to join ${group.name}`,
+				react: InviteEmail({ groupName: group.name, inviteUrl }),
+			});
+			console.log("Email response:", response);
+		} catch (err) {
+			console.error("Email failed:", err);
+		}
 	}
 
 	return { success: true };
