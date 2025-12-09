@@ -1,6 +1,7 @@
 "use client";
 
 import { GroupData } from "@/hooks/useGroups";
+import { useGroupSubmissions } from "@/hooks/useGroupSubmissions";
 import { calculateNextSharing } from "@/utils/calculateNextSharing";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Avatar, Paper, Stack, Typography } from "@mui/material";
@@ -8,6 +9,7 @@ import { useRouter } from "next/navigation";
 
 export default function GroupCard({ group }: { group: GroupData }) {
 	const router = useRouter();
+	const { submittedCount, requiredCount, loading } = useGroupSubmissions(group);
 
 	return (
 		<Paper
@@ -27,6 +29,11 @@ export default function GroupCard({ group }: { group: GroupData }) {
 				)}{" "}
 				days
 			</Typography>
+			{!loading && (
+				<Typography>
+					{submittedCount}/{requiredCount} recipes submitted
+				</Typography>
+			)}
 		</Paper>
 	);
 }
