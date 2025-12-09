@@ -1,20 +1,20 @@
+import { Weekday } from "@/utils/calculateNextSharing";
 import { createClient } from "@/utils/supabase/client";
 import { useEffect, useState } from "react";
 
-export type Group = {
+export type GroupData = {
 	id: string;
 	name: string;
+	sharing_frequency: number;
+	weekdays: Weekday[];
 };
 
 type GroupMemberWithGroup = {
-	groups: {
-		id: string;
-		name: string;
-	}[];
+	groups: GroupData[];
 };
 
 export function useGroups() {
-	const [groups, setGroups] = useState<Group[]>([]);
+	const [groups, setGroups] = useState<GroupData[]>([]);
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
@@ -32,7 +32,7 @@ export function useGroups() {
 
 			const { data, error } = await supabase
 				.from("group_members")
-				.select("groups(id, name)")
+				.select("groups(id, name, weekdays, sharing_frequency)")
 				.eq("user_id", user.id);
 
 			if (error || !data) {
