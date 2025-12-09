@@ -18,7 +18,9 @@ export function calculateNextSharing(
 		return diff;
 	});
 
+	// Sort from small to big
 	daysUntilNextSharing.sort((a, b) => a - b);
 
+	// Return the first "count" amount
 	return daysUntilNextSharing.slice(0, count);
 }
