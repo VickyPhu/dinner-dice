@@ -21,7 +21,11 @@ export default function GroupCard({ group }: { group: GroupData }) {
 				</Avatar>
 			</Stack>
 			<Typography variant="body1">
-				Next sharing in: {calculateNextSharing(group.weekdays)} days
+				Next sharing in:{" "}
+				{calculateNextSharing(group.weekdays, group.sharing_frequency).join(
+					", "
+				)}{" "}
+				days
 			</Typography>
 		</Paper>
 	);

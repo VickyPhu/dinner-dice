@@ -1,7 +1,10 @@
 export type Weekday = "Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat" | "Sun";
 
-export function calculateNextSharing(weekdays: Weekday[]): number {
-	if (weekdays.length === 0) return 0;
+export function calculateNextSharing(
+	weekdays: Weekday[],
+	count: number
+): number[] {
+	if (weekdays.length === 0) return [];
 
 	const order: Weekday[] = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 	const today = new Date();
@@ -15,5 +18,7 @@ export function calculateNextSharing(weekdays: Weekday[]): number {
 		return diff;
 	});
 
-	return Math.min(...daysUntilNextSharing);
+	daysUntilNextSharing.sort((a, b) => a - b);
+
+	return daysUntilNextSharing.slice(0, count);
 }
