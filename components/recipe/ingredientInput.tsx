@@ -43,6 +43,12 @@ export default function IngredientInput({
 					label="e.g 1 onion"
 					value={input}
 					onChange={(e) => setInput(e.target.value)}
+					onKeyDown={(e) => {
+						if (e.key === "Enter") {
+							e.preventDefault();
+							addIngredient();
+						}
+					}}
 				/>
 				<Button variant="contained" onClick={addIngredient}>
 					Add
