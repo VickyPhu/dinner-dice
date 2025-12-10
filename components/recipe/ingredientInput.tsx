@@ -1,8 +1,10 @@
 "use client";
 
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import {
 	Box,
 	Button,
+	IconButton,
 	List,
 	ListItem,
 	ListItemText,
@@ -27,6 +29,11 @@ export default function IngredientInput({
 		setInput("");
 	}
 
+	function removeIngredient(index: number) {
+		const remove = value.filter((_, i) => i !== index);
+		onChange(remove);
+	}
+
 	return (
 		<Box>
 			<Typography variant="h6">Ingredients</Typography>
@@ -43,7 +50,14 @@ export default function IngredientInput({
 			</Stack>
 			<List dense>
 				{value.map((ingredient, index) => (
-					<ListItem key={index}>
+					<ListItem
+						key={index}
+						secondaryAction={
+							<IconButton edge="end" onClick={() => removeIngredient(index)}>
+								<DeleteOutlineIcon />
+							</IconButton>
+						}
+					>
 						<ListItemText primary={ingredient} />
 					</ListItem>
 				))}
