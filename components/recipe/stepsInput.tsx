@@ -1,4 +1,6 @@
 "use client";
+import ArrowDownwardOutlinedIcon from "@mui/icons-material/ArrowDownwardOutlined";
+import ArrowUpwardOutlinedIcon from "@mui/icons-material/ArrowUpwardOutlined";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutlined";
 import {
 	Box,
@@ -32,6 +34,20 @@ export default function StepsInput({
 		onChange(value.filter((_, i) => i !== index));
 	}
 
+	function moveStepUp(index: number) {
+		if (index === 0) return;
+		const move = [...value];
+		[move[index - 1], move[index]] = [move[index], move[index - 1]];
+		onChange(move);
+	}
+
+	function moveStepDown(index: number) {
+		if (index === value.length - 1) return;
+		const move = [...value];
+		[move[index + 1], move[index]] = [move[index], move[index + 1]];
+		onChange(move);
+	}
+
 	return (
 		<Box>
 			<Typography variant="h6">Steps</Typography>
@@ -57,9 +73,20 @@ export default function StepsInput({
 					<ListItem
 						key={index}
 						secondaryAction={
-							<IconButton onClick={() => removeStep(index)}>
-								<DeleteOutlineIcon />
-							</IconButton>
+							<Stack direction="row">
+								<IconButton
+									onClick={() => moveStepUp(index)}
+									disabled={index === 0}
+								>
+									<ArrowUpwardOutlinedIcon />
+								</IconButton>
+								<IconButton onClick={() => moveStepDown(index)}>
+									<ArrowDownwardOutlinedIcon />
+								</IconButton>
+								<IconButton onClick={() => removeStep(index)}>
+									<DeleteOutlineIcon />
+								</IconButton>
+							</Stack>
 						}
 					>
 						<ListItemText primary={`${index + 1}. ${step}`} />
