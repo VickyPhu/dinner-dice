@@ -1,8 +1,9 @@
 "use client";
-
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutlined";
 import {
 	Box,
 	Button,
+	IconButton,
 	List,
 	ListItem,
 	ListItemText,
@@ -27,6 +28,10 @@ export default function StepsInput({
 		setInput("");
 	}
 
+	function removeStep(index: number) {
+		onChange(value.filter((_, i) => i !== index));
+	}
+
 	return (
 		<Box>
 			<Typography variant="h6">Steps</Typography>
@@ -36,7 +41,7 @@ export default function StepsInput({
 					label="e.g Cut the onion in cubes"
 					value={input}
 					onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={(e) => {
+					onKeyDown={(e) => {
 						if (e.key === "Enter") {
 							e.preventDefault();
 							addStep();
@@ -49,7 +54,14 @@ export default function StepsInput({
 			</Stack>
 			<List>
 				{value.map((step, index) => (
-					<ListItem key={index}>
+					<ListItem
+						key={index}
+						secondaryAction={
+							<IconButton onClick={() => removeStep(index)}>
+								<DeleteOutlineIcon />
+							</IconButton>
+						}
+					>
 						<ListItemText primary={`${index + 1}. ${step}`} />
 					</ListItem>
 				))}
