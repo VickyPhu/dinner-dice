@@ -1,28 +1,25 @@
 "use client";
 
-import IngredientInput from "@/components/recipe/ingredientInput";
-import StepsInput from "@/components/recipe/stepsInput";
-import TimeInput from "@/components/recipe/timeInput";
-import { Container, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import SubmitRecipeForm from "@/components/recipe/submitRecipeForm";
+import { Box, Container, Typography } from "@mui/material";
+import { useParams } from "next/navigation";
+import { RecipeFormProp, submitRecipe } from "./actions";
 
 export default function SubmitRecipePage() {
-	const [title, setTitle] = useState("");
-	const [totalTime, setTotalTime] = useState("");
-	const [ingredients, setIngredients] = useState<string[]>([]);
-	const [steps, setSteps] = useState<string[]>([]);
+	const params = useParams();
+	const groupId = params.groupId as string;
+
+	async function handleSubmit(values: RecipeFormProp) {
+		const today = new Date().toISOString().slice(0, 10);
+		await submitRecipe(groupId, today, values);
+	}
 
 	return (
 		<Container>
-			<Typography variant="h6">Recipe title</Typography>
-			<TextField
-				fullWidth
-				value={title}
-				onChange={(e) => setTitle(e.target.value)}
-			/>
-			<TimeInput value={totalTime} onChange={setTotalTime} />
-			<IngredientInput value={ingredients} onChange={setIngredients} />
-			<StepsInput value={steps} onChange={setSteps} />
+			<Box>
+				<Typography variant="h1">Submit this week&apos;s recipe</Typography>
+				<SubmitRecipeForm onSubmit={handleSubmit} />
+			</Box>
 		</Container>
 	);
 }
