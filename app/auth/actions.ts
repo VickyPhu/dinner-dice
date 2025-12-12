@@ -29,14 +29,16 @@ export async function logIn(formData: FormData) {
 	});
 
 	if (!parsed.success) {
-		return { error: parsed.error.flatten().fieldErrors };
+		const error = parsed.error.flatten().fieldErrors;
+		redirect(`/login?error=${encodeURIComponent(JSON.stringify(error))}`);
 	}
 
 	const supabase = await createClient();
 	const { error } = await supabase.auth.signInWithPassword(parsed.data);
 
 	if (error) {
-		return { error: error.message };
+		const errorObj = { form: error.message };
+		redirect(`/login?error=${encodeURIComponent(JSON.stringify(errorObj))}`);
 	}
 	redirect("/groups");
 }
