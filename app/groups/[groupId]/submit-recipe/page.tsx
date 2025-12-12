@@ -1,85 +1,59 @@
-"use client";
+import SubmitRecipes from "@/components/recipe/submitRecipes";
+import { calculateNextSharing } from "@/utils/calculateNextSharing";
+import { createClient } from "@/utils/supabase/server";
 
-import SubmitRecipeForm from "@/components/recipe/submitRecipeForm";
-import { useGroups } from "@/hooks/useGroups";
-import { useRecipeSubmissions } from "@/hooks/useRecipeSubmissions";
-import { Box, Container, Tab, Tabs, Typography } from "@mui/material";
-import { useParams } from "next/navigation";
-import { useState } from "react";
-import { RecipeFormProp, submitRecipe } from "./actions";
+export default async function SubmitRecipePage({
+	params,
+}: {
+	params: Promise<{ groupId: string }>;
+}) {
+	const { groupId } = await params;
+	console.log("groupId:", groupId);
 
-export default function SubmitRecipePage() {
-	const params = useParams();
-	const groupId = params.groupId as string;
+	const supabase = await createClient();
 
-	// Hooks
-	const { groups, loading: loadingGroups } = useGroups();
-	const group = groups.find((g) => g.id === groupId);
+	// Fetch user
+	const {
+		data: { user },
+	} = await supabase.auth.getUser();
 
-	// If the group exists, fetch the submission
-	const { entries, loading: loadingEntries } = useRecipeSubmissions(
-		group ?? { id: "", weekdays: [], sharing_frequency: 0 } // temp fallback
+	if (!user) {
+		return <div>You must be logged in.</div>;
+	}
+
+	// Fetcj info about group from Supabase
+	const { data: group, error } = await supabase
+		.from("groups")
+		.select("*")
+		.eq("id", groupId)
+		.single();
+
+	if (error || !group) {
+		return <div>Group not found.</div>;
+	}
+
+	// Calculate which dates the user have to send in recipes for
+	const offsets = calculateNextSharing(group.weekdays, group.sharing_frequency);
+	const today = new Date();
+	const dates = offsets.map((d) => {
+		const date = new Date(today);
+		date.setDate(today.getDate() + d);
+		return date.toISOString().slice(0, 10);
+	});
+
+	// Fetch all recipes for the dates
+	const { data: recipes } = await supabase
+		.from("recipes")
+		.select("*")
+		.eq("group_id", groupId)
+		.eq("user_id", user.id)
+		.in("for_date", dates);
+		
+	const recipeMap = Object.fromEntries(
+		dates.map((d) => [d, recipes?.find((r) => r.for_date === d) ?? null])
 	);
 
-	const [tabIndex, setTabIndex] = useState(0);
-
-	if (loadingGroups) {
-		return (
-			<Container>
-				<Typography>Loading group...</Typography>
-			</Container>
-		);
-	}
-
-	if (!group) {
-		return (
-			<Container>
-				<Typography>Group not found</Typography>
-			</Container>
-		);
-	}
-
-	if (loadingEntries) {
-		return (
-			<Container>
-				<Typography>Loading recipes...</Typography>
-			</Container>
-		);
-	}
-
-	// Render the form
-	const currentEntry = entries[tabIndex];
-
-	async function handleSubmit(values: RecipeFormProp) {
-		await submitRecipe(groupId, currentEntry.date, values);
-	}
-
 	return (
-		<Container>
-			<Box>
-				<Typography variant="h1">Submit this week&apos;s recipe</Typography>
-
-				<Tabs
-					value={tabIndex}
-					onChange={(_, v) => setTabIndex(v)}
-					variant="scrollable"
-					scrollButtons="auto"
-				>
-					{entries.map((entry) => {
-						const weekday = new Date(entry.date).toLocaleDateString("en-US", {
-							weekday: "short",
-						});
-						const isDone = !!entry.recipe;
-						return (
-							<Tab key={entry.date} label={isDone ? `✓ ${weekday}` : weekday} />
-						);
-					})}
-				</Tabs>
-
-				<Box>
-					<SubmitRecipeForm onSubmit={handleSubmit} />
-				</Box>
-			</Box>
-		</Container>
+		<SubmitRecipes groupId={groupId} dates={dates} recipeMap={recipeMap} />
 	);
 }
