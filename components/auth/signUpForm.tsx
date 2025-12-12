@@ -1,7 +1,7 @@
 "use client";
 
 import { signUp } from "@/app/auth/actions";
-import { Box, Container, TextField, Typography } from "@mui/material";
+import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import { useActionState } from "react";
 
 type SignUpFormState = {
@@ -51,7 +51,9 @@ export default function SignupPage() {
 				{state.error?.form && (
 					<Typography color="error">{state.error.form}</Typography>
 				)}
-				<button type="submit">Sign up</button>
+				<Button variant="contained" type="submit">
+					Sign up
+				</Button>
 			</Box>
 		</Container>
 	);
