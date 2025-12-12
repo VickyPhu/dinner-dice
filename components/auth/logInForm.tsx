@@ -2,6 +2,7 @@
 
 import { logIn } from "@/app/auth/actions";
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
+import { useRouter } from "next/navigation";
 import { useActionState, useState } from "react";
 
 type LoginFormState = {
@@ -35,6 +36,8 @@ export default function LandingPage() {
 
 	const [email, setEmail] = useState("");
 
+	const router = useRouter();
+
 	return (
 		<Container>
 			<Box component="form" action={formAction}>
@@ -59,6 +62,9 @@ export default function LandingPage() {
 				)}
 				<Button variant="contained" type="submit">
 					Log in
+				</Button>
+				<Button variant="contained" onClick={() => router.push("/signup")}>
+					Sign up
 				</Button>
 			</Box>
 		</Container>
