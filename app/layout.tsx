@@ -26,7 +26,9 @@ export default function RootLayout({
 	return (
 		<html lang="en" className={`${atma.variable} ${inter.variable}`}>
 			<body>
-				<Providers>{children}</Providers>
+				<main>
+					<Providers>{children}</Providers>
+				</main>
 			</body>
 		</html>
 	);
