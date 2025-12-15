@@ -4,6 +4,7 @@ import { RecipeFormProp } from "@/app/groups/[groupId]/submit-recipe/actions";
 import { submitRecipeProxy } from "@/app/groups/[groupId]/submit-recipe/submitRecipeProxy";
 import { updateRecipeProxy } from "@/app/groups/[groupId]/submit-recipe/updateRecipeProxy";
 import { Box, Tab, Tabs, Typography } from "@mui/material";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import SubmitRecipeForm from "./submitRecipeForm";
 
@@ -22,6 +23,8 @@ export default function SubmitRecipeClient({
 
 	const date = dates[selected];
 	const existingRecipe = recipeMap[date];
+
+	const router = useRouter();
 
 	return (
 		<Box>
@@ -46,15 +49,20 @@ export default function SubmitRecipeClient({
 
 			<Box sx={{ mt: 3 }}>
 				<Typography variant="h5">Recipe for {date}</Typography>
-                
+
 				<SubmitRecipeForm
 					defaultValues={existingRecipe ?? undefined}
 					mode={existingRecipe ? "edit" : "create"}
-					onSubmit={(values) =>
-						existingRecipe
-							? updateRecipeProxy(groupId, date, values)
-							: submitRecipeProxy(groupId, date, values)
-					}
+					onSubmit={async (values) => {
+						if (existingRecipe) {
+							await updateRecipeProxy(groupId, date, values);
+						} else {
+							await submitRecipeProxy(groupId, date, values);
+						}
+
+						// Update server and the page
+						router.refresh();
+					}}
 				/>
 			</Box>
 		</Box>
