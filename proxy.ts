@@ -1,4 +1,4 @@
-import { createClient } from "@/utils/supabase/server"; // din SSR-client
+import { createClient } from "@/utils/supabase/server";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
