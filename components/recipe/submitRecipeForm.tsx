@@ -7,15 +7,23 @@ import IngredientInput from "./ingredientInput";
 import StepsInput from "./stepsInput";
 import TimeInput from "./timeInput";
 
+type SubmitRecipeFormProps = {
+	onSubmit: (values: RecipeFormProp) => void;
+	defaultValues?: RecipeFormProp;
+	mode: "create" | "edit";
+};
+
 export default function SubmitRecipeForm({
 	onSubmit,
-}: {
-	onSubmit: (values: RecipeFormProp) => void;
-}) {
-	const [title, setTitle] = useState("");
-	const [time, setTime] = useState("");
-	const [ingredients, setIngredients] = useState<string[]>([]);
-	const [steps, setSteps] = useState<string[]>([]);
+	defaultValues,
+	mode,
+}: SubmitRecipeFormProps) {
+	const [title, setTitle] = useState(defaultValues?.title ?? "");
+	const [time, setTime] = useState(defaultValues?.time ?? "");
+	const [ingredients, setIngredients] = useState<string[]>(
+		defaultValues?.ingredients ?? []
+	);
+	const [steps, setSteps] = useState<string[]>(defaultValues?.steps ?? []);
 
 	return (
 		<Box>
@@ -33,7 +41,7 @@ export default function SubmitRecipeForm({
 				sx={{ mt: 2 }}
 				onClick={() => onSubmit({ title, time, ingredients, steps })}
 			>
-				Submit recipe
+				{mode === "edit" ? "Save changes" : "Submit recipe"}
 			</Button>
 		</Box>
 	);
