@@ -1,10 +1,10 @@
 import LogInForm from "@/components/auth/logInForm";
-import { Container } from "@mui/material";
+import { Box } from "@mui/material";
 
 export default function LandingPage() {
 	return (
-		<Container>
+		<Box>
 			<LogInForm />
-		</Container>
+		</Box>
 	);
 }
