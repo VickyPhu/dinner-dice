@@ -51,6 +51,7 @@ export default function SubmitRecipeClient({
 				<Typography variant="h5">Recipe for {date}</Typography>
 
 				<SubmitRecipeForm
+					key={date} // Create new instance of the submit recipe form for each date
 					defaultValues={existingRecipe ?? undefined}
 					mode={existingRecipe ? "edit" : "create"}
 					onSubmit={async (values) => {
