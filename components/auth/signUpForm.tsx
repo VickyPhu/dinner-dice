@@ -9,6 +9,7 @@ type SignUpFormState = {
 	error: null | {
 		email?: string[];
 		password?: string[];
+		username?: string[];
 		form?: string;
 	};
 };
@@ -36,6 +37,15 @@ export default function SignupPage() {
 
 	return (
 		<Box component="form" action={formAction}>
+			<TextField
+				name="username"
+				label="Username"
+				autoComplete="username"
+				required
+				fullWidth
+				error={!!state.error?.username}
+				helperText={state.error?.username?.[0]}
+			/>
 			<TextField
 				name="email"
 				type="email"
