@@ -1,3 +1,5 @@
+import AssignedRecipe from "@/components/recipe/assignedRecipe";
+
 export default function AssignedRecipePage() {
-	return <h1>Assigned Recipe Page</h1>;
+	return <AssignedRecipe />;
 }
