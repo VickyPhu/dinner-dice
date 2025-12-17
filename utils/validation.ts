@@ -27,6 +27,11 @@ export const logInSchema = z.object({
 
 export type logInData = z.infer<typeof logInSchema>;
 
+const inviteSchema = z.object({
+	type: z.enum(["email", "username"]),
+	value: z.string().min(1),
+});
+
 export const createGroupSchema = z
 	.object({
 		name: z.string().min(3, "Group name must be at least 3 characters long"),
@@ -35,7 +40,7 @@ export const createGroupSchema = z
 			.min(1, "Must share at least once per week")
 			.max(7, "Max 7 days"),
 		weekdays: z.array(z.string()).min(1, "Select at least one day"),
-		invited_emails: z.array(z.string().email()).optional(),
+		invites: z.array(inviteSchema).default([]),
 	})
 	.superRefine((data, ctx) => {
 		// amount of days the user selected

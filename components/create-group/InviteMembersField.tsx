@@ -5,29 +5,38 @@ import { Button, Stack, TextField } from "@mui/material";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 
+type Invite = {
+	type: "email" | "username";
+	value: string;
+};
+
 export default function InviteMembersField() {
 	const { setValue, watch } = useFormContext();
-	const invited = watch("invited_emails") as string[];
+	const invites = watch("invites") as Invite[];
 
 	const [inputValue, setInputValue] = useState("");
 
-	const addEmail = () => {
-		const email = inputValue.trim();
+	const addInvite = () => {
+		const value = inputValue.trim().toLowerCase();
+		if (!value) return;
 
-		if (!email) return;
+		const isEmail = value.includes("@");
 
-		// Only add if the email is not already in the list
-		if (!invited.includes(email)) {
-			setValue("invited_emails", [...invited, email], { shouldValidate: true });
+		const invite = {
+			type: isEmail ? "email" : "username",
+			value,
+		};
+
+		if (!invites.some((i) => i.value === value)) {
+			setValue("invites", [...invites, invite], { shouldValidate: true });
 		}
-
 		setInputValue("");
 	};
 
-	const removeEmail = (email: string) => {
+	const removeInvite = (value: string) => {
 		setValue(
-			"invited_emails",
-			invited.filter((e) => e !== email),
+			"invites",
+			invites.filter((i) => i.value !== value),
 			{ shouldValidate: true }
 		);
 	};
@@ -36,7 +45,7 @@ export default function InviteMembersField() {
 		<Stack>
 			<Stack direction="row" gap={2}>
 				<TextField
-					label="Invite members (email)"
+					label="Username or email"
 					variant="outlined"
 					fullWidth
 					value={inputValue}
@@ -46,20 +55,20 @@ export default function InviteMembersField() {
 					onKeyDown={(e) => {
 						if (e.key === "Enter") {
 							e.preventDefault();
-							addEmail();
+							addInvite();
 						}
 					}}
 				/>
-				<Button onClick={addEmail} variant="contained" aria-label="add email">
+				<Button onClick={addInvite} variant="contained" aria-label="add email">
 					Add
 				</Button>
 			</Stack>
 
 			<ul>
-				{invited?.map((email) => (
-					<li key={email}>
-						{email}
-						<DeleteOutlineIcon onClick={() => removeEmail(email)} />
+				{invites?.map((invite) => (
+					<li key={invite.value}>
+						{invite.value} ({invite.type})
+						<DeleteOutlineIcon onClick={() => removeInvite(invite.value)} />
 					</li>
 				))}
 			</ul>
