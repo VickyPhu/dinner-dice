@@ -12,6 +12,10 @@ export const signUpSchema = z.object({
 			message: "Password must contain at least one lowercase letter",
 		})
 		.regex(/[0-9]/, { message: "Password must contain at least one number" }),
+	username: z
+		.string()
+		.min(3)
+		.regex(/^[a-zA-Z0-9_]+$/, "Only letters, numbers and _"),
 });
 
 export type signInData = z.infer<typeof signUpSchema>;
