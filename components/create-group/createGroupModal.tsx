@@ -28,7 +28,7 @@ export default function CreateGroupModal({ open, onClose }: Props) {
 			name: "",
 			sharing_frequency: 1,
 			weekdays: [],
-			invited_emails: [],
+			invites: [],
 		},
 	});
 
@@ -42,16 +42,18 @@ export default function CreateGroupModal({ open, onClose }: Props) {
 		formData.append("name", data.name);
 		formData.append("sharing_frequency", data.sharing_frequency.toString());
 		data.weekdays.forEach((d) => formData.append("weekdays", d));
-		formData.append("invited_emails", (data.invited_emails ?? []).join(","));
+
+		formData.append("invites", JSON.stringify(data.invites));
 
 		const result = await createGroup(formData);
 
 		if (result?.error) {
 			console.error("Error creating group:", result.error);
-		} else {
-			methods.reset();
-			onClose();
+			return;
 		}
+
+		methods.reset();
+		onClose();
 	};
 
 	return (
