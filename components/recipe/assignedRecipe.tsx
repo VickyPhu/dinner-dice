@@ -26,8 +26,7 @@ export default function AssignedRecipePage() {
 
 	const now = new Date();
 	const revealAt = new Date(assignment.reveal_at);
-	console.log(typeof assignment.reveal_at, assignment.reveal_at);
-	const isRevealed = now >= revealAt;
+	const isRevealed = new Date() >= new Date(assignment.reveal_at);
 
 	if (!isRevealed) {
 		const daysLeft = Math.ceil((revealAt.getTime() - now.getTime()) / 86400000);
