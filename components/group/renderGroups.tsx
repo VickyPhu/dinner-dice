@@ -37,9 +37,9 @@ export default function RenderGroups() {
 			<CreateGroupModal open={open} onClose={() => setOpen(false)} />
 
 			<Stack>
-				{groups.map((group) => (
-					<GroupCard key={group.id} group={group} />
-				))}
+				{groups.map(
+					(group) => group && <GroupCard key={group.id} group={group} />
+				)}
 			</Stack>
 		</Container>
 	);

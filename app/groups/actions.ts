@@ -10,15 +10,13 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL!;
 
 export async function createGroup(formData: FormData) {
+	const invitesRaw = formData.get("invites");
+
 	const parsed = createGroupSchema.safeParse({
 		name: formData.get("name"),
 		sharing_frequency: Number(formData.get("sharing_frequency")),
 		weekdays: formData.getAll("weekdays"),
-		invited_emails: formData.get("invited_emails")
-			? (formData.get("invited_emails") as string)
-					.split(",")
-					.map((e) => e.trim())
-			: [],
+		invites: invitesRaw ? JSON.parse(invitesRaw as string) : [],
 	});
 
 	if (!parsed.success) {
@@ -34,7 +32,9 @@ export async function createGroup(formData: FormData) {
 	const { data: group, error: insertError } = await supabase
 		.from("groups")
 		.insert({
-			...parsed.data,
+			name: parsed.data.name,
+			sharing_frequency: parsed.data.sharing_frequency,
+			weekdays: parsed.data.weekdays,
 			created_by: user.id,
 		})
 		.select()
@@ -51,36 +51,65 @@ export async function createGroup(formData: FormData) {
 
 	if (memberError) return { error: memberError.message };
 
-	// Create invites + send emails
-	for (const email of parsed.data.invited_emails ?? []) {
-		const token = crypto.randomUUID();
+	for (const invite of parsed.data.invites) {
+		// Invite by email
+		if (invite.type === "email") {
+			const token = crypto.randomUUID();
 
-		const { error: inviteError } = await supabase.from("group_invites").insert({
-			group_id: group.id,
-			email,
-			token,
-		});
+			const { error: inviteError } = await supabase
+				.from("group_invites")
+				.insert({
+					group_id: group.id,
+					email: invite.value,
+					token,
+				});
 
-		if (inviteError) {
-			console.error("Invite creation failed", inviteError);
+			if (inviteError) {
+				console.error("Invite creation failed", inviteError);
+				continue;
+			}
+
+			// Generate invite URL
+			const inviteUrl = `${baseUrl}/invite?token=${token}`;
+
+			// Send invite email
+			try {
+				await resend.emails.send({
+					from: "DinnerDice <onboarding@resend.dev>", // Should be own domain later
+					to: invite.value,
+					subject: `You're invited to join ${group.name}`,
+					react: InviteEmail({ groupName: group.name, inviteUrl }),
+				});
+			} catch (err) {
+				console.error("Email failed:", err);
+			}
 		}
 
-		// Generate invite URL
-		const inviteUrl = `${baseUrl}/invite?token=${token}`;
+		// Add member by username (instantly a member)
+		if (invite.type === "username") {
+			const { data: profile } = await supabase
+				.from("profiles")
+				.select("user_id")
+				.eq("username", invite.value)
+				.single();
 
-		// Send invite email
-		try {
-			const response = await resend.emails.send({
-				from: "DinnerDice <onboarding@resend.dev>", // Should be own domain later
-				to: email,
-				subject: `You're invited to join ${group.name}`,
-				react: InviteEmail({ groupName: group.name, inviteUrl }),
-			});
-			console.log("Email response:", response);
-		} catch (err) {
-			console.error("Email failed:", err);
+			if (!profile) {
+				console.warn("Username not found", invite.value);
+				continue;
+			}
+
+			const { error: memberError } = await supabase
+				.from("group_members")
+				.insert({
+					group_id: group.id,
+					user_id: profile.user_id,
+					role: "member",
+				});
+
+			if (memberError) {
+				console.error("Failed to add member", memberError);
+			}
 		}
 	}
-
 	return { success: true };
 }
