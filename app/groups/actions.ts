@@ -10,11 +10,13 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL!;
 
 export async function createGroup(formData: FormData) {
+	const invitesRaw = formData.get("invites");
+
 	const parsed = createGroupSchema.safeParse({
 		name: formData.get("name"),
 		sharing_frequency: Number(formData.get("sharing_frequency")),
 		weekdays: formData.getAll("weekdays"),
-		invites: JSON.parse(formData.get("invites") as string),
+		invites: invitesRaw ? JSON.parse(invitesRaw as string) : [],
 	});
 
 	if (!parsed.success) {
@@ -30,7 +32,9 @@ export async function createGroup(formData: FormData) {
 	const { data: group, error: insertError } = await supabase
 		.from("groups")
 		.insert({
-			...parsed.data,
+			name: parsed.data.name,
+			sharing_frequency: parsed.data.sharing_frequency,
+			weekdays: parsed.data.weekdays,
 			created_by: user.id,
 		})
 		.select()
@@ -98,7 +102,7 @@ export async function createGroup(formData: FormData) {
 				.from("group_members")
 				.insert({
 					group_id: group.id,
-					user_id: profile.user_id.id,
+					user_id: profile.user_id,
 					role: "member",
 				});
 
@@ -106,7 +110,6 @@ export async function createGroup(formData: FormData) {
 				console.error("Failed to add member", memberError);
 			}
 		}
-
-		return { success: true };
 	}
+	return { success: true };
 }
