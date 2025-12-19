@@ -21,28 +21,12 @@ export default function AssignedRecipePage() {
 		return (
 			<Box>
 				<Typography>No recipe assigned yet</Typography>
-			</Box>
-		);
-
-	const now = new Date();
-	const revealAt = new Date(assignment.reveal_at);
-	console.log(typeof assignment.reveal_at, assignment.reveal_at);
-	const isRevealed = now >= revealAt;
-
-	if (!isRevealed) {
-		const daysLeft = Math.ceil((revealAt.getTime() - now.getTime()) / 86400000);
-
-		return (
-			<Box>
 				<Typography>
-					Your recipe will be revealed on {revealAt.toLocaleDateString()}
-				</Typography>
-				<Typography>
-					In {daysLeft} day{daysLeft !== 1 && "s"}
+					Your recipe will be revealed 2 days before the sharing date
 				</Typography>
 			</Box>
 		);
-	}
+
 	return (
 		<Box>
 			<RecipeRevealCard recipe={assignment.recipe} />
