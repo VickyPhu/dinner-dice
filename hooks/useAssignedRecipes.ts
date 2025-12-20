@@ -19,8 +19,8 @@ export interface RecipeAssignment {
 	recipe: Recipe;
 }
 
-export function useAssignedRecipe(groupId: string) {
-	const [assignment, setAssignment] = useState<RecipeAssignment | null>(null);
+export function useAssignedRecipes(groupId: string) {
+	const [assignments, setAssignments] = useState<RecipeAssignment[]>([]);
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
@@ -33,33 +33,45 @@ export function useAssignedRecipe(groupId: string) {
 
 			const { data, error } = await supabase
 				.from("recipe_assignments")
-				.select(`*, recipes!inner (id, title, time, ingredients, steps)`)
+				.select(`*, recipes!inner(id, title, time, ingredients, steps)`)
 				.eq("group_id", groupId)
 				.eq("assigned_to", user.id)
-				.maybeSingle();
+				.order("for_date", { ascending: true });
 
 			if (error) {
 				console.error("Assignment fetch error", error);
-			} else if (data) {
-				setAssignment({
-					id: data.id,
-					group_id: data.group_id,
-					assigned_to: data.assigned_to,
-					recipe_id: data.recipe_id,
-					for_date: data.for_date,
-					reveal_at: data.reveal_at,
-					recipe: {
-						id: data.recipes.id,
-						title: data.recipes.title,
-						time: data.recipes.time,
-						ingredients: data.recipes.ingredients,
-						steps: data.recipes.steps,
-					},
-				});
+				setLoading(false);
+				return;
 			}
+
+			if (!data) {
+				setAssignments([]);
+				setLoading(false);
+				return;
+			}
+
+			const mapped: RecipeAssignment[] = data.map((item) => ({
+				id: item.id,
+				group_id: item.group_id,
+				assigned_to: item.assigned_to,
+				recipe_id: item.recipe_id,
+				for_date: item.for_date,
+				reveal_at: item.reveal_at,
+				recipe: {
+					id: item.recipes.id,
+					title: item.recipes.title,
+					time: item.recipes.time,
+					ingredients: item.recipes.ingredients,
+					steps: item.recipes.steps,
+				},
+			}));
+
+			setAssignments(mapped);
 			setLoading(false);
 		}
+
 		load();
 	}, [groupId]);
-	return { assignment, loading };
+
+	return { assignments, loading };
 }
