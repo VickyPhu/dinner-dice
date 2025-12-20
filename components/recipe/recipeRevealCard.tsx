@@ -1,5 +1,3 @@
-"use client";
-
 import { Recipe } from "@/hooks/useAssignedRecipes";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import {
@@ -11,7 +9,9 @@ import {
 	Typography,
 } from "@mui/material";
 
-export default function RecipeRevealCard({ recipe }: { recipe: Recipe }) {
+export default function RecipeRevealCard({ recipe }: { recipe?: Recipe }) {
+	if (!recipe) return null;
+
 	return (
 		<Card>
 			<CardContent>
@@ -22,12 +22,14 @@ export default function RecipeRevealCard({ recipe }: { recipe: Recipe }) {
 					</Icon>
 					{recipe.time}
 				</Typography>
+
 				<Typography variant="h2">Ingredients</Typography>
 				<List>
 					{recipe.ingredients.map((ingredient, i) => (
 						<ListItem key={i}>{ingredient}</ListItem>
 					))}
 				</List>
+
 				<Typography variant="h2">Steps</Typography>
 				<List>
 					{recipe.steps.map((step, i) => (
