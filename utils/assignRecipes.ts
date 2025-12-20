@@ -1,75 +1,157 @@
-import { createClient } from "@/utils/supabase/server";
+import { supabaseAdmin } from "./supabase/admin";
+
+interface Recipe {
+	id: string;
+	user_id: string;
+}
+
+const daysAhead = 7;
 
 export async function assignRecipes() {
-	const supabase = await createClient();
+	const groups = await getGroups();
+	if (!groups.length) return;
 
-	const { data: groups } = await supabase.from("groups").select("id, weekdays");
-
-	if (!groups) return;
+	const today = startOfDay(new Date());
 
 	for (const group of groups) {
-		const forDate = findNextSharingDate(group.weekdays);
-		if (!forDate) continue;
+		const sharingDates = getSharingDates(today, group.weekdays, daysAhead);
 
-		// Protection: don't run again
-		const { data: existing } = await supabase
-			.from("recipe_assignments")
-			.select("id")
-			.eq("group_id", group.id)
-			.eq("for_date", forDate);
-
-		if (existing && existing.length > 0) continue;
-
-		// Get all the submitted recipes within the group and for the specific day
-		const { data: recipes } = await supabase
-			.from("recipes")
-			.select("id, user_id")
-			.eq("group_id", group.id)
-			.eq("for_date", forDate);
-
-		if (!recipes || recipes.length === 0) continue;
-
-		const { data: members } = await supabase
-			.from("group_members")
-			.select("user_id")
-			.eq("group_id", group.id);
-
-		if (!members) continue;
-
-		// A member of the group should not be able to receive their own submitted recipe
-		for (const member of members) {
-			const possible = recipes.filter((r) => r.user_id !== member.user_id);
-
-			if (possible.length === 0) continue;
-
-			const recipe = possible[Math.floor(Math.random() * possible.length)];
-
-			const revealAt = new Date(forDate);
-			revealAt.setDate(revealAt.getDate() - 2); // Two days before sharing date
-
-			await supabase.from("recipe_assignments").insert({
-				group_id: group.id,
-				recipe_id: recipe.id,
-				assigned_to: member.user_id,
-				for_date: forDate,
-				reveal_at: revealAt.toISOString(),
-			});
+		for (const forDate of sharingDates) {
+			await assignForGroupAndDate(group.id, forDate);
 		}
 	}
 }
 
-function findNextSharingDate(weekdays: string[]): string | null {
-	const today = new Date();
+// Fetch groups
+async function getGroups() {
+	const { data, error } = await supabaseAdmin
+		.from("groups")
+		.select("id, weekdays");
 
-	for (let i = 1; i <= 14; i++) {
-		const d = new Date(today);
-		d.setDate(today.getDate() + i);
+	if (error) {
+		console.error("Failed to fetch groups", error);
+		return [];
+	}
+
+	return data ?? [];
+}
+
+// Fetch all the sharing days
+function getSharingDates(
+	startDate: Date,
+	weekdays: string[],
+	daysAhead: number
+): string[] {
+	const dates: string[] = [];
+
+	for (let i = 0; i <= daysAhead; i++) {
+		const d = new Date(startDate);
+		d.setDate(startDate.getDate() + i);
 
 		const weekday = d.toLocaleDateString("en-US", { weekday: "short" });
 		if (weekdays.includes(weekday)) {
-			return d.toISOString().slice(0, 10);
+			dates.push(d.toISOString().slice(0, 10));
 		}
 	}
 
-	return null;
+	return dates;
+}
+
+// Assign recipe for one group + one day
+async function assignForGroupAndDate(groupId: string, forDate: string) {
+	if (await assignmentsExist(groupId, forDate)) return;
+
+	const recipes = await getRecipesForDate(groupId, forDate);
+	if (!recipes.length) return;
+
+	const members = await getGroupMembers(groupId);
+	if (!members.length) return;
+
+	for (const member of members) {
+		const recipe = pickRandomRecipe(recipes, member.user_id);
+		if (!recipe) continue;
+
+		await createAssignment({
+			groupId,
+			forDate,
+			recipeId: recipe.id,
+			assignedTo: member.user_id,
+		});
+	}
+}
+
+// Check to see if assignment already exists
+async function assignmentsExist(groupId: string, forDate: string) {
+	const { data } = await supabaseAdmin
+		.from("recipe_assignments")
+		.select("id")
+		.eq("group_id", groupId)
+		.eq("for_date", forDate)
+		.limit(1);
+
+	return !!data?.length;
+}
+
+// Fetch recipe for today
+async function getRecipesForDate(groupId: string, forDate: string) {
+	const { data } = await supabaseAdmin
+		.from("recipes")
+		.select("id, user_id")
+		.eq("group_id", groupId)
+		.eq("for_date", forDate);
+
+	return data ?? [];
+}
+
+// Get group members
+async function getGroupMembers(groupId: string) {
+	const { data } = await supabaseAdmin
+		.from("group_members")
+		.select("user_id")
+		.eq("group_id", groupId);
+
+	return data ?? [];
+}
+
+// Shuffle recipes, should not be able to receive your own
+function pickRandomRecipe(
+	recipes: readonly Recipe[],
+	userId: string
+): Recipe | null {
+	const possible = recipes.filter((r) => r.user_id !== userId);
+
+	return possible.length
+		? possible[Math.floor(Math.random() * possible.length)]
+		: null;
+}
+
+// Create assignment
+async function createAssignment({
+	groupId,
+	forDate,
+	recipeId,
+	assignedTo,
+}: {
+	groupId: string;
+	forDate: string;
+	recipeId: string;
+	assignedTo: string;
+}) {
+	const revealAt = new Date(forDate);
+	revealAt.setDate(revealAt.getDate() - 2);
+
+	await supabaseAdmin.from("recipe_assignments").insert({
+		group_id: groupId,
+		recipe_id: recipeId,
+		assigned_to: assignedTo,
+		for_date: forDate,
+		reveal_at: revealAt.toISOString(),
+	});
+}
+
+// Help with the date
+function startOfDay(date: Date) {
+	const d = new Date(date);
+	d.setHours(0, 0, 0, 0);
+	return d;
 }
