@@ -50,21 +50,34 @@ export function useAssignedRecipes(groupId: string) {
 				return;
 			}
 
-			const mapped: RecipeAssignment[] = data.map((item) => ({
-				id: item.id,
-				group_id: item.group_id,
-				assigned_to: item.assigned_to,
-				recipe_id: item.recipe_id,
-				for_date: item.for_date,
-				reveal_at: item.reveal_at,
-				recipe: {
-					id: item.recipes.id,
-					title: item.recipes.title,
-					time: item.recipes.time,
-					ingredients: item.recipes.ingredients,
-					steps: item.recipes.steps,
-				},
-			}));
+			const today = new Date();
+			today.setHours(0, 0, 0, 0);
+
+			const mapped: RecipeAssignment[] = data
+				.map((item) => ({
+					id: item.id,
+					group_id: item.group_id,
+					assigned_to: item.assigned_to,
+					recipe_id: item.recipe_id,
+					for_date: item.for_date,
+					reveal_at: item.reveal_at,
+					recipe: {
+						id: item.recipes.id,
+						title: item.recipes.title,
+						time: item.recipes.time,
+						ingredients: item.recipes.ingredients,
+						steps: item.recipes.steps,
+					},
+				}))
+				.filter((item) => {
+					const revealAt = new Date(item.reveal_at);
+					revealAt.setHours(0, 0, 0, 0);
+
+					const forDate = new Date(item.for_date);
+					forDate.setHours(0, 0, 0, 0);
+
+					return revealAt <= today && today <= forDate;
+				});
 
 			setAssignments(mapped);
 			setLoading(false);
