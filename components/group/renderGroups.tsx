@@ -4,7 +4,6 @@ import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import { Container, IconButton, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 
-import { signOut } from "@/app/auth/actions";
 import CreateGroupModal from "@/components/create-group/createGroupModal";
 import GroupCard from "@/components/group/groupCard";
 import { useGroups } from "@/hooks/useGroups";
@@ -17,10 +16,6 @@ export default function RenderGroups() {
 
 	return (
 		<Container>
-			<form action={signOut}>
-				<button type="submit">Sign out</button>
-			</form>
-
 			<Stack
 				direction="row"
 				justifyContent="space-between"
