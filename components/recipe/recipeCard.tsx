@@ -2,6 +2,7 @@
 
 import { deleteRecipe } from "@/app/groups/[groupId]/recipes/[recipeId]/actions";
 import { Recipe } from "@/hooks/useAssignedRecipes";
+import { useToastStore } from "@/stores/toastStore";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { Button, IconButton } from "@mui/material";
 import { useRouter } from "next/navigation";
@@ -17,25 +18,22 @@ interface RecipeCardProps {
 export default function RecipeCard({ recipe, groupId }: RecipeCardProps) {
 	const [open, setOpen] = useState(false);
 	const router = useRouter();
+	const { addToast } = useToastStore();
 
 	const handleDelete = async () => {
 		await deleteRecipe(recipe.id, groupId);
 		setOpen(false);
+
+		addToast({
+			message: "Recipe was successfully deleted",
+			type: "success",
+		});
+
 		router.push(`/groups/${groupId}/recipes`);
 	};
 
 	return (
 		<>
-			<Button onClick={() => router.push(`/groups/${groupId}/recipes`)}>
-				Go back
-			</Button>
-			<Button
-				onClick={() =>
-					router.push("/groups/c629b766-43c0-45a8-815e-3b4536838e5f/recipes")
-				}
-			>
-				Test
-			</Button>
 			<IconButton onClick={() => setOpen(true)}>
 				<DeleteOutlineIcon />
 			</IconButton>
