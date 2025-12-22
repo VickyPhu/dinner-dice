@@ -1,5 +1,7 @@
 "use client";
 
+import { useToastStore } from "@/stores/toastStore";
+
 import { RecipeFormProp } from "@/app/groups/[groupId]/submit-recipe/actions";
 import { submitRecipeProxy } from "@/app/groups/[groupId]/submit-recipe/submitRecipeProxy";
 import { updateRecipeProxy } from "@/app/groups/[groupId]/submit-recipe/updateRecipeProxy";
@@ -25,6 +27,7 @@ export default function SubmitRecipeClient({
 	const existingRecipe = recipeMap[date];
 
 	const router = useRouter();
+	const { addToast } = useToastStore();
 
 	return (
 		<Box>
@@ -55,14 +58,25 @@ export default function SubmitRecipeClient({
 					defaultValues={existingRecipe ?? undefined}
 					mode={existingRecipe ? "edit" : "create"}
 					onSubmit={async (values) => {
-						if (existingRecipe) {
-							await updateRecipeProxy(groupId, date, values);
-						} else {
-							await submitRecipeProxy(groupId, date, values);
-						}
+						try {
+							if (existingRecipe) {
+								await updateRecipeProxy(groupId, date, values);
+							} else {
+								await submitRecipeProxy(groupId, date, values);
+							}
 
-						// Update server and the page
-						router.refresh();
+							addToast({
+								message: `Recipe for ${date} saved`,
+								type: "success",
+							});
+
+							router.refresh();
+						} catch {
+							addToast({
+								message: `Failed to save recipe for ${date}`,
+								type: "error",
+							});
+						}
 					}}
 				/>
 			</Box>

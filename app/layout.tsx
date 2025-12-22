@@ -1,3 +1,4 @@
+import Toast from "@/components/toast";
 import type { Metadata } from "next";
 import { Atma, Inter } from "next/font/google";
 import "./globals.css";
@@ -27,7 +28,10 @@ export default function RootLayout({
 		<html lang="en" className={`${atma.variable} ${inter.variable}`}>
 			<body>
 				<main>
-					<Providers>{children}</Providers>
+					<Providers>
+						{children}
+						<Toast />
+					</Providers>
 				</main>
 			</body>
 		</html>

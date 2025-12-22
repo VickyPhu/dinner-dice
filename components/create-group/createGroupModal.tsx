@@ -1,6 +1,7 @@
 "use client";
 
 import { createGroup } from "@/app/groups/actions";
+import { useToastStore } from "@/stores/toastStore";
 import { createGroupData, createGroupSchema } from "@/utils/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -22,6 +23,8 @@ type Props = {
 };
 
 export default function CreateGroupModal({ open, onClose }: Props) {
+	const { addToast } = useToastStore();
+
 	const methods = useForm<createGroupData>({
 		resolver: zodResolver(createGroupSchema),
 		defaultValues: {
@@ -51,6 +54,11 @@ export default function CreateGroupModal({ open, onClose }: Props) {
 			console.error("Error creating group:", result.error);
 			return;
 		}
+
+		addToast({
+			message: `Group "${data.name}" created successfully`,
+			type: "success",
+		});
 
 		methods.reset();
 		onClose();
