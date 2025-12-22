@@ -9,6 +9,7 @@ export default async function SpecificRecipePage({
 	params: Promise<{ groupId: string; recipeId: string }>;
 }) {
 	const { recipeId } = await params;
+	const { groupId } = await params;
 	const supabase = await createClient();
 
 	const { data: recipe, error } = await supabase
@@ -23,7 +24,7 @@ export default async function SpecificRecipePage({
 
 	return (
 		<Box>
-			<RecipeCard recipe={recipe} />
+			<RecipeCard recipe={recipe} groupId={groupId} />
 		</Box>
 	);
 }
