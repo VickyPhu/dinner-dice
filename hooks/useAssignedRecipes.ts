@@ -33,7 +33,7 @@ export function useAssignedRecipes(groupId: string) {
 
 			const { data, error } = await supabase
 				.from("recipe_assignments")
-				.select(`*, recipes!inner(id, title, time, ingredients, steps)`)
+				.select(`*, recipes(id, title, time, ingredients, steps)`)
 				.eq("group_id", groupId)
 				.eq("assigned_to", user.id)
 				.order("for_date", { ascending: true });
@@ -50,21 +50,27 @@ export function useAssignedRecipes(groupId: string) {
 				return;
 			}
 
-			const mapped: RecipeAssignment[] = data.map((item) => ({
-				id: item.id,
-				group_id: item.group_id,
-				assigned_to: item.assigned_to,
-				recipe_id: item.recipe_id,
-				for_date: item.for_date,
-				reveal_at: item.reveal_at,
-				recipe: {
-					id: item.recipes.id,
-					title: item.recipes.title,
-					time: item.recipes.time,
-					ingredients: item.recipes.ingredients,
-					steps: item.recipes.steps,
-				},
-			}));
+			const today = new Date();
+			today.setHours(0, 0, 0, 0);
+
+			const mapped: RecipeAssignment[] = data
+				.filter((item) => item.recipes)
+				.map((item) => ({
+					id: item.id,
+					group_id: item.group_id,
+					assigned_to: item.assigned_to,
+					recipe_id: item.recipe_id,
+					for_date: item.for_date,
+					reveal_at: item.reveal_at,
+					recipe: {
+						id: item.recipes.id,
+						title: item.recipes.title,
+						time: item.recipes.time,
+						ingredients: item.recipes.ingredients,
+						steps: item.recipes.steps,
+					},
+				}))
+				.filter(isVisibleToday);
 
 			setAssignments(mapped);
 			setLoading(false);
@@ -74,4 +80,9 @@ export function useAssignedRecipes(groupId: string) {
 	}, [groupId]);
 
 	return { assignments, loading };
+}
+
+function isVisibleToday(a: RecipeAssignment) {
+	const today = new Date().toISOString().slice(0, 10);
+	return a.reveal_at.slice(0, 10) <= today && today <= a.for_date;
 }

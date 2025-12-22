@@ -2,6 +2,7 @@ import { Recipe } from "@/hooks/useAssignedRecipes";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import {
 	Card,
+	CardActions,
 	CardContent,
 	Icon,
 	List,
@@ -9,7 +10,15 @@ import {
 	Typography,
 } from "@mui/material";
 
-export default function RecipeRevealCard({ recipe }: { recipe?: Recipe }) {
+interface RecipeRevealProps {
+	recipe: Recipe;
+	actions?: React.ReactNode;
+}
+
+export default function RecipeRevealCard({
+	recipe,
+	actions,
+}: RecipeRevealProps) {
 	if (!recipe) return null;
 
 	return (
@@ -39,6 +48,7 @@ export default function RecipeRevealCard({ recipe }: { recipe?: Recipe }) {
 					))}
 				</List>
 			</CardContent>
+			{actions && <CardActions>{actions}</CardActions>}
 		</Card>
 	);
 }

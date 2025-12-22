@@ -11,7 +11,7 @@ export async function getRecipes(groupId: string): Promise<RecipeListItem[]> {
 
 	const { data, error } = await supabase
 		.from("recipes")
-		.select("id, title, time, group_id")
+		.select("*")
 		.eq("group_id", groupId)
 		.lte("for_date", new Date().toISOString().slice(0, 10)); // Only show earlier recipes or the ones for today
 
