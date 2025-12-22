@@ -5,7 +5,7 @@ import { Box, Typography } from "@mui/material";
 export default async function RecipesPage({
 	params,
 }: {
-	params: Promise<{ groupId: string }>;
+	params: { groupId: string };
 }) {
 	const { groupId } = await params;
 
@@ -17,7 +17,7 @@ export default async function RecipesPage({
 
 	return (
 		<Box>
-			<SmallRecipeCard recipes={recipes} />
+			<SmallRecipeCard recipes={recipes} groupId={groupId} />
 		</Box>
 	);
 }

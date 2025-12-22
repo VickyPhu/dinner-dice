@@ -1,7 +1,7 @@
 "use client";
 
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import { Box, Card, CardContent, Icon, Typography } from "@mui/material";
+import { Box, Card, CardContent, Icon, Link, Typography } from "@mui/material";
 
 interface Recipe {
 	id: string;
@@ -9,21 +9,29 @@ interface Recipe {
 	time: string;
 }
 
-export default function SmallRecipeCard({ recipes }: { recipes: Recipe[] }) {
+export default function SmallRecipeCard({
+	recipes,
+	groupId,
+}: {
+	recipes: Recipe[];
+	groupId: string;
+}) {
 	return (
 		<Box>
 			{recipes.map((recipe) => (
-				<Card key={recipe.id}>
-					<CardContent>
-						<Typography variant="h2">{recipe.title}</Typography>
-						<Typography variant="h3">
-							<Icon>
-								<AccessTimeIcon />
-							</Icon>
-							{recipe.time}
-						</Typography>
-					</CardContent>
-				</Card>
+				<Link href={`/groups/${groupId}/recipes/${recipe.id}`} key={recipe.id}>
+					<Card>
+						<CardContent>
+							<Typography variant="h2">{recipe.title}</Typography>
+							<Typography variant="h3">
+								<Icon>
+									<AccessTimeIcon />
+								</Icon>
+								{recipe.time}
+							</Typography>
+						</CardContent>
+					</Card>
+				</Link>
 			))}
 		</Box>
 	);
