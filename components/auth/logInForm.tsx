@@ -39,8 +39,24 @@ export default function LandingPage() {
 	const router = useRouter();
 
 	return (
-		<Container>
-			<Box component="form" action={formAction}>
+		<Container
+			sx={{
+				width: "350px",
+				background: "var(--card-bg)",
+				padding: "2rem",
+				borderRadius: "var(--card-radius)",
+				boxShadow: "2px 4px 4px var(--card-shadow)",
+			}}
+		>
+			<Box
+				component="form"
+				action={formAction}
+				sx={{
+					display: "flex",
+					flexDirection: "column",
+					gap: "0.5rem",
+				}}
+			>
 				<TextField
 					name="email"
 					type="email"
@@ -49,6 +65,23 @@ export default function LandingPage() {
 					onChange={(e) => setEmail(e.target.value)}
 					error={!!state.error?.email}
 					helperText={state.error?.email?.[0]}
+					sx={{
+						background: "var(--placeholder-bg)",
+						borderRadius: "var(--card-radius)",
+						"& .MuiInputBase-input": {
+							color: "var(--text)",
+						},
+						"& .MuiOutlinedInput-notchedOutline": {
+							borderColor: "var(--button-hover)",
+						},
+						"&:hover .MuiOutlinedInput-notchedOutline": {
+							borderColor: "var(--text)",
+						},
+						"& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+							{
+								borderColor: "var(--button-hover)",
+							},
+					}}
 				/>
 				<TextField
 					name="password"
@@ -56,6 +89,23 @@ export default function LandingPage() {
 					placeholder="Password"
 					error={!!state.error?.password}
 					helperText={state.error?.password?.[0]}
+					sx={{
+						background: "var(--placeholder-bg)",
+						borderRadius: "var(--card-radius)",
+						"& .MuiInputBase-input": {
+							color: "var(--text)",
+						},
+						"& .MuiOutlinedInput-notchedOutline": {
+							borderColor: "var(--button-hover)",
+						},
+						"&:hover .MuiOutlinedInput-notchedOutline": {
+							borderColor: "var(--text)",
+						},
+						"& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+							{
+								borderColor: "var(--button-hover)",
+							},
+					}}
 				/>
 				{state.error?.form && (
 					<Typography color="error">{state.error.form}</Typography>

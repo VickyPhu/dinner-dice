@@ -10,11 +10,12 @@
 	--card-shadow: #d7aeb8;
 	--card-hover: #edb9c6;
 	--card-hover-shadow: rgba(218, 161, 175, 0.25);
+	--card-radius: 0.5rem;
 
 	/* Buttons */
 	--button: #f283af;
 	--button-border: rgba(196, 54, 112, 0.8);
-	--button-shadow: rgba(196, 54, 112, 0.5);
+	--button-shadow: #c4367080;
 	--button-hover: #c43670;
 	--button-hover-shadow: rgba(196, 54, 112, 0.7); /* Also used for border */
 	--button2-shadow: rgba(
