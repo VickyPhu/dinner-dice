@@ -21,8 +21,20 @@ export default function Header({ variant, backHref }: Props) {
 		>
 			<Toolbar>
 				{variant === "back" && backHref && (
-					<IconButton component={Link} href={backHref} edge="start">
-						<ArrowBackIcon />
+					<IconButton
+						component={Link}
+						href={backHref}
+						edge="start"
+						sx={{
+							transition: "transform 0.2s ease",
+							"&:hover": {
+								transform: "scale(1.05)",
+							},
+						}}
+					>
+						<ArrowBackIcon
+							sx={{ fontSize: { xs: 40, md: 45 }, color: "var(--text)" }}
+						/>
 					</IconButton>
 				)}
 
@@ -40,7 +52,15 @@ export default function Header({ variant, backHref }: Props) {
 
 				<Box sx={{ flexGrow: 1 }} />
 				<form action={signOut}>
-					<IconButton type="submit">
+					<IconButton
+						type="submit"
+						sx={{
+							transition: "transform 0.2s ease",
+							"&:hover": {
+								transform: "scale(1.05)",
+							},
+						}}
+					>
 						<LogoutIcon
 							sx={{ fontSize: { xs: 40, md: 45 }, color: "var(--text)" }}
 						/>
