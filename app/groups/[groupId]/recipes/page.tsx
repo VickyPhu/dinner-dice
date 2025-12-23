@@ -1,3 +1,4 @@
+import Header from "@/components/header";
 import SmallRecipeCard from "@/components/recipe/smallRecipeCard";
 import { getRecipes } from "@/utils/getRecipes";
 import { Box, Typography } from "@mui/material";
@@ -17,6 +18,7 @@ export default async function RecipesPage({
 
 	return (
 		<Box>
+			<Header variant="back" backHref={`/groups/${groupId}`} />
 			<SmallRecipeCard recipes={recipes} groupId={groupId} />
 		</Box>
 	);
