@@ -1,3 +1,4 @@
+import Header from "@/components/header";
 import RecipeCard from "@/components/recipe/recipeCard";
 import { createClient } from "@/utils/supabase/server";
 import { Box } from "@mui/material";
@@ -24,6 +25,7 @@ export default async function SpecificRecipePage({
 
 	return (
 		<Box>
+			<Header variant="back" backHref={`/groups/${groupId}/recipes`} />
 			<RecipeCard recipe={recipe} groupId={groupId} />
 		</Box>
 	);
