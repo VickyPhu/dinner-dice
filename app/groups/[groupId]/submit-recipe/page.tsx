@@ -1,6 +1,8 @@
+import Header from "@/components/header";
 import SubmitRecipes from "@/components/recipe/submitRecipes";
 import { calculateNextSharing } from "@/utils/calculateNextSharing";
 import { createClient } from "@/utils/supabase/server";
+import { Box } from "@mui/material";
 
 export default async function SubmitRecipePage({
 	params,
@@ -21,7 +23,7 @@ export default async function SubmitRecipePage({
 		return <div>You must be logged in.</div>;
 	}
 
-	// Fetcj info about group from Supabase
+	// Fetch info about group from Supabase
 	const { data: group, error } = await supabase
 		.from("groups")
 		.select("*")
@@ -48,12 +50,15 @@ export default async function SubmitRecipePage({
 		.eq("group_id", groupId)
 		.eq("user_id", user.id)
 		.in("for_date", dates);
-		
+
 	const recipeMap = Object.fromEntries(
 		dates.map((d) => [d, recipes?.find((r) => r.for_date === d) ?? null])
 	);
 
 	return (
-		<SubmitRecipes groupId={groupId} dates={dates} recipeMap={recipeMap} />
+		<Box>
+			<Header variant="back" backHref={`/groups/${groupId}`} />
+			<SubmitRecipes groupId={groupId} dates={dates} recipeMap={recipeMap} />
+		</Box>
 	);
 }
