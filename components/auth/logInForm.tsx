@@ -1,11 +1,12 @@
 "use client";
 
 import { logIn } from "@/app/auth/actions";
-import { Box, Container, TextField, Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useActionState, useState } from "react";
 import PrimaryButton from "../buttons/primaryButton";
 import SecondaryButton from "../buttons/secondaryButton";
+import TextInput from "../textInput";
 
 type LoginFormState = {
 	error: null | {
@@ -53,61 +54,29 @@ export default function LandingPage() {
 			<Box
 				component="form"
 				action={formAction}
+				noValidate
 				sx={{
 					display: "flex",
 					flexDirection: "column",
 					gap: "0.5rem",
 				}}
 			>
-				<TextField
+				<TextInput
 					name="email"
 					type="email"
-					placeholder="Email"
+					label="Email"
 					value={email}
+					autoFocus
 					onChange={(e) => setEmail(e.target.value)}
 					error={!!state.error?.email}
 					helperText={state.error?.email?.[0]}
-					sx={{
-						background: "var(--placeholder-bg)",
-						borderRadius: "var(--card-radius)",
-						"& .MuiInputBase-input": {
-							color: "var(--text)",
-						},
-						"& .MuiOutlinedInput-notchedOutline": {
-							borderColor: "var(--button-hover)",
-						},
-						"&:hover .MuiOutlinedInput-notchedOutline": {
-							borderColor: "var(--text)",
-						},
-						"& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-							{
-								borderColor: "var(--button-hover)",
-							},
-					}}
 				/>
-				<TextField
+				<TextInput
 					name="password"
 					type="password"
-					placeholder="Password"
+					label="Password"
 					error={!!state.error?.password}
 					helperText={state.error?.password?.[0]}
-					sx={{
-						background: "var(--placeholder-bg)",
-						borderRadius: "var(--card-radius)",
-						"& .MuiInputBase-input": {
-							color: "var(--text)",
-						},
-						"& .MuiOutlinedInput-notchedOutline": {
-							borderColor: "var(--button-hover)",
-						},
-						"&:hover .MuiOutlinedInput-notchedOutline": {
-							borderColor: "var(--text)",
-						},
-						"& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-							{
-								borderColor: "var(--button-hover)",
-							},
-					}}
 				/>
 				{state.error?.form && (
 					<Typography color="error">{state.error.form}</Typography>
