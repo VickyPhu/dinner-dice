@@ -65,6 +65,7 @@ export default function LandingPage() {
 					name="email"
 					type="email"
 					label="Email"
+					required
 					value={email}
 					autoFocus
 					onChange={(e) => setEmail(e.target.value)}
@@ -75,6 +76,7 @@ export default function LandingPage() {
 					name="password"
 					type="password"
 					label="Password"
+					required
 					error={!!state.error?.password}
 					helperText={state.error?.password?.[0]}
 				/>

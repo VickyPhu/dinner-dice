@@ -61,6 +61,7 @@ export default function SignupPage() {
 				<TextInput
 					name="username"
 					label="Username"
+					autoFocus
 					required
 					error={!!state.error?.username}
 					helperText={state.error?.username?.[0]}
@@ -69,6 +70,7 @@ export default function SignupPage() {
 					name="email"
 					type="email"
 					label="Email"
+					required
 					error={!!state.error?.email}
 					helperText={state.error?.email?.[0]}
 				/>
@@ -76,6 +78,7 @@ export default function SignupPage() {
 					name="password"
 					type="password"
 					label="Password"
+					required
 					error={!!state.error?.password}
 					helperText={state.error?.password?.[0]}
 				/>
