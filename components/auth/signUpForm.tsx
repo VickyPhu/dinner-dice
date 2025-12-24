@@ -1,9 +1,10 @@
 "use client";
 
 import { signUp } from "@/app/auth/actions";
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Button, Container, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useActionState } from "react";
+import TextInput from "../textInput";
 
 type SignUpFormState = {
 	error: null | {
@@ -36,39 +37,56 @@ export default function SignupPage() {
 	const router = useRouter();
 
 	return (
-		<Box component="form" action={formAction}>
-			<TextField
-				name="username"
-				label="Username"
-				autoComplete="username"
-				required
-				fullWidth
-				error={!!state.error?.username}
-				helperText={state.error?.username?.[0]}
-			/>
-			<TextField
-				name="email"
-				type="email"
-				placeholder="Email"
-				error={!!state.error?.email}
-				helperText={state.error?.email?.[0]}
-			/>
-			<TextField
-				name="password"
-				type="password"
-				placeholder="Password"
-				error={!!state.error?.password}
-				helperText={state.error?.password?.[0]}
-			/>
-			{state.error?.form && (
-				<Typography color="error">{state.error.form}</Typography>
-			)}
-			<Button variant="contained" type="submit">
-				Sign up
-			</Button>
-			<Button variant="contained" onClick={() => router.push("/")}>
-				Log in
-			</Button>
-		</Box>
+		<Container
+			sx={{
+				width: "350px",
+				background: "var(--card-bg)",
+				padding: "2rem",
+				borderRadius: "var(--card-radius)",
+				boxShadow: "2px 4px 4px var(--card-shadow)",
+			}}
+		>
+			<Box
+				component="form"
+				action={formAction}
+				noValidate
+				sx={{
+					display: "flex",
+					flexDirection: "column",
+					gap: "0.5rem",
+				}}
+			>
+				<TextInput
+					name="username"
+					label="Username"
+					required
+					error={!!state.error?.username}
+					helperText={state.error?.username?.[0]}
+				/>
+				<TextInput
+					name="email"
+					type="email"
+					label="Email"
+					error={!!state.error?.email}
+					helperText={state.error?.email?.[0]}
+				/>
+				<TextInput
+					name="password"
+					type="password"
+					label="Password"
+					error={!!state.error?.password}
+					helperText={state.error?.password?.[0]}
+				/>
+				{state.error?.form && (
+					<Typography color="error">{state.error.form}</Typography>
+				)}
+				<Button variant="contained" type="submit">
+					Sign up
+				</Button>
+				<Button variant="contained" onClick={() => router.push("/")}>
+					Log in
+				</Button>
+			</Box>
+		</Container>
 	);
 }
