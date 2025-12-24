@@ -93,7 +93,7 @@ export default function LandingPage() {
 						sx={{ backgroundColor: "var(--text)", marginBlock: "0.5rem" }}
 					/>
 					<Typography variant="body1" textAlign={"center"}>
-						Sign up to start sharing
+						Create an account to start sharing
 					</Typography>
 					<SecondaryButton onClick={() => router.push("/signup")}>
 						Sign up
