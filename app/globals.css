@@ -1,6 +1,6 @@
 :root {
 	--background: #fbf4eb;
-	--placeholder-bg: #fafafa;
+	--white: #fafafa;
 
 	/* Text */
 	--text: #520021; /* Also used for icons and border for second button */
@@ -10,11 +10,12 @@
 	--card-shadow: #d7aeb8;
 	--card-hover: #edb9c6;
 	--card-hover-shadow: rgba(218, 161, 175, 0.25);
+	--card-radius: 0.5rem;
 
 	/* Buttons */
 	--button: #f283af;
 	--button-border: rgba(196, 54, 112, 0.8);
-	--button-shadow: rgba(196, 54, 112, 0.5);
+	--button-shadow: hsla(335, 57%, 49%, 0.502);
 	--button-hover: #c43670;
 	--button-hover-shadow: rgba(196, 54, 112, 0.7); /* Also used for border */
 	--button2-shadow: rgba(
@@ -54,4 +55,16 @@ a {
 .page-container {
 	max-width: 1000px;
 	margin: 0 auto;
+}
+
+.hidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
 }

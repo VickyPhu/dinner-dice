@@ -1,9 +1,12 @@
 "use client";
 
 import { signUp } from "@/app/auth/actions";
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Container, Divider, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useActionState } from "react";
+import PrimaryButton from "../buttons/primaryButton";
+import SecondaryButton from "../buttons/secondaryButton";
+import TextInput from "../textInput";
 
 type SignUpFormState = {
 	error: null | {
@@ -36,39 +39,65 @@ export default function SignupPage() {
 	const router = useRouter();
 
 	return (
-		<Box component="form" action={formAction}>
-			<TextField
-				name="username"
-				label="Username"
-				autoComplete="username"
-				required
-				fullWidth
-				error={!!state.error?.username}
-				helperText={state.error?.username?.[0]}
-			/>
-			<TextField
-				name="email"
-				type="email"
-				placeholder="Email"
-				error={!!state.error?.email}
-				helperText={state.error?.email?.[0]}
-			/>
-			<TextField
-				name="password"
-				type="password"
-				placeholder="Password"
-				error={!!state.error?.password}
-				helperText={state.error?.password?.[0]}
-			/>
-			{state.error?.form && (
-				<Typography color="error">{state.error.form}</Typography>
-			)}
-			<Button variant="contained" type="submit">
-				Sign up
-			</Button>
-			<Button variant="contained" onClick={() => router.push("/")}>
-				Log in
-			</Button>
-		</Box>
+		<Container
+			sx={{
+				width: "350px",
+				background: "var(--card-bg)",
+				padding: "2rem",
+				borderRadius: "var(--card-radius)",
+				boxShadow: "2px 4px 4px var(--card-shadow)",
+			}}
+		>
+			<Box
+				component="form"
+				action={formAction}
+				noValidate
+				sx={{
+					display: "flex",
+					flexDirection: "column",
+					gap: "0.5rem",
+				}}
+			>
+				<TextInput
+					name="username"
+					label="Username"
+					autoFocus
+					required
+					error={!!state.error?.username}
+					helperText={state.error?.username?.[0]}
+				/>
+				<TextInput
+					name="email"
+					type="email"
+					label="Email"
+					required
+					error={!!state.error?.email}
+					helperText={state.error?.email?.[0]}
+				/>
+				<TextInput
+					name="password"
+					type="password"
+					label="Password"
+					required
+					error={!!state.error?.password}
+					helperText={state.error?.password?.[0]}
+				/>
+				{state.error?.form && (
+					<Typography color="error">{state.error.form}</Typography>
+				)}
+				<Box display={"flex"} flexDirection={"column"} gap={2} paddingTop={0.5}>
+					<PrimaryButton type="submit">Sign up</PrimaryButton>
+					<Divider
+						sx={{ backgroundColor: "var(--text)", marginBlock: "0.5rem" }}
+					/>
+					<Typography variant="body1" textAlign={"center"}>
+						Already have an account?
+					</Typography>
+					<SecondaryButton variant="contained" onClick={() => router.push("/")}>
+						Log in
+					</SecondaryButton>
+				</Box>
+			</Box>
+		</Container>
 	);
 }
