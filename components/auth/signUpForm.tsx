@@ -1,7 +1,7 @@
 "use client";
 
 import { signUp } from "@/app/auth/actions";
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container, Divider, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useActionState } from "react";
 import PrimaryButton from "../buttons/primaryButton";
@@ -84,6 +84,12 @@ export default function SignupPage() {
 				)}
 				<Box display={"flex"} flexDirection={"column"} gap={2} paddingTop={0.5}>
 					<PrimaryButton type="submit">Sign up</PrimaryButton>
+					<Divider
+						sx={{ backgroundColor: "var(--text)", marginBlock: "0.5rem" }}
+					/>
+					<Typography variant="body1" textAlign={"center"}>
+						Already have an account?
+					</Typography>
 					<SecondaryButton variant="contained" onClick={() => router.push("/")}>
 						Log in
 					</SecondaryButton>
