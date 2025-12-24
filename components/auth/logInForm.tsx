@@ -92,8 +92,8 @@ export default function LandingPage() {
 					<Divider
 						sx={{ backgroundColor: "var(--text)", marginBlock: "0.5rem" }}
 					/>
-					<Typography variant="body1">
-						Create an account to start sharing
+					<Typography variant="body1" textAlign={"center"}>
+						Sign up to start sharing
 					</Typography>
 					<SecondaryButton onClick={() => router.push("/signup")}>
 						Sign up
