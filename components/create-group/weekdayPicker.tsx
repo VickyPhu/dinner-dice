@@ -5,6 +5,7 @@ import {
 	FormControlLabel,
 	FormGroup,
 	FormHelperText,
+	Typography,
 } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 
@@ -34,6 +35,9 @@ export default function WeekdayPicker() {
 
 	return (
 		<>
+			<Typography variant="body1" color={"var(--text)"} mt={1}>
+				On which day/s? *
+			</Typography>
 			<FormGroup row>
 				{weekdays.map((day) => {
 					const isChecked = selectedDays.includes(day);
@@ -41,19 +45,42 @@ export default function WeekdayPicker() {
 					return (
 						<FormControlLabel
 							key={day}
+							label={day}
+							sx={{
+								"& .MuiFormControlLabel-label": {
+									color: "var(--text)",
+								},
+							}}
 							control={
 								<Checkbox
 									checked={isChecked}
 									onChange={() => toggleDay(day)}
 									disabled={disabledCheckbox}
+									sx={{
+										color: "var(--text)",
+
+										"&.Mui-checked": {
+											color: "var(--text)",
+										},
+									}}
 								/>
 							}
-							label={day}
 						/>
 					);
 				})}
 			</FormGroup>
-			{error && <FormHelperText error>{error}</FormHelperText>}
+			{error && (
+				<FormHelperText
+					error
+					sx={{
+						background: "var(--white)",
+						padding: "0.25rem 0.5rem",
+						borderRadius: "0.25rem",
+					}}
+				>
+					{error}
+				</FormHelperText>
+			)}
 		</>
 	);
 }

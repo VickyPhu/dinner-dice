@@ -37,7 +37,7 @@ export default function RenderGroups() {
 					{profile?.username ? `${profile.username}'s groups` : "My groups"}
 				</Typography>
 
-				<IconButton onClick={() => setOpen(true)}>
+				<IconButton aria-label="Create a group" onClick={() => setOpen(true)}>
 					<AddBoxOutlinedIcon
 						sx={{ fontSize: { xs: 40, md: 45 }, color: "var(--text)" }}
 					/>

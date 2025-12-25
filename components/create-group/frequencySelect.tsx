@@ -13,8 +13,47 @@ export default function FrequencySelect() {
 	const { control } = useFormContext();
 
 	return (
-		<FormControl fullWidth margin="normal">
-			<InputLabel id="frequency-label">Sharing Frequency</InputLabel>
+		<FormControl
+			fullWidth
+			margin="normal"
+			variant="outlined"
+			required
+			sx={{
+				background: "var(--white)",
+				borderRadius: "var(--card-radius)",
+
+				"& .MuiInputLabel-root": {
+					color: "var(--button2-shadow)",
+				},
+
+				"& .MuiInputLabel-root.Mui-focused": {
+					color: "var(--button2-shadow)",
+				},
+
+				"& .MuiOutlinedInput-notchedOutline": {
+					borderColor: "var(--button-hover)",
+				},
+
+				"&:hover .MuiOutlinedInput-notchedOutline": {
+					borderColor: "var(--text)",
+				},
+
+				"& .Mui-focused .MuiOutlinedInput-notchedOutline": {
+					borderColor: "var(--button-hover)",
+				},
+
+				"& .Mui-error .MuiOutlinedInput-notchedOutline": {
+					borderColor: "error",
+				},
+
+				"& .MuiInputLabel-root.Mui-error": {
+					color: "error",
+				},
+			}}
+		>
+			<InputLabel id="frequency-label" htmlFor="sharing-frequency">
+				Sharing Frequency
+			</InputLabel>
 			<Controller
 				name="sharing_frequency"
 				control={control}
@@ -23,10 +62,18 @@ export default function FrequencySelect() {
 						<Select
 							{...field}
 							labelId="frequency-label"
-							label="Sharing Frequency"
+							label="Sharing frequency"
+							inputProps={{
+								id: "sharing-frequency",
+							}}
+							sx={{
+								"& .MuiSelect-select": {
+									color: "var(--text)",
+								},
+							}}
 						>
 							{[1, 2, 3, 4, 5, 6, 7].map((freq) => (
-								<MenuItem key={freq} value={freq}>
+								<MenuItem role="option" key={freq} value={freq}>
 									{freq} day{freq > 1 ? "s" : ""}
 								</MenuItem>
 							))}

@@ -5,13 +5,15 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import {
 	Autocomplete,
 	Box,
-	Button,
+	Divider,
+	IconButton,
 	Stack,
-	TextField,
 	Typography,
 } from "@mui/material";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
+import PrimaryButton from "../buttons/primaryButton";
+import TextInput from "../textInput";
 
 type Invite = {
 	type: "email" | "username";
@@ -52,12 +54,16 @@ export default function InviteMembersField() {
 
 	return (
 		<Stack>
+			<Typography variant="body1" color={"var(--text)"} marginBlock={1}>
+				Add a member by username
+			</Typography>
 			<Stack direction="row" gap={2}>
 				<Autocomplete
 					freeSolo
 					loading={loading}
 					options={options}
 					inputValue={inputValue}
+					fullWidth
 					onInputChange={async (_, value) => {
 						setInputValue(value);
 						setError(null);
@@ -79,28 +85,53 @@ export default function InviteMembersField() {
 					}}
 					noOptionsText="No users found"
 					renderInput={(params) => (
-						<TextField
+						<TextInput
 							{...params}
 							label="Username or email"
 							error={!!error}
 							helperText={error}
-							fullWidth
 						/>
 					)}
 				/>
-				<Button onClick={addInvite} variant="contained" aria-label="add email">
+				<PrimaryButton
+					onClick={addInvite}
+					variant="contained"
+					aria-label="add email"
+				>
 					Add
-				</Button>
+				</PrimaryButton>
 			</Stack>
 
 			{invites.length > 0 && (
 				<Box>
-					<Typography variant="subtitle2">Invited</Typography>
-					<ul>
+					<Typography
+						variant="body2"
+						color={"var(--text)"}
+						marginTop={2}
+						marginBottom={1}
+					>
+						Members
+					</Typography>
+					<Divider
+						sx={{ backgroundColor: "var(--text)", marginBlock: "0.5rem" }}
+					/>
+					<Box component="ul" sx={{ listStyle: "none", p: 0, m: 0 }}>
 						{invites.map((invite) => (
-							<li key={invite.value}>
-								{invite.value} ({invite.type})
-								<DeleteOutlineIcon
+							<Box
+								component="li"
+								key={invite.value}
+								sx={{
+									display: "flex",
+									justifyContent: "space-between",
+									alignItems: "center",
+									py: 0.5,
+								}}
+							>
+								<Typography variant="body2">{invite.value}</Typography>
+
+								<IconButton
+									aria-label="Remove invite"
+									size="small"
 									onClick={() =>
 										setValue(
 											"invites",
@@ -108,10 +139,20 @@ export default function InviteMembersField() {
 											{ shouldValidate: true }
 										)
 									}
-								/>
-							</li>
+									sx={{
+										transition: "transform 0.2s ease",
+										"&:hover": {
+											transform: "scale(1.05)",
+										},
+									}}
+								>
+									<DeleteOutlineIcon
+										sx={{ fontSize: { xs: 30 }, color: "var(--text)" }}
+									/>
+								</IconButton>
+							</Box>
 						))}
-					</ul>
+					</Box>
 				</Box>
 			)}
 		</Stack>

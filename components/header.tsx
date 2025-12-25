@@ -53,6 +53,7 @@ export default function Header({ variant, backHref }: Props) {
 				<Box sx={{ flexGrow: 1 }} />
 				<form action={signOut}>
 					<IconButton
+						aria-label="Log out"
 						type="submit"
 						sx={{
 							transition: "transform 0.2s ease",

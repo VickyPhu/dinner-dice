@@ -5,13 +5,16 @@ import { useToastStore } from "@/stores/toastStore";
 import { createGroupData, createGroupSchema } from "@/utils/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-	Button,
+	Box,
 	Dialog,
 	DialogActions,
 	DialogContent,
 	DialogTitle,
+	Typography,
 } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
+import PrimaryButton from "../buttons/primaryButton";
+import SecondaryButton from "../buttons/secondaryButton";
 import InviteMembersField from "../create-group/InviteMembersField";
 import FrequencySelect from "./frequencySelect";
 import GroupNameField from "./groupNameField";
@@ -65,8 +68,21 @@ export default function CreateGroupModal({ open, onClose }: Props) {
 	};
 
 	return (
-		<Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
-			<DialogTitle>Create group</DialogTitle>
+		<Dialog
+			open={open}
+			onClose={onClose}
+			fullWidth
+			maxWidth="sm"
+			PaperProps={{
+				sx: {
+					backgroundColor: "var(--card-bg)",
+					borderRadius: "var(--card-radius)",
+				},
+			}}
+		>
+			<DialogTitle variant="h1" color="var(--text)">
+				Create a New Group
+			</DialogTitle>
 
 			<FormProvider {...methods}>
 				<form onSubmit={methods.handleSubmit(onSubmit)}>
@@ -74,6 +90,7 @@ export default function CreateGroupModal({ open, onClose }: Props) {
 						{/* Add components to the form here */}
 						<GroupNameField control={control} errors={errors} />
 						{/* Dropdown to chose sharing frequency */}
+						<Typography variant="body1" color={"var(--text)"} sx={{pt: "1rem"}}>How often should your group share recipes?</Typography>
 						<FrequencySelect />
 
 						{/* Which days will the group share recipes, based on selected frequency */}
@@ -84,10 +101,12 @@ export default function CreateGroupModal({ open, onClose }: Props) {
 					</DialogContent>
 
 					<DialogActions>
-						<Button onClick={onClose}>Cancel</Button>
-						<Button type="submit" variant="contained">
-							Create
-						</Button>
+						<Box display={"flex"} gap={"1rem"} padding={"1rem"}>
+							<SecondaryButton onClick={onClose}>Cancel</SecondaryButton>
+							<PrimaryButton type="submit" variant="contained">
+								Create
+							</PrimaryButton>
+						</Box>
 					</DialogActions>
 				</form>
 			</FormProvider>
