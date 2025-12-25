@@ -41,14 +41,26 @@ export default function WeekdayPicker() {
 					return (
 						<FormControlLabel
 							key={day}
+							label={day}
+							sx={{
+								"& .MuiFormControlLabel-label": {
+									color: "var(--text)",
+								},
+							}}
 							control={
 								<Checkbox
 									checked={isChecked}
 									onChange={() => toggleDay(day)}
 									disabled={disabledCheckbox}
+									sx={{
+										color: "var(--text)",
+
+										"&.Mui-checked": {
+											color: "var(--text)",
+										},
+									}}
 								/>
 							}
-							label={day}
 						/>
 					);
 				})}
