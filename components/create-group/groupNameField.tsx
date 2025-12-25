@@ -1,8 +1,8 @@
 "use client";
 
 import { createGroupData } from "@/utils/validation";
-import { TextField } from "@mui/material";
 import { Control, Controller, FieldErrors } from "react-hook-form";
+import TextInput from "../textInput";
 
 type Props = {
 	control: Control<createGroupData>;
@@ -15,7 +15,7 @@ export default function GroupNameField({ control, errors }: Props) {
 			name="name"
 			control={control}
 			render={({ field }) => (
-				<TextField
+				<TextInput
 					{...field}
 					label="Group name"
 					fullWidth
