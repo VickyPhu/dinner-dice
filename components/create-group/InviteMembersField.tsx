@@ -2,7 +2,14 @@
 
 import { searchUsers } from "@/utils/searchUsers";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { Autocomplete, Box, Divider, Stack, Typography } from "@mui/material";
+import {
+	Autocomplete,
+	Box,
+	Divider,
+	IconButton,
+	Stack,
+	Typography,
+} from "@mui/material";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import PrimaryButton from "../buttons/primaryButton";
@@ -97,17 +104,34 @@ export default function InviteMembersField() {
 
 			{invites.length > 0 && (
 				<Box>
-					<Typography variant="body2" color={"var(--text)"} marginTop={2} marginBottom={1}>
+					<Typography
+						variant="body2"
+						color={"var(--text)"}
+						marginTop={2}
+						marginBottom={1}
+					>
 						Members
 					</Typography>
 					<Divider
 						sx={{ backgroundColor: "var(--text)", marginBlock: "0.5rem" }}
 					/>
-					<ul>
+					<Box component="ul" sx={{ listStyle: "none", p: 0, m: 0 }}>
 						{invites.map((invite) => (
-							<li key={invite.value}>
-								{invite.value} ({invite.type})
-								<DeleteOutlineIcon
+							<Box
+								component="li"
+								key={invite.value}
+								sx={{
+									display: "flex",
+									justifyContent: "space-between",
+									alignItems: "center",
+									py: 0.5,
+								}}
+							>
+								<Typography variant="body2">{invite.value}</Typography>
+
+								<IconButton
+									aria-label="Remove invite"
+									size="small"
 									onClick={() =>
 										setValue(
 											"invites",
@@ -115,10 +139,20 @@ export default function InviteMembersField() {
 											{ shouldValidate: true }
 										)
 									}
-								/>
-							</li>
+									sx={{
+										transition: "transform 0.2s ease",
+										"&:hover": {
+											transform: "scale(1.05)",
+										},
+									}}
+								>
+									<DeleteOutlineIcon
+										sx={{ fontSize: { xs: 30 }, color: "var(--text)" }}
+									/>
+								</IconButton>
+							</Box>
 						))}
-					</ul>
+					</Box>
 				</Box>
 			)}
 		</Stack>
