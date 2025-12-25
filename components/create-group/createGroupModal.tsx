@@ -65,8 +65,21 @@ export default function CreateGroupModal({ open, onClose }: Props) {
 	};
 
 	return (
-		<Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
-			<DialogTitle variant="h1" color="var(--text)">Create group</DialogTitle>
+		<Dialog
+			open={open}
+			onClose={onClose}
+			fullWidth
+			maxWidth="sm"
+			PaperProps={{
+				sx: {
+					backgroundColor: "var(--card-bg)",
+					borderRadius: "var(--card-radius)",
+				},
+			}}
+		>
+			<DialogTitle variant="h1" color="var(--text)">
+				Create group
+			</DialogTitle>
 
 			<FormProvider {...methods}>
 				<form onSubmit={methods.handleSubmit(onSubmit)}>
