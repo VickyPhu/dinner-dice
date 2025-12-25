@@ -81,7 +81,7 @@ export default function CreateGroupModal({ open, onClose }: Props) {
 			}}
 		>
 			<DialogTitle variant="h1" color="var(--text)">
-				Create group
+				Create a New Group
 			</DialogTitle>
 
 			<FormProvider {...methods}>
