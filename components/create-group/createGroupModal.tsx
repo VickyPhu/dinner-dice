@@ -5,13 +5,15 @@ import { useToastStore } from "@/stores/toastStore";
 import { createGroupData, createGroupSchema } from "@/utils/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-	Button,
+	Box,
 	Dialog,
 	DialogActions,
 	DialogContent,
 	DialogTitle,
 } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
+import PrimaryButton from "../buttons/primaryButton";
+import SecondaryButton from "../buttons/secondaryButton";
 import InviteMembersField from "../create-group/InviteMembersField";
 import FrequencySelect from "./frequencySelect";
 import GroupNameField from "./groupNameField";
@@ -97,10 +99,12 @@ export default function CreateGroupModal({ open, onClose }: Props) {
 					</DialogContent>
 
 					<DialogActions>
-						<Button onClick={onClose}>Cancel</Button>
-						<Button type="submit" variant="contained">
-							Create
-						</Button>
+						<Box display={"flex"} gap={"1rem"}>
+							<SecondaryButton onClick={onClose}>Cancel</SecondaryButton>
+							<PrimaryButton type="submit" variant="contained">
+								Create
+							</PrimaryButton>
+						</Box>
 					</DialogActions>
 				</form>
 			</FormProvider>
