@@ -2,16 +2,10 @@
 
 import { searchUsers } from "@/utils/searchUsers";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import {
-	Autocomplete,
-	Box,
-	Button,
-	Stack,
-	TextField,
-	Typography,
-} from "@mui/material";
+import { Autocomplete, Box, Button, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
+import TextInput from "../textInput";
 
 type Invite = {
 	type: "email" | "username";
@@ -61,6 +55,7 @@ export default function InviteMembersField() {
 					loading={loading}
 					options={options}
 					inputValue={inputValue}
+					fullWidth
 					onInputChange={async (_, value) => {
 						setInputValue(value);
 						setError(null);
@@ -82,12 +77,11 @@ export default function InviteMembersField() {
 					}}
 					noOptionsText="No users found"
 					renderInput={(params) => (
-						<TextField
+						<TextInput
 							{...params}
 							label="Username or email"
 							error={!!error}
 							helperText={error}
-							fullWidth
 						/>
 					)}
 				/>
