@@ -31,6 +31,7 @@ export default function GroupCard({
 				color: "inherit",
 				borderBottomLeftRadius: isLast ? "var(--card-radius)" : 0,
 				borderBottomRightRadius: isLast ? "var(--card-radius)" : 0,
+				boxShadow: "1px 2px 4px var(--card-shadow)"
 			}}
 		>
 			<Stack direction="row" alignItems="center" justifyContent="space-between">

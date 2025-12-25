@@ -26,9 +26,11 @@ export default function RenderGroups() {
 				mt={2}
 				sx={{
 					background: "var(--card-bg)",
-					padding: "0.5rem",
+					padding: "0.5rem 0.5rem 0.5rem 1rem",
 					borderTopRightRadius: "var(--card-radius)",
 					borderTopLeftRadius: "var(--card-radius)",
+					boxShadow: "1px 0px 4px var(--card-shadow)",
+					borderBottom: "1px solid var(--button2-shadow)",
 				}}
 			>
 				<Typography variant="h1">
