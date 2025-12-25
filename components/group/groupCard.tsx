@@ -37,7 +37,12 @@ export default function GroupCard({
 				},
 			}}
 		>
-			<Stack direction="row" alignItems="center" justifyContent="space-between">
+			<Stack
+				direction="row"
+				alignItems="center"
+				justifyContent="space-between"
+				paddingRight="0.5rem"
+			>
 				<Typography variant="h2">{group.name}</Typography>
 				<ArrowForwardIosIcon
 					sx={{ color: "var(--text)", fontsize: { xs: 40, md: 45 } }}
