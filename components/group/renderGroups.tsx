@@ -23,14 +23,22 @@ export default function RenderGroups() {
 				direction="row"
 				justifyContent="space-between"
 				alignItems="center"
-				mb={2}
+				mt={2}
+				sx={{
+					background: "var(--card-bg)",
+					padding: "0.5rem",
+					borderTopRightRadius: "var(--card-radius)",
+					borderTopLeftRadius: "var(--card-radius)",
+				}}
 			>
 				<Typography variant="h1">
 					{profile?.username ? `${profile.username}'s groups` : "My groups"}
 				</Typography>
 
 				<IconButton onClick={() => setOpen(true)}>
-					<AddBoxOutlinedIcon />
+					<AddBoxOutlinedIcon
+						sx={{ fontSize: { xs: 40, md: 45 }, color: "var(--text)" }}
+					/>
 				</IconButton>
 			</Stack>
 
