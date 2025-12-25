@@ -99,7 +99,7 @@ export default function CreateGroupModal({ open, onClose }: Props) {
 					</DialogContent>
 
 					<DialogActions>
-						<Box display={"flex"} gap={"1rem"}>
+						<Box display={"flex"} gap={"1rem"} padding={"1rem"}>
 							<SecondaryButton onClick={onClose}>Cancel</SecondaryButton>
 							<PrimaryButton type="submit" variant="contained">
 								Create
