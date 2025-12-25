@@ -2,9 +2,10 @@
 
 import { searchUsers } from "@/utils/searchUsers";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { Autocomplete, Box, Button, Stack, Typography } from "@mui/material";
+import { Autocomplete, Box, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
+import PrimaryButton from "../buttons/primaryButton";
 import TextInput from "../textInput";
 
 type Invite = {
@@ -85,9 +86,13 @@ export default function InviteMembersField() {
 						/>
 					)}
 				/>
-				<Button onClick={addInvite} variant="contained" aria-label="add email">
+				<PrimaryButton
+					onClick={addInvite}
+					variant="contained"
+					aria-label="add email"
+				>
 					Add
-				</Button>
+				</PrimaryButton>
 			</Stack>
 
 			{invites.length > 0 && (
