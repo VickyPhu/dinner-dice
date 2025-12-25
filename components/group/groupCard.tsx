@@ -24,8 +24,7 @@ export default function GroupCard({
 			sx={{
 				background: "var(--card-bg)",
 				borderBottom: "1px solid var(--button2-shadow)",
-				paddingInline: "1rem",
-				paddingBlock: "0.7rem",
+				padding: "1rem",
 				cursor: "pointer",
 				textDecoration: "none",
 				color: "inherit",
