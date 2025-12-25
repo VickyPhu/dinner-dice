@@ -46,7 +46,14 @@ export default function RenderGroups() {
 
 			<Stack>
 				{groups.map(
-					(group) => group && <GroupCard key={group.id} group={group} />
+					(group, index) =>
+						group && (
+							<GroupCard
+								key={group.id}
+								group={group}
+								isLast={index === groups.length - 1}
+							/>
+						)
 				)}
 			</Stack>
 		</Container>
