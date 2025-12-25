@@ -5,6 +5,7 @@ import {
 	FormControlLabel,
 	FormGroup,
 	FormHelperText,
+	Typography,
 } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 
@@ -34,6 +35,9 @@ export default function WeekdayPicker() {
 
 	return (
 		<>
+			<Typography variant="body1" color={"var(--text)"}>
+				On which day/s?
+			</Typography>
 			<FormGroup row>
 				{weekdays.map((day) => {
 					const isChecked = selectedDays.includes(day);
