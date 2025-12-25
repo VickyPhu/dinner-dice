@@ -52,6 +52,9 @@ export default function InviteMembersField() {
 
 	return (
 		<Stack>
+			<Typography variant="body1" color={"var(--text)"} marginBlock={1}>
+				Add a member by username
+			</Typography>
 			<Stack direction="row" gap={2}>
 				<Autocomplete
 					freeSolo
