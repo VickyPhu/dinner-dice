@@ -10,6 +10,7 @@ import {
 	DialogActions,
 	DialogContent,
 	DialogTitle,
+	Typography,
 } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
 import PrimaryButton from "../buttons/primaryButton";
@@ -89,6 +90,7 @@ export default function CreateGroupModal({ open, onClose }: Props) {
 						{/* Add components to the form here */}
 						<GroupNameField control={control} errors={errors} />
 						{/* Dropdown to chose sharing frequency */}
+						<Typography variant="body1" color={"var(--text)"} sx={{pt: "1rem"}}>How often should your group share recipes?</Typography>
 						<FrequencySelect />
 
 						{/* Which days will the group share recipes, based on selected frequency */}
