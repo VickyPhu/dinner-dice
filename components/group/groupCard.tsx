@@ -4,7 +4,7 @@ import { GroupData } from "@/hooks/useGroups";
 import { useGroupSubmissions } from "@/hooks/useGroupSubmissions";
 import { calculateNextSharing } from "@/utils/calculateNextSharing";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { Avatar, Box, Link, Stack, Typography } from "@mui/material";
+import { Box, Link, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 
 export default function GroupCard({
@@ -24,21 +24,24 @@ export default function GroupCard({
 			sx={{
 				background: "var(--card-bg)",
 				borderBottom: "1px solid var(--button2-shadow)",
-				paddingInline: "0.5rem",
+				paddingInline: "1rem",
 				paddingBlock: "0.7rem",
 				cursor: "pointer",
 				textDecoration: "none",
 				color: "inherit",
 				borderBottomLeftRadius: isLast ? "var(--card-radius)" : 0,
 				borderBottomRightRadius: isLast ? "var(--card-radius)" : 0,
-				boxShadow: "1px 2px 4px var(--card-shadow)"
+				boxShadow: "1px 2px 4px var(--card-shadow)",
+				"&:hover svg": {
+					transform: "translateX(2px)",
+				},
 			}}
 		>
 			<Stack direction="row" alignItems="center" justifyContent="space-between">
 				<Typography variant="h2">{group.name}</Typography>
-				<Avatar>
-					<ArrowForwardIosIcon />
-				</Avatar>
+				<ArrowForwardIosIcon
+					sx={{ color: "var(--text)", fontsize: { xs: 40, md: 45 } }}
+				/>
 			</Stack>
 			<Typography variant="body1">
 				Next sharing in:{" "}
