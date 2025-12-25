@@ -59,6 +59,7 @@ export default function FrequencySelect() {
 					<>
 						<Select
 							{...field}
+							id="sharing-frequency"
 							labelId="frequency-label"
 							label="Sharing frequency"
 							sx={{
@@ -68,7 +69,7 @@ export default function FrequencySelect() {
 							}}
 						>
 							{[1, 2, 3, 4, 5, 6, 7].map((freq) => (
-								<MenuItem key={freq} value={freq}>
+								<MenuItem role="option" key={freq} value={freq}>
 									{freq} day{freq > 1 ? "s" : ""}
 								</MenuItem>
 							))}
