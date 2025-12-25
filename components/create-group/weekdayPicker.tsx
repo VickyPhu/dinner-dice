@@ -36,7 +36,7 @@ export default function WeekdayPicker() {
 	return (
 		<>
 			<Typography variant="body1" color={"var(--text)"}>
-				On which day/s?
+				On which day/s? *
 			</Typography>
 			<FormGroup row>
 				{weekdays.map((day) => {
@@ -72,7 +72,11 @@ export default function WeekdayPicker() {
 			{error && (
 				<FormHelperText
 					error
-					sx={{ background: "var(--white)", padding: "0.25rem 0.5rem",borderRadius: "0.25rem" }}
+					sx={{
+						background: "var(--white)",
+						padding: "0.25rem 0.5rem",
+						borderRadius: "0.25rem",
+					}}
 				>
 					{error}
 				</FormHelperText>

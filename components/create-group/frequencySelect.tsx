@@ -17,6 +17,7 @@ export default function FrequencySelect() {
 			fullWidth
 			margin="normal"
 			variant="outlined"
+			required
 			sx={{
 				background: "var(--white)",
 				borderRadius: "var(--card-radius)",
