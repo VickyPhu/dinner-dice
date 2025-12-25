@@ -4,23 +4,46 @@ import { GroupData } from "@/hooks/useGroups";
 import { useGroupSubmissions } from "@/hooks/useGroupSubmissions";
 import { calculateNextSharing } from "@/utils/calculateNextSharing";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { Avatar, Paper, Stack, Typography } from "@mui/material";
+import { Box, Link, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 
-export default function GroupCard({ group }: { group: GroupData }) {
+export default function GroupCard({
+	group,
+	isLast,
+}: {
+	group: GroupData;
+	isLast?: boolean;
+}) {
 	const router = useRouter();
 	const { submittedCount, requiredCount, loading } = useGroupSubmissions(group);
 
 	return (
-		<Paper
-			variant="outlined"
+		<Box
+			component={Link}
 			onClick={() => router.push(`/groups/${group.id}`)}
+			sx={{
+				background: "var(--card-bg)",
+				borderBottom: "1px solid var(--button2-shadow)",
+				padding: "1rem",
+				cursor: "pointer",
+				textDecoration: "none",
+				color: "inherit",
+				borderBottomLeftRadius: isLast ? "var(--card-radius)" : 0,
+				borderBottomRightRadius: isLast ? "var(--card-radius)" : 0,
+				boxShadow: "1px 2px 4px var(--card-shadow)",
+				"&:hover svg": {
+					transform: "translateX(2px)",
+				},
+			}}
 		>
-			<Stack direction="row" alignItems="center" justifyContent="space-between">
+			<Stack
+				direction="row"
+				alignItems="center"
+				justifyContent="space-between"
+				paddingRight="0.5rem"
+			>
 				<Typography variant="h2">{group.name}</Typography>
-				<Avatar>
-					<ArrowForwardIosIcon />
-				</Avatar>
+				<ArrowForwardIosIcon sx={{ color: "var(--text)" }} />
 			</Stack>
 			<Typography variant="body1">
 				Next sharing in:{" "}
@@ -34,6 +57,6 @@ export default function GroupCard({ group }: { group: GroupData }) {
 					{submittedCount}/{requiredCount} recipes submitted
 				</Typography>
 			)}
-		</Paper>
+		</Box>
 	);
 }

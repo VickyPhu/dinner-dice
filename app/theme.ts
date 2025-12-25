@@ -33,7 +33,7 @@ const theme = createTheme({
     h2: {
       fontFamily: "var(--font-heading)",
       fontWeight: 400,
-      fontSize: "1.5rem",
+      fontSize: "1.8rem",
       lineHeight: 1.3,
       "@media (max-width:600px)": {
         fontSize: "1.5rem", 

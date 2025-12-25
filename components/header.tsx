@@ -42,7 +42,7 @@ export default function Header({ variant, backHref }: Props) {
 					<Box sx={{ width: { xs: 120, sm: 150 } }}>
 						<Image
 							src="/dinnerdice_logo.png"
-							alt="Logo"
+							alt="Dinner Dice Logo"
 							width={120}
 							height={32}
 							style={{ width: "100%", height: "auto" }}
