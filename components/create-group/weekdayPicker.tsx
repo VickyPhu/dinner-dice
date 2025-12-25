@@ -69,7 +69,14 @@ export default function WeekdayPicker() {
 					);
 				})}
 			</FormGroup>
-			{error && <FormHelperText error>{error}</FormHelperText>}
+			{error && (
+				<FormHelperText
+					error
+					sx={{ background: "var(--white)", padding: "0.25rem 0.5rem",borderRadius: "0.25rem" }}
+				>
+					{error}
+				</FormHelperText>
+			)}
 		</>
 	);
 }
