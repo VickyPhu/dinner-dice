@@ -2,7 +2,7 @@
 
 import { searchUsers } from "@/utils/searchUsers";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { Autocomplete, Box, Stack, Typography } from "@mui/material";
+import { Autocomplete, Box, Divider, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import PrimaryButton from "../buttons/primaryButton";
@@ -97,7 +97,12 @@ export default function InviteMembersField() {
 
 			{invites.length > 0 && (
 				<Box>
-					<Typography variant="subtitle2">Invited</Typography>
+					<Typography variant="body2" color={"var(--text)"} marginTop={2} marginBottom={1}>
+						Members
+					</Typography>
+					<Divider
+						sx={{ backgroundColor: "var(--text)", marginBlock: "0.5rem" }}
+					/>
 					<ul>
 						{invites.map((invite) => (
 							<li key={invite.value}>
