@@ -44,9 +44,7 @@ export default function GroupCard({
 				paddingRight="0.5rem"
 			>
 				<Typography variant="h2">{group.name}</Typography>
-				<ArrowForwardIosIcon
-					sx={{ color: "var(--text)", fontsize: { xs: 40, md: 45 } }}
-				/>
+				<ArrowForwardIosIcon sx={{ color: "var(--text)" }} />
 			</Stack>
 			<Typography variant="body1">
 				Next sharing in:{" "}
