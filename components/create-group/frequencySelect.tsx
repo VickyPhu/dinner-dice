@@ -51,7 +51,9 @@ export default function FrequencySelect() {
 				},
 			}}
 		>
-			<InputLabel id="frequency-label">Sharing Frequency</InputLabel>
+			<InputLabel id="frequency-label" htmlFor="sharing-frequency">
+				Sharing Frequency
+			</InputLabel>
 			<Controller
 				name="sharing_frequency"
 				control={control}
@@ -59,9 +61,11 @@ export default function FrequencySelect() {
 					<>
 						<Select
 							{...field}
-							id="sharing-frequency"
 							labelId="frequency-label"
 							label="Sharing frequency"
+							inputProps={{
+								id: "sharing-frequency",
+							}}
 							sx={{
 								"& .MuiSelect-select": {
 									color: "var(--text)",
