@@ -35,7 +35,7 @@ export default function WeekdayPicker() {
 
 	return (
 		<>
-			<Typography variant="body1" color={"var(--text)"}>
+			<Typography variant="body1" color={"var(--text)"} mt={1}>
 				On which day/s? *
 			</Typography>
 			<FormGroup row>
