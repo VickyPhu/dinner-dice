@@ -13,11 +13,17 @@ export default function GroupDashboard() {
 	const group = groups.find((g) => g.id === groupId);
 
 	return (
-		<Box sx={{ margin: "1rem 0rem 0rem 1.5rem" }}>
+		<Box sx={{ margin: "1rem 1.5rem" }}>
 			<Typography variant="h1" mb={2}>
 				{loading ? "Loading..." : `Group: ${group?.name ?? "Unknown group"}`}
 			</Typography>
-			<Box display={"flex"} gap={5}>
+			<Box
+				sx={{
+					display: "flex",
+					gap: { xs: 2, md: 5 },
+					flexDirection: { xs: "column", md: "row" },
+				}}
+			>
 				<MenuCard
 					onClick={() => router.push(`/groups/${groupId}/submit-recipe`)}
 				>
