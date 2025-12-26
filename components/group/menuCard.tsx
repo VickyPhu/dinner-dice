@@ -24,6 +24,7 @@ export default function MenuCard({
 					borderRadius: "var(--card-radius)",
 					boxShadow: "1px 2px 4px var(--card-shadow)",
 					transition: "all 0.2s ease-in-out",
+					cursor: "pointer",
 					"&:hover": {
 						background: "var(--card-hover)",
 						boxShadow: "2px 6px 4px var(--card-hover-shadow)",
