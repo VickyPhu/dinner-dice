@@ -29,7 +29,7 @@ export default function DashboardText({ group, members }: Props) {
 			</Typography>
 
 			{/* Group members */}
-			<Box display="flex" alignItems="center" gap={1}>
+			<Box display="flex" alignItems="center" gap={1} mt={1} mb={2}>
 				<PersonOutlineIcon />
 				<Box sx={{ display: { xs: "block", sm: "none" } }}>
 					<Typography>
