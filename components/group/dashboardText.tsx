@@ -36,12 +36,18 @@ export default function DashboardText({ group, members }: Props) {
 						{members.length} member{members.length !== 1 ? "s" : ""}
 					</Typography>
 				</Box>
-				<Box sx={{ display: { xs: "none", sm: "flex" }, gap: 1 }}>
-					{members.map((m) => (
-						<Typography key={m.user_id}>
-							{m.username ?? "Unknown user"}
-						</Typography>
-					))}
+				<Box
+					sx={{ display: { xs: "none", sm: "flex" }, gap: 1, flexWrap: "wrap" }}
+				>
+					<Typography variant="body1">
+						{members
+							.map((m) => m.username ?? "Unknown user")
+							.reduce((prev, curr, index, arr) => {
+								if (index === 0) return curr; // first member
+								if (index === arr.length - 1) return prev + " & " + curr; // last member
+								return prev + ", " + curr; // members in-between
+							}, "")}
+					</Typography>
 				</Box>
 			</Box>
 		</Box>
