@@ -25,6 +25,7 @@ export default function Header({ variant, backHref }: Props) {
 						component={Link}
 						href={backHref}
 						edge="start"
+						aria-label="Go back"
 						sx={{
 							transition: "transform 0.2s ease",
 							"&:hover": {
