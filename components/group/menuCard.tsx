@@ -16,6 +16,7 @@ export default function MenuCard({
 			<Stack
 				direction="row"
 				alignItems="center"
+				justifyContent="space-between"
 				sx={{
 					textDecoration: "none",
 					background: "var(--card-bg)",
