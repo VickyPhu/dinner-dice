@@ -14,7 +14,7 @@ export default function GroupDashboard() {
 
 	return (
 		<Box sx={{ margin: "1rem 0rem 0rem 1.5rem" }}>
-			<Typography variant="h1">
+			<Typography variant="h1" mb={2}>
 				{loading ? "Loading..." : `Group: ${group?.name ?? "Unknown group"}`}
 			</Typography>
 			<Box display={"flex"} gap={5}>
