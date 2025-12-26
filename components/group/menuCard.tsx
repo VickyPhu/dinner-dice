@@ -1,7 +1,7 @@
 "use client";
 
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { Avatar, Paper, Stack } from "@mui/material";
+import { Avatar, Box, Link, Stack } from "@mui/material";
 import { ReactNode } from "react";
 
 export default function MenuCard({
@@ -12,8 +12,19 @@ export default function MenuCard({
 	onClick?: () => void;
 }) {
 	return (
-		<Paper variant="outlined" onClick={onClick}>
-			<Stack direction="row" alignItems="center" justifyContent="space-between">
+		<Box component={Link} onClick={onClick} sx={{ textDecoration: "none" }}>
+			<Stack
+				direction="row"
+				alignItems="center"
+				sx={{
+					textDecoration: "none",
+					background: "var(--card-bg)",
+					color: "var(--text)",
+					padding: "1rem",
+					borderRadius: "var(--card-radius)",
+					boxShadow: "1px 2px 4px var(--card-shadow)"
+				}}
+			>
 				{/* Content to the left */}
 				{children}
 				{/* Arrow to the right */}
@@ -21,6 +32,6 @@ export default function MenuCard({
 					<ArrowForwardIosIcon />
 				</Avatar>
 			</Stack>
-		</Paper>
+		</Box>
 	);
 }
