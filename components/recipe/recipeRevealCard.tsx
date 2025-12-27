@@ -4,7 +4,6 @@ import {
 	Card,
 	CardActions,
 	CardContent,
-	Icon,
 	List,
 	ListItem,
 	Typography,
@@ -31,11 +30,19 @@ export default function RecipeRevealCard({
 			}}
 		>
 			<CardContent>
-				<Typography variant="h2">{recipe.title}</Typography>
-				<Typography variant="subtitle1">
-					<Icon>
-						<AccessTimeIcon />
-					</Icon>
+				<Typography variant="h2" sx={{ color: "var(--text)" }}>
+					{recipe.title}
+				</Typography>
+				<Typography
+					variant="body1"
+					sx={{
+						display: "flex",
+						alignItems: "center",
+						gap: 0.5,
+						color: "var(--text)",
+					}}
+				>
+					<AccessTimeIcon sx={{ fontSize: 20 }} />
 					{recipe.time}
 				</Typography>
 
