@@ -81,21 +81,52 @@ export default function StepsInput({
 									aria-label="Move step up"
 									onClick={() => moveStepUp(index)}
 									disabled={index === 0}
+									sx={{
+										color: "var(--text)",
+										transition: "transform 0.2s ease, color 0.2s ease",
+										"&:hover": {
+											transform: "scale(1.05)",
+										},
+										"&.Mui-disabled": {
+											color: "color-mix(in srgb, var(--text) 40%, transparent)",
+										},
+									}}
 								>
-									<ArrowUpwardOutlinedIcon />
+									<ArrowUpwardOutlinedIcon sx={{ fontSize: 30 }} />
 								</IconButton>
+
 								<IconButton
 									aria-label="Move step down"
 									onClick={() => moveStepDown(index)}
 									disabled={index === value.length - 1}
+									sx={{
+										color: "var(--text)",
+										transition: "transform 0.2s ease, color 0.2s ease",
+										"&:hover": {
+											transform: "scale(1.05)",
+										},
+										"&.Mui-disabled": {
+											color: "color-mix(in srgb, var(--text) 40%, transparent)",
+										},
+									}}
 								>
-									<ArrowDownwardOutlinedIcon />
+									<ArrowDownwardOutlinedIcon sx={{ fontSize: 30 }} />
 								</IconButton>
 								<IconButton
 									aria-label="Remove step"
 									onClick={() => removeStep(index)}
+									sx={{
+										color: "var(--text)",
+										transition: "transform 0.2s ease, color 0.2s ease",
+										"&:hover": {
+											transform: "scale(1.05)",
+										},
+										"&.Mui-disabled": {
+											color: "color-mix(in srgb, var(--text) 40%, transparent)",
+										},
+									}}
 								>
-									<DeleteOutlineIcon />
+									<DeleteOutlineIcon sx={{ fontSize: 30 }} />
 								</IconButton>
 							</Stack>
 						}
