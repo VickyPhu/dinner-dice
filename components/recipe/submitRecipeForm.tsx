@@ -1,8 +1,9 @@
 "use client";
 
 import { RecipeFormProp } from "@/app/groups/[groupId]/submit-recipe/actions";
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { useState } from "react";
+import TextInput from "../textInput";
 import IngredientInput from "./ingredientInput";
 import StepsInput from "./stepsInput";
 import TimeInput from "./timeInput";
@@ -28,7 +29,7 @@ export default function SubmitRecipeForm({
 	return (
 		<Box>
 			<Typography variant="body1">Recipe title</Typography>
-			<TextField
+			<TextInput
 				fullWidth
 				value={title}
 				onChange={(e) => setTitle(e.target.value)}
