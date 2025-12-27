@@ -31,10 +31,12 @@ export default function AssignedRecipePage() {
 	}
 
 	return (
-		<Box>
+		<Box sx={{ margin: { xs: "1rem", md: "1rem 2rem" } }}>
 			{assignments.map((assignment) => (
 				<Box key={assignment.id} mb={2}>
-					<Typography variant="h1">Your assigned recipes</Typography>
+					<Typography variant="h1" sx={{ mb: "1rem" }}>
+						Your assigned recipes
+					</Typography>
 					<Typography variant="subtitle2" color="text.secondary">
 						For date: {new Date(assignment.for_date).toLocaleDateString()}
 					</Typography>
