@@ -27,13 +27,15 @@ export default function SubmitRecipeForm({
 	const [steps, setSteps] = useState<string[]>(defaultValues?.steps ?? []);
 
 	return (
-		<Box sx={{display: "flex", flexDirection: "column", gap: 2}}>
-			<Typography variant="body1">Recipe title</Typography>
-			<TextInput
-				fullWidth
-				value={title}
-				onChange={(e) => setTitle(e.target.value)}
-			/>
+		<Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+			<Box>
+				<Typography variant="body1">Recipe title</Typography>
+				<TextInput
+					fullWidth
+					value={title}
+					onChange={(e) => setTitle(e.target.value)}
+				/>
+			</Box>
 			<TimeInput value={time} onChange={setTime} />
 			<IngredientInput value={ingredients} onChange={setIngredients} />
 			<StepsInput value={steps} onChange={setSteps} />
