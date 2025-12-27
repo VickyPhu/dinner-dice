@@ -36,6 +36,18 @@ export default function SubmitRecipeClient({
 				onChange={(_, v) => setSelected(v)}
 				variant="scrollable"
 				scrollButtons="auto"
+				sx={{
+					"& .MuiTab-root": {
+						color: "color-mix(in srgb, var(--text) 60%, transparent)",
+					},
+					"& .MuiTab-root.Mui-selected": {
+						color: "var(--text)",
+						fontWeight: "600",
+					},
+					"& .MuiTabs-indicator": {
+						background: "var(--text)",
+					},
+				}}
 			>
 				{dates.map((d, idx) => {
 					const weekday = new Date(d).toLocaleDateString("en-US", {
