@@ -80,7 +80,10 @@ export default function StepsInput({
 								>
 									<ArrowUpwardOutlinedIcon />
 								</IconButton>
-								<IconButton onClick={() => moveStepDown(index)}>
+								<IconButton
+									onClick={() => moveStepDown(index)}
+									disabled={index === value.length - 1}
+								>
 									<ArrowDownwardOutlinedIcon />
 								</IconButton>
 								<IconButton onClick={() => removeStep(index)}>
