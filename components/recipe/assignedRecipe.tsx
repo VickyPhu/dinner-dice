@@ -34,6 +34,7 @@ export default function AssignedRecipePage() {
 		<Box>
 			{assignments.map((assignment) => (
 				<Box key={assignment.id} mb={2}>
+					<Typography variant="h1">Your assigned recipes</Typography>
 					<Typography variant="subtitle2" color="text.secondary">
 						For date: {new Date(assignment.for_date).toLocaleDateString()}
 					</Typography>
