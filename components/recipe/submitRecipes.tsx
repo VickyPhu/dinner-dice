@@ -46,6 +46,7 @@ export default function SubmitRecipeClient({
 					value={selected}
 					onChange={(e) => setSelected(Number(e.target.value))}
 					fullWidth
+					sx={{mb: 1}}
 				>
 					{dates.map((d, idx) => (
 						<MenuItem key={d} value={idx}>
