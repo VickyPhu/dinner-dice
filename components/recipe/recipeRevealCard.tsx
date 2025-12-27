@@ -22,7 +22,14 @@ export default function RecipeRevealCard({
 	if (!recipe) return null;
 
 	return (
-		<Card>
+		<Card
+			sx={{
+				padding: "0.5rem",
+				background: "var(--card-bg)",
+				borderRadius: "var(--card-radius)",
+				boxShadow: "1px 2px 4px var(--card-shadow)",
+			}}
+		>
 			<CardContent>
 				<Typography variant="h2">{recipe.title}</Typography>
 				<Typography variant="subtitle1">
