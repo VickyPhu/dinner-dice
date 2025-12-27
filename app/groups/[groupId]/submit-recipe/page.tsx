@@ -2,7 +2,7 @@ import Header from "@/components/header";
 import SubmitRecipes from "@/components/recipe/submitRecipes";
 import { calculateNextSharing } from "@/utils/calculateNextSharing";
 import { createClient } from "@/utils/supabase/server";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 export default async function SubmitRecipePage({
 	params,
@@ -58,6 +58,9 @@ export default async function SubmitRecipePage({
 	return (
 		<Box>
 			<Header variant="back" backHref={`/groups/${groupId}`} />
+			<Typography variant="h1" sx={{ margin: { xs: "1rem", md: "2rem" } }}>
+				Submit this week&apos;s recipe
+			</Typography>
 			<SubmitRecipes groupId={groupId} dates={dates} recipeMap={recipeMap} />
 		</Box>
 	);
