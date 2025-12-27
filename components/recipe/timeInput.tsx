@@ -1,6 +1,7 @@
 "use client";
 
-import { Box, MenuItem, Select, Typography } from "@mui/material";
+import { Box, MenuItem, Typography } from "@mui/material";
+import TextInput from "../textInput";
 
 const timeOptions = [
 	"0-10 min",
@@ -22,19 +23,19 @@ interface Props {
 export default function TimeInput({ value, onChange }: Props) {
 	return (
 		<Box>
-			<Typography variant="h6">Prep- and cooking time</Typography>
-			<Select
+			<Typography variant="body1">Prep- and cooking time</Typography>
+			<TextInput
+				select
 				fullWidth
 				value={value}
 				onChange={(e) => onChange(e.target.value)}
-				displayEmpty
 			>
 				{timeOptions.map((t) => (
 					<MenuItem key={t} value={t}>
 						{t}
 					</MenuItem>
 				))}
-			</Select>
+			</TextInput>
 		</Box>
 	);
 }

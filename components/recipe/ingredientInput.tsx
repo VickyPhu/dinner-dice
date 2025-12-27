@@ -3,16 +3,16 @@
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import {
 	Box,
-	Button,
 	IconButton,
 	List,
 	ListItem,
 	ListItemText,
 	Stack,
-	TextField,
 	Typography,
 } from "@mui/material";
 import { useState } from "react";
+import PrimaryButton from "../buttons/primaryButton";
+import TextInput from "../textInput";
 
 export default function IngredientInput({
 	value,
@@ -36,9 +36,9 @@ export default function IngredientInput({
 
 	return (
 		<Box>
-			<Typography variant="h6">Ingredients</Typography>
-			<Stack direction="row">
-				<TextField
+			<Typography variant="body1">Ingredients</Typography>
+			<Stack direction="row" gap={1}>
+				<TextInput
 					fullWidth
 					label="e.g 1 onion"
 					value={input}
@@ -50,17 +50,30 @@ export default function IngredientInput({
 						}
 					}}
 				/>
-				<Button variant="contained" onClick={addIngredient}>
+				<PrimaryButton variant="contained" onClick={addIngredient}>
 					Add
-				</Button>
+				</PrimaryButton>
 			</Stack>
-			<List dense>
+			<List dense sx={{ mt: 2 }}>
 				{value.map((ingredient, index) => (
 					<ListItem
 						key={index}
 						secondaryAction={
-							<IconButton edge="end" onClick={() => removeIngredient(index)}>
-								<DeleteOutlineIcon />
+							<IconButton
+								aria-label="Remove ingredient"
+								size="small"
+								edge="end"
+								onClick={() => removeIngredient(index)}
+								sx={{
+									transition: "transform 0.2s ease",
+									"&:hover": {
+										transform: "scale(1.05)",
+									},
+								}}
+							>
+								<DeleteOutlineIcon
+									sx={{ fontSize: { xs: 30 }, color: "var(--text)" }}
+								/>
 							</IconButton>
 						}
 					>

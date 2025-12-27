@@ -4,16 +4,16 @@ import ArrowUpwardOutlinedIcon from "@mui/icons-material/ArrowUpwardOutlined";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutlined";
 import {
 	Box,
-	Button,
 	IconButton,
 	List,
 	ListItem,
 	ListItemText,
 	Stack,
-	TextField,
 	Typography,
 } from "@mui/material";
 import { useState } from "react";
+import PrimaryButton from "../buttons/primaryButton";
+import TextInput from "../textInput";
 
 export default function StepsInput({
 	value,
@@ -50,9 +50,12 @@ export default function StepsInput({
 
 	return (
 		<Box>
-			<Typography variant="h6">Steps</Typography>
-			<Stack direction="row">
-				<TextField
+			<Typography variant="body1">Steps</Typography>
+			<Stack direction="row" gap={1}>
+				<TextInput
+					multiline
+					minRows={1}
+					maxRows={6}
 					fullWidth
 					label="e.g Cut the onion in cubes"
 					value={input}
@@ -64,27 +67,66 @@ export default function StepsInput({
 						}
 					}}
 				/>
-				<Button variant="contained" onClick={addStep}>
+				<PrimaryButton variant="contained" onClick={addStep}>
 					Add
-				</Button>
+				</PrimaryButton>
 			</Stack>
-			<List>
+			<List dense sx={{ mt: 2 }}>
 				{value.map((step, index) => (
 					<ListItem
 						key={index}
 						secondaryAction={
 							<Stack direction="row">
 								<IconButton
+									aria-label="Move step up"
 									onClick={() => moveStepUp(index)}
 									disabled={index === 0}
+									sx={{
+										color: "var(--text)",
+										transition: "transform 0.2s ease, color 0.2s ease",
+										"&:hover": {
+											transform: "scale(1.05)",
+										},
+										"&.Mui-disabled": {
+											color: "color-mix(in srgb, var(--text) 40%, transparent)",
+										},
+									}}
 								>
-									<ArrowUpwardOutlinedIcon />
+									<ArrowUpwardOutlinedIcon sx={{ fontSize: 30 }} />
 								</IconButton>
-								<IconButton onClick={() => moveStepDown(index)}>
-									<ArrowDownwardOutlinedIcon />
+
+								<IconButton
+									aria-label="Move step down"
+									onClick={() => moveStepDown(index)}
+									disabled={index === value.length - 1}
+									sx={{
+										color: "var(--text)",
+										transition: "transform 0.2s ease, color 0.2s ease",
+										"&:hover": {
+											transform: "scale(1.05)",
+										},
+										"&.Mui-disabled": {
+											color: "color-mix(in srgb, var(--text) 40%, transparent)",
+										},
+									}}
+								>
+									<ArrowDownwardOutlinedIcon sx={{ fontSize: 30 }} />
 								</IconButton>
-								<IconButton onClick={() => removeStep(index)}>
-									<DeleteOutlineIcon />
+								<IconButton
+									aria-label="Remove step"
+									onClick={() => removeStep(index)}
+									sx={{
+										color: "var(--text)",
+										transition: "transform 0.2s ease, color 0.2s ease",
+										"&:hover": {
+											transform: "scale(1.05)",
+										},
+										"&.Mui-disabled": {
+											color: "color-mix(in srgb, var(--text) 40%, transparent)",
+										},
+									}}
+								>
+									<DeleteOutlineIcon sx={{ fontSize: 30 }} />
 								</IconButton>
 							</Stack>
 						}
