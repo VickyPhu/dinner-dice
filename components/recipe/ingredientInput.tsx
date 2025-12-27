@@ -59,8 +59,21 @@ export default function IngredientInput({
 					<ListItem
 						key={index}
 						secondaryAction={
-							<IconButton edge="end" onClick={() => removeIngredient(index)}>
-								<DeleteOutlineIcon />
+							<IconButton
+								aria-label="Remove ingredient"
+								size="small"
+								edge="end"
+								onClick={() => removeIngredient(index)}
+								sx={{
+									transition: "transform 0.2s ease",
+									"&:hover": {
+										transform: "scale(1.05)",
+									},
+								}}
+							>
+								<DeleteOutlineIcon
+									sx={{ fontSize: { xs: 30 }, color: "var(--text)" }}
+								/>
 							</IconButton>
 						}
 					>
