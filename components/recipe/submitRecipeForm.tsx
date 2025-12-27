@@ -27,7 +27,7 @@ export default function SubmitRecipeForm({
 	const [steps, setSteps] = useState<string[]>(defaultValues?.steps ?? []);
 
 	return (
-		<Box>
+		<Box sx={{display: "flex", flexDirection: "column", gap: 2}}>
 			<Typography variant="body1">Recipe title</Typography>
 			<TextInput
 				fullWidth
