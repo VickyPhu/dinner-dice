@@ -8,7 +8,6 @@ import { useToastStore } from "@/stores/toastStore";
 import {
 	Box,
 	MenuItem,
-	Select,
 	Tab,
 	Tabs,
 	Typography,
@@ -16,6 +15,7 @@ import {
 } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import TextInput from "../textInput";
 import SubmitRecipeForm from "./submitRecipeForm";
 
 interface SubmitRecipeClientProps {
@@ -42,11 +42,12 @@ export default function SubmitRecipeClient({
 	return (
 		<Box sx={{ padding: { xs: "1rem", md: "2rem" } }}>
 			{isMobile ? (
-				<Select
+				<TextInput
+					select
 					value={selected}
 					onChange={(e) => setSelected(Number(e.target.value))}
 					fullWidth
-					sx={{mb: 1}}
+					sx={{ mb: 1 }}
 				>
 					{dates.map((d, idx) => (
 						<MenuItem key={d} value={idx}>
@@ -56,7 +57,7 @@ export default function SubmitRecipeClient({
 							{recipeMap[d] && " ✓"}
 						</MenuItem>
 					))}
-				</Select>
+				</TextInput>
 			) : (
 				<Tabs
 					value={selected}
