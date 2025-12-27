@@ -9,10 +9,10 @@ import {
 	ListItem,
 	ListItemText,
 	Stack,
-	TextField,
 	Typography,
 } from "@mui/material";
 import { useState } from "react";
+import TextInput from "../textInput";
 
 export default function IngredientInput({
 	value,
@@ -38,7 +38,7 @@ export default function IngredientInput({
 		<Box>
 			<Typography variant="body1">Ingredients</Typography>
 			<Stack direction="row">
-				<TextField
+				<TextInput
 					fullWidth
 					label="e.g 1 onion"
 					value={input}
