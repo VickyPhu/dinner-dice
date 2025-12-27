@@ -1,12 +1,13 @@
 import { Recipe } from "@/hooks/useAssignedRecipes";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import {
+	Box,
 	Card,
 	CardActions,
 	CardContent,
-	Icon,
 	List,
 	ListItem,
+	Stack,
 	Typography,
 } from "@mui/material";
 
@@ -22,31 +23,76 @@ export default function RecipeRevealCard({
 	if (!recipe) return null;
 
 	return (
-		<Card>
+		<Card
+			sx={{
+				padding: "0.5rem",
+				background: "var(--card-bg)",
+				borderRadius: "var(--card-radius)",
+				boxShadow: "1px 2px 4px var(--card-shadow)",
+			}}
+		>
 			<CardContent>
-				<Typography variant="h2">{recipe.title}</Typography>
-				<Typography variant="subtitle1">
-					<Icon>
-						<AccessTimeIcon />
-					</Icon>
-					{recipe.time}
-				</Typography>
+				<Stack spacing={1}>
+					<Typography variant="h2" sx={{ color: "var(--text)" }}>
+						{recipe.title}
+					</Typography>
+					<Typography
+						variant="body1"
+						sx={{
+							display: "flex",
+							alignItems: "center",
+							gap: 0.5,
+							color: "var(--text)",
+						}}
+					>
+						<AccessTimeIcon sx={{ fontSize: 20 }} />
+						{recipe.time}
+					</Typography>
 
-				<Typography variant="h2">Ingredients</Typography>
-				<List>
-					{recipe.ingredients.map((ingredient, i) => (
-						<ListItem key={i}>{ingredient}</ListItem>
-					))}
-				</List>
+					<Stack direction={{ xs: "column", md: "row" }} spacing={4}>
+						<Box sx={{ flex: 1 }}>
+							<Typography variant="h3" color={"var(--text)"}>
+								Ingredients
+							</Typography>
+							<List
+								disablePadding
+								sx={{
+									listStyleType: "disc",
+									listStylePosition: "inside",
+								}}
+							>
+								{recipe.ingredients.map((ingredient, i) => (
+									<ListItem
+										key={i}
+										sx={{
+											display: "list-item",
+											color: "var(--text)",
+											fontSize: "1.125rem",
+										}}
+									>
+										{ingredient}
+									</ListItem>
+								))}
+							</List>
+						</Box>
 
-				<Typography variant="h2">Steps</Typography>
-				<List>
-					{recipe.steps.map((step, i) => (
-						<ListItem key={i}>
-							{i + 1}. {step}
-						</ListItem>
-					))}
-				</List>
+						<Box sx={{ flex: 2 }}>
+							<Typography variant="h3" color={"var(--text)"}>
+								Steps
+							</Typography>
+							<List disablePadding>
+								{recipe.steps.map((step, i) => (
+									<ListItem
+										key={i}
+										sx={{ color: "var(--text)", fontSize: "1.125rem" }}
+									>
+										{i + 1}. {step}
+									</ListItem>
+								))}
+							</List>
+						</Box>
+					</Stack>
+				</Stack>
 			</CardContent>
 			{actions && <CardActions>{actions}</CardActions>}
 		</Card>
