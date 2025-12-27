@@ -1,8 +1,9 @@
 "use client";
 
 import { RecipeFormProp } from "@/app/groups/[groupId]/submit-recipe/actions";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useState } from "react";
+import PrimaryButton from "../buttons/primaryButton";
 import TextInput from "../textInput";
 import IngredientInput from "./ingredientInput";
 import StepsInput from "./stepsInput";
@@ -39,13 +40,15 @@ export default function SubmitRecipeForm({
 			<TimeInput value={time} onChange={setTime} />
 			<IngredientInput value={ingredients} onChange={setIngredients} />
 			<StepsInput value={steps} onChange={setSteps} />
-			<Button
-				variant="contained"
-				sx={{ mt: 2 }}
-				onClick={() => onSubmit({ title, time, ingredients, steps })}
-			>
-				{mode === "edit" ? "Save changes" : "Submit recipe"}
-			</Button>
+			<Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+				<PrimaryButton
+					variant="contained"
+					sx={{ mt: 2, maxWidth: "10rem" }}
+					onClick={() => onSubmit({ title, time, ingredients, steps })}
+				>
+					{mode === "edit" ? "Save changes" : "Submit recipe"}
+				</PrimaryButton>
+			</Box>
 		</Box>
 	);
 }
