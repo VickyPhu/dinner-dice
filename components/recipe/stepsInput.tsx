@@ -78,18 +78,23 @@ export default function StepsInput({
 						secondaryAction={
 							<Stack direction="row">
 								<IconButton
+									aria-label="Move step up"
 									onClick={() => moveStepUp(index)}
 									disabled={index === 0}
 								>
 									<ArrowUpwardOutlinedIcon />
 								</IconButton>
 								<IconButton
+									aria-label="Move step down"
 									onClick={() => moveStepDown(index)}
 									disabled={index === value.length - 1}
 								>
 									<ArrowDownwardOutlinedIcon />
 								</IconButton>
-								<IconButton onClick={() => removeStep(index)}>
+								<IconButton
+									aria-label="Remove step"
+									onClick={() => removeStep(index)}
+								>
 									<DeleteOutlineIcon />
 								</IconButton>
 							</Stack>
