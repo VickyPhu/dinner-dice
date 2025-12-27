@@ -3,7 +3,6 @@
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import {
 	Box,
-	Button,
 	IconButton,
 	List,
 	ListItem,
@@ -12,6 +11,7 @@ import {
 	Typography,
 } from "@mui/material";
 import { useState } from "react";
+import PrimaryButton from "../buttons/primaryButton";
 import TextInput from "../textInput";
 
 export default function IngredientInput({
@@ -37,7 +37,7 @@ export default function IngredientInput({
 	return (
 		<Box>
 			<Typography variant="body1">Ingredients</Typography>
-			<Stack direction="row">
+			<Stack direction="row" gap={1}>
 				<TextInput
 					fullWidth
 					label="e.g 1 onion"
@@ -50,9 +50,9 @@ export default function IngredientInput({
 						}
 					}}
 				/>
-				<Button variant="contained" onClick={addIngredient}>
+				<PrimaryButton variant="contained" onClick={addIngredient}>
 					Add
-				</Button>
+				</PrimaryButton>
 			</Stack>
 			<List dense>
 				{value.map((ingredient, index) => (
