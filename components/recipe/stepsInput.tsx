@@ -4,7 +4,6 @@ import ArrowUpwardOutlinedIcon from "@mui/icons-material/ArrowUpwardOutlined";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutlined";
 import {
 	Box,
-	Button,
 	IconButton,
 	List,
 	ListItem,
@@ -13,6 +12,7 @@ import {
 	Typography,
 } from "@mui/material";
 import { useState } from "react";
+import PrimaryButton from "../buttons/primaryButton";
 import TextInput from "../textInput";
 
 export default function StepsInput({
@@ -51,7 +51,7 @@ export default function StepsInput({
 	return (
 		<Box>
 			<Typography variant="body1">Steps</Typography>
-			<Stack direction="row">
+			<Stack direction="row" gap={1}>
 				<TextInput
 					multiline
 					minRows={1}
@@ -67,9 +67,9 @@ export default function StepsInput({
 						}
 					}}
 				/>
-				<Button variant="contained" onClick={addStep}>
+				<PrimaryButton variant="contained" onClick={addStep}>
 					Add
-				</Button>
+				</PrimaryButton>
 			</Stack>
 			<List>
 				{value.map((step, index) => (
