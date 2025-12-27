@@ -10,10 +10,10 @@ import {
 	ListItem,
 	ListItemText,
 	Stack,
-	TextField,
 	Typography,
 } from "@mui/material";
 import { useState } from "react";
+import TextInput from "../textInput";
 
 export default function StepsInput({
 	value,
@@ -52,7 +52,10 @@ export default function StepsInput({
 		<Box>
 			<Typography variant="body1">Steps</Typography>
 			<Stack direction="row">
-				<TextField
+				<TextInput
+					multiline
+					minRows={1}
+					maxRows={6}
 					fullWidth
 					label="e.g Cut the onion in cubes"
 					value={input}
