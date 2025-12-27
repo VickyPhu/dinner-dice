@@ -54,7 +54,7 @@ export default function IngredientInput({
 					Add
 				</PrimaryButton>
 			</Stack>
-			<List dense>
+			<List dense sx={{ mt: 2 }}>
 				{value.map((ingredient, index) => (
 					<ListItem
 						key={index}
