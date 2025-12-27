@@ -40,7 +40,7 @@ export default function SubmitRecipeClient({
 	const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
 	return (
-		<Box>
+		<Box sx={{ padding: { xs: "1rem", md: "2rem" } }}>
 			{isMobile ? (
 				<Select
 					value={selected}
