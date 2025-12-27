@@ -54,11 +54,21 @@ export default function RecipeRevealCard({
 							<Typography variant="h3" color={"var(--text)"}>
 								Ingredients
 							</Typography>
-							<List disablePadding>
+							<List
+								disablePadding
+								sx={{
+									listStyleType: "disc",
+									listStylePosition: "inside",
+								}}
+							>
 								{recipe.ingredients.map((ingredient, i) => (
 									<ListItem
 										key={i}
-										sx={{ color: "var(--text)", fontSize: "1.125rem" }}
+										sx={{
+											display: "list-item",
+											color: "var(--text)",
+											fontSize: "1.125rem",
+										}}
 									>
 										{ingredient}
 									</ListItem>
