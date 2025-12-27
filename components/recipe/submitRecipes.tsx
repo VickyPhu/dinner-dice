@@ -40,7 +40,15 @@ export default function SubmitRecipeClient({
 	const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
 	return (
-		<Box sx={{ padding: { xs: "1rem", md: "2rem" }, margin: {xs: "1rem", md: "2rem"}, background: "var(--card-bg)", borderRadius: "var(--card-radius)", boxShadow: "1px 2px 4px var(--card-shadow)" }}>
+		<Box
+			sx={{
+				padding: { xs: "1rem", md: "2rem" },
+				margin: { xs: "1rem", md: "2rem" },
+				background: "var(--card-bg)",
+				borderRadius: "var(--card-radius)",
+				boxShadow: "1px 2px 4px var(--card-shadow)",
+			}}
+		>
 			{isMobile ? (
 				<TextInput
 					select
@@ -64,7 +72,8 @@ export default function SubmitRecipeClient({
 					onChange={(_, v) => setSelected(v)}
 					variant="scrollable"
 					scrollButtons="auto"
-					sx={{pb: 1,
+					sx={{
+						pb: 1,
 						"& .MuiTab-root": {
 							color: "color-mix(in srgb, var(--text) 60%, transparent)",
 						},
@@ -96,7 +105,9 @@ export default function SubmitRecipeClient({
 			)}
 
 			<Box sx={{ mt: 3 }}>
-				<Typography variant="h2" sx={{marginBlock: 2}}>Recipe for {date}</Typography>
+				<Typography variant="h2" sx={{ marginBlock: 2 }}>
+					Recipe for {date}
+				</Typography>
 
 				<SubmitRecipeForm
 					key={date}
