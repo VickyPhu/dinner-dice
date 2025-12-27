@@ -40,7 +40,7 @@ export default function SubmitRecipeClient({
 	const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
 	return (
-		<Box sx={{ padding: { xs: "1rem", md: "2rem" } }}>
+		<Box sx={{ padding: { xs: "1rem", md: "2rem" }, margin: {xs: "1rem", md: "2rem"}, background: "var(--card-bg)", borderRadius: "var(--card-radius)", boxShadow: "1px 2px 4px var(--card-shadow)" }}>
 			{isMobile ? (
 				<TextInput
 					select
