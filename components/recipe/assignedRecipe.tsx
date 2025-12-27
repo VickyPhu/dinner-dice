@@ -37,7 +37,7 @@ export default function AssignedRecipePage() {
 					<Typography variant="h1" sx={{ mb: "1rem" }}>
 						Your assigned recipes
 					</Typography>
-					<Typography variant="subtitle2" color="text.secondary">
+					<Typography variant="body2">
 						For date: {new Date(assignment.for_date).toLocaleDateString()}
 					</Typography>
 
