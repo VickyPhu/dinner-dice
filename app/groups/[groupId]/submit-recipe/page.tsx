@@ -58,7 +58,7 @@ export default async function SubmitRecipePage({
 	return (
 		<Box>
 			<Header variant="back" backHref={`/groups/${groupId}`} />
-			<Typography variant="h1" sx={{ margin: { xs: "1rem", md: "2rem" } }}>
+			<Typography variant="h1" sx={{ margin: { xs: "1rem", md: "1rem 2rem" } }}>
 				Submit this week&apos;s recipe
 			</Typography>
 			<SubmitRecipes groupId={groupId} dates={dates} recipeMap={recipeMap} />
