@@ -64,7 +64,7 @@ export default function SubmitRecipeClient({
 					onChange={(_, v) => setSelected(v)}
 					variant="scrollable"
 					scrollButtons="auto"
-					sx={{
+					sx={{pb: 1,
 						"& .MuiTab-root": {
 							color: "color-mix(in srgb, var(--text) 60%, transparent)",
 						},
@@ -96,7 +96,7 @@ export default function SubmitRecipeClient({
 			)}
 
 			<Box sx={{ mt: 3 }}>
-				<Typography variant="h5">Recipe for {date}</Typography>
+				<Typography variant="h2" sx={{marginBlock: 2}}>Recipe for {date}</Typography>
 
 				<SubmitRecipeForm
 					key={date}
