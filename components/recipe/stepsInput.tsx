@@ -71,7 +71,7 @@ export default function StepsInput({
 					Add
 				</PrimaryButton>
 			</Stack>
-			<List>
+			<List dense sx={{ mt: 2 }}>
 				{value.map((step, index) => (
 					<ListItem
 						key={index}
