@@ -50,7 +50,7 @@ export default function StepsInput({
 
 	return (
 		<Box>
-			<Typography variant="h6">Steps</Typography>
+			<Typography variant="body1">Steps</Typography>
 			<Stack direction="row">
 				<TextField
 					fullWidth

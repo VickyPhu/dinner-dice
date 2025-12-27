@@ -36,7 +36,7 @@ export default function IngredientInput({
 
 	return (
 		<Box>
-			<Typography variant="h6">Ingredients</Typography>
+			<Typography variant="body1">Ingredients</Typography>
 			<Stack direction="row">
 				<TextField
 					fullWidth

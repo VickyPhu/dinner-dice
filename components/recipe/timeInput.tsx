@@ -22,7 +22,7 @@ interface Props {
 export default function TimeInput({ value, onChange }: Props) {
 	return (
 		<Box>
-			<Typography variant="h6">Prep- and cooking time</Typography>
+			<Typography variant="body1">Prep- and cooking time</Typography>
 			<Select
 				fullWidth
 				value={value}

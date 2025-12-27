@@ -27,7 +27,7 @@ export default function SubmitRecipeForm({
 
 	return (
 		<Box>
-			<Typography variant="h6">Recipe title</Typography>
+			<Typography variant="body1">Recipe title</Typography>
 			<TextField
 				fullWidth
 				value={title}
