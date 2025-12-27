@@ -46,17 +46,29 @@ export default function RecipeRevealCard({
 					{recipe.time}
 				</Typography>
 
-				<Typography variant="h2">Ingredients</Typography>
+				<Typography variant="h3" color={"var(--text)"}>
+					Ingredients
+				</Typography>
 				<List>
 					{recipe.ingredients.map((ingredient, i) => (
-						<ListItem key={i}>{ingredient}</ListItem>
+						<ListItem
+							key={i}
+							sx={{ color: "var(--text)", fontSize: "1.125rem" }}
+						>
+							{ingredient}
+						</ListItem>
 					))}
 				</List>
 
-				<Typography variant="h2">Steps</Typography>
+				<Typography variant="h3" color={"var(--text)"}>
+					Steps
+				</Typography>
 				<List>
 					{recipe.steps.map((step, i) => (
-						<ListItem key={i}>
+						<ListItem
+							key={i}
+							sx={{ color: "var(--text)", fontSize: "1.125rem" }}
+						>
 							{i + 1}. {step}
 						</ListItem>
 					))}
