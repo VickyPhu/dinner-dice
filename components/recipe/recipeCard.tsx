@@ -4,9 +4,11 @@ import { deleteRecipe } from "@/app/groups/[groupId]/recipes/[recipeId]/actions"
 import { Recipe } from "@/hooks/useAssignedRecipes";
 import { useToastStore } from "@/stores/toastStore";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { Button, IconButton } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import PrimaryButton from "../buttons/primaryButton";
+import SecondaryButton from "../buttons/secondaryButton";
 import ConfirmModal from "../confirmModal";
 import RecipeRevealCard from "./recipeRevealCard";
 
@@ -41,8 +43,11 @@ export default function RecipeCard({ recipe, groupId }: RecipeCardProps) {
 				recipe={recipe}
 				actions={
 					<>
-						<Button>Rate recipe</Button>
-						<Button>See reviews</Button>
+						<Typography variant="body2" color={"var(--text)"}>
+							Coming soon...
+						</Typography>
+						<PrimaryButton disabled>Rate recipe</PrimaryButton>
+						<SecondaryButton disabled>See reviews</SecondaryButton>
 					</>
 				}
 			/>

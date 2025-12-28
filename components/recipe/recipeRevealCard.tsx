@@ -94,7 +94,13 @@ export default function RecipeRevealCard({
 					</Stack>
 				</Stack>
 			</CardContent>
-			{actions && <CardActions>{actions}</CardActions>}
+			{actions && (
+				<CardActions
+					sx={{ display: "flex", justifyContent: "flex-end", gap: 1 }}
+				>
+					{actions}
+				</CardActions>
+			)}
 		</Card>
 	);
 }
