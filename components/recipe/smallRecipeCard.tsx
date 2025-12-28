@@ -42,7 +42,9 @@ export default function SmallRecipeCard({
 							},
 						}}
 					>
-						<CardContent>
+						<CardContent
+							sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}
+						>
 							<Box
 								sx={{
 									display: "flex",
