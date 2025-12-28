@@ -19,8 +19,24 @@ export default function SmallRecipeCard({
 	return (
 		<Box sx={{ margin: "1rem 1.5rem" }}>
 			{recipes.map((recipe) => (
-				<Link href={`/groups/${groupId}/recipes/${recipe.id}`} key={recipe.id}>
-					<Card>
+				<Link
+					href={`/groups/${groupId}/recipes/${recipe.id}`}
+					key={recipe.id}
+					sx={{ textDecoration: "none" }}
+				>
+					<Card
+						sx={{
+							color: "var(--text)",
+							background: "var(--card-bg)",
+							boxShadow: "1px 2px 4px var(--card-shadow)",
+							transition: "all 0.2s ease-in-out",
+							cursor: "pointer",
+							"&:hover": {
+								background: "var(--card-hover)",
+								boxShadow: "2px 6px 4px var(--card-hover-shadow)",
+							},
+						}}
+					>
 						<CardContent>
 							<Typography variant="h2">{recipe.title}</Typography>
 							<Typography variant="h3">
