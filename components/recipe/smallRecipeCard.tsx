@@ -17,7 +17,7 @@ export default function SmallRecipeCard({
 	groupId: string;
 }) {
 	return (
-		<Box>
+		<Box sx={{ margin: "1rem 1.5rem" }}>
 			{recipes.map((recipe) => (
 				<Link href={`/groups/${groupId}/recipes/${recipe.id}`} key={recipe.id}>
 					<Card>
