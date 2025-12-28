@@ -19,15 +19,26 @@ export default function SmallRecipeCard({
 	groupId: string;
 }) {
 	return (
-		<Box sx={{ margin: "1rem 1.5rem" }}>
+		<Box
+			sx={{
+				margin: "1rem 1.5rem",
+				display: "grid",
+				gridTemplateColumns: {
+					xs: "1fr",
+					md: "repeat(auto-fit, minmax(300px, 1fr))",
+				},
+				gap: 2,
+			}}
+		>
 			{recipes.map((recipe) => (
 				<Link
 					href={`/groups/${groupId}/recipes/${recipe.id}`}
 					key={recipe.id}
-					sx={{ textDecoration: "none" }}
+					sx={{ textDecoration: "none", flex: 1 }}
 				>
 					<Card
 						sx={{
+							height: "100%",
 							color: "var(--text)",
 							background: "var(--card-bg)",
 							boxShadow: "1px 2px 4px var(--card-shadow)",
