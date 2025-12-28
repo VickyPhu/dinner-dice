@@ -8,6 +8,7 @@ interface Recipe {
 	id: string;
 	title: string;
 	time: string;
+	username: string;
 }
 
 export default function SmallRecipeCard({
@@ -67,6 +68,7 @@ export default function SmallRecipeCard({
 								<AccessTimeIcon sx={{ fontSize: 20 }} />
 								{recipe.time}
 							</Typography>
+							<Typography variant="body2">By: {recipe.username}</Typography>
 						</CardContent>
 					</Card>
 				</Link>
