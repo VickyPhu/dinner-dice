@@ -84,7 +84,7 @@ export default function SmallRecipeCard({
 									<AccessTimeIcon sx={{ fontSize: 20 }} />
 									{recipe.time}
 								</Typography>
-								<Typography variant="body2">By: {recipe.username}</Typography>
+								<Typography variant="body1">By: {recipe.username}</Typography>
 							</CardContent>
 						</Card>
 					</Link>
