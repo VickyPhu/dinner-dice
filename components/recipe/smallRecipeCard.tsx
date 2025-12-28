@@ -1,7 +1,7 @@
 "use client";
 
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import { Box, Card, CardContent, Icon, Link, Typography } from "@mui/material";
+import { Box, Card, CardContent, Link, Typography } from "@mui/material";
 
 interface Recipe {
 	id: string;
@@ -39,10 +39,15 @@ export default function SmallRecipeCard({
 					>
 						<CardContent>
 							<Typography variant="h2">{recipe.title}</Typography>
-							<Typography variant="h3">
-								<Icon>
-									<AccessTimeIcon />
-								</Icon>
+							<Typography
+								variant="body1"
+								sx={{
+									display: "flex",
+									alignItems: "center",
+									gap: 0.5,
+								}}
+							>
+								<AccessTimeIcon sx={{ fontSize: 20 }} />
 								{recipe.time}
 							</Typography>
 						</CardContent>
