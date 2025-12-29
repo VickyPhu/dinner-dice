@@ -36,48 +36,50 @@ export default function RecipeCard({ recipe, groupId }: RecipeCardProps) {
 
 	return (
 		<>
-			<Box
-				sx={{
-					display: "flex",
-					justifyContent: "flex-end",
-					alignItems: "center",
-				}}
-			>
-				<IconButton
-					aria-label="Delete recipe"
-					onClick={() => setOpen(true)}
+			<Box sx={{ margin: "1rem 1.5rem" }}>
+				<Box
 					sx={{
-						transition: "transform 0.2s ease",
-						"&:hover": {
-							transform: "scale(1.05)",
-						},
+						display: "flex",
+						justifyContent: "flex-end",
+						alignItems: "center",
 					}}
 				>
-					<DeleteOutlineIcon sx={{ color: "var(--text)", fontSize: 30 }} />
-				</IconButton>
+					<IconButton
+						aria-label="Delete recipe"
+						onClick={() => setOpen(true)}
+						sx={{
+							transition: "transform 0.2s ease",
+							"&:hover": {
+								transform: "scale(1.05)",
+							},
+						}}
+					>
+						<DeleteOutlineIcon sx={{ color: "var(--text)", fontSize: 30 }} />
+					</IconButton>
+				</Box>
+				<RecipeRevealCard
+					recipe={recipe}
+					showUsername
+					titleVariant="h1"
+					actions={
+						<>
+							<Typography variant="body2" color={"var(--text)"}>
+								Coming soon...
+							</Typography>
+							<PrimaryButton disabled>Rate recipe</PrimaryButton>
+							<SecondaryButton disabled>See reviews</SecondaryButton>
+						</>
+					}
+				/>
+				<ConfirmModal
+					open={open}
+					title="Delete recipe?"
+					description="Are you sure you want to delete this recipe? This action can't be undone"
+					confirmText="Delete"
+					onConfirm={handleDelete}
+					onClose={() => setOpen(false)}
+				/>
 			</Box>
-			<RecipeRevealCard
-				recipe={recipe}
-				showUsername
-				titleVariant="h1"
-				actions={
-					<>
-						<Typography variant="body2" color={"var(--text)"}>
-							Coming soon...
-						</Typography>
-						<PrimaryButton disabled>Rate recipe</PrimaryButton>
-						<SecondaryButton disabled>See reviews</SecondaryButton>
-					</>
-				}
-			/>
-			<ConfirmModal
-				open={open}
-				title="Delete recipe?"
-				description="Are you sure you want to delete this recipe? This action can't be undone"
-				confirmText="Delete"
-				onConfirm={handleDelete}
-				onClose={() => setOpen(false)}
-			/>
 		</>
 	);
 }
