@@ -18,7 +18,7 @@ export default function RenderGroups() {
 	if (loading) return <p>Loading groups...</p>;
 
 	return (
-		<Container>
+		<Container sx={{mb: "3rem"}}>
 			<Stack
 				direction="row"
 				justifyContent="space-between"
