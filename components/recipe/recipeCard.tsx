@@ -2,6 +2,7 @@
 
 import { deleteRecipe } from "@/app/groups/[groupId]/recipes/[recipeId]/actions";
 import { BaseRecipe, Recipe } from "@/hooks/useAssignedRecipes";
+import useUser from "@/hooks/useUser";
 import { useToastStore } from "@/stores/toastStore";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { Box, IconButton, Typography } from "@mui/material";
@@ -21,6 +22,8 @@ export default function RecipeCard({ recipe, groupId }: RecipeCardProps) {
 	const [open, setOpen] = useState(false);
 	const router = useRouter();
 	const { addToast } = useToastStore();
+	const { profile } = useUser();
+	const canDelete = "user_id" in recipe && recipe.user_id === profile?.user_id;
 
 	const handleDelete = async () => {
 		await deleteRecipe(recipe.id, groupId);
@@ -44,18 +47,20 @@ export default function RecipeCard({ recipe, groupId }: RecipeCardProps) {
 						alignItems: "center",
 					}}
 				>
-					<IconButton
-						aria-label="Delete recipe"
-						onClick={() => setOpen(true)}
-						sx={{
-							transition: "transform 0.2s ease",
-							"&:hover": {
-								transform: "scale(1.05)",
-							},
-						}}
-					>
-						<DeleteOutlineIcon sx={{ color: "var(--text)", fontSize: 30 }} />
-					</IconButton>
+					{canDelete && (
+						<IconButton
+							aria-label="Delete recipe"
+							onClick={() => setOpen(true)}
+							sx={{
+								transition: "transform 0.2s ease",
+								"&:hover": {
+									transform: "scale(1.05)",
+								},
+							}}
+						>
+							<DeleteOutlineIcon sx={{ color: "var(--text)", fontSize: 30 }} />
+						</IconButton>
+					)}
 				</Box>
 				<RecipeRevealCard
 					recipe={recipe}
