@@ -23,9 +23,14 @@ import WeekdayPicker from "./weekdayPicker";
 type Props = {
 	open: boolean;
 	onClose: () => void;
+	refetchGroups?: () => void;
 };
 
-export default function CreateGroupModal({ open, onClose }: Props) {
+export default function CreateGroupModal({
+	open,
+	onClose,
+	refetchGroups,
+}: Props) {
 	const { addToast } = useToastStore();
 
 	const methods = useForm<createGroupData>({
@@ -65,6 +70,8 @@ export default function CreateGroupModal({ open, onClose }: Props) {
 
 		methods.reset();
 		onClose();
+
+		if (refetchGroups) refetchGroups();
 	};
 
 	return (
@@ -90,7 +97,13 @@ export default function CreateGroupModal({ open, onClose }: Props) {
 						{/* Add components to the form here */}
 						<GroupNameField control={control} errors={errors} />
 						{/* Dropdown to chose sharing frequency */}
-						<Typography variant="body1" color={"var(--text)"} sx={{pt: "1rem"}}>How often should your group share recipes?</Typography>
+						<Typography
+							variant="body1"
+							color={"var(--text)"}
+							sx={{ pt: "1rem" }}
+						>
+							How often should your group share recipes?
+						</Typography>
 						<FrequencySelect />
 
 						{/* Which days will the group share recipes, based on selected frequency */}

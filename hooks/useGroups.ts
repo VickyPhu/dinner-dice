@@ -1,59 +1,37 @@
 "use client";
 
-import { Weekday } from "@/utils/calculateNextSharing";
 import { createClient } from "@/utils/supabase/client";
 import { useEffect, useState } from "react";
 
 export type GroupData = {
 	id: string;
 	name: string;
+	weekdays: string[];
 	sharing_frequency: number;
-	weekdays: Weekday[];
-};
-
-type GroupMemberWithGroup = {
-	groups: GroupData[];
+	created_by: string;
 };
 
 export function useGroups() {
 	const [groups, setGroups] = useState<GroupData[]>([]);
 	const [loading, setLoading] = useState(true);
 
-	useEffect(() => {
-		async function fetchGroups() {
+	const fetchGroups = async () => {
+		try {
+			setLoading(true);
 			const supabase = createClient();
-			const {
-				data: { user },
-			} = await supabase.auth.getUser();
-
-			if (!user) {
-				setGroups([]);
-				setLoading(false);
-				return;
-			}
-
-			const { data, error } = await supabase
-				.from("group_members")
-				.select("groups(id, name, weekdays, sharing_frequency)")
-				.eq("user_id", user.id);
-
-			if (error || !data) {
-				console.error("Supabase error:", error);
-				setGroups([]);
-				setLoading(false);
-				return;
-			}
-
-			const groupList = (data as GroupMemberWithGroup[]).flatMap(
-				(item) => item.groups
-			);
-
-			setGroups(groupList);
+			const { data, error } = await supabase.from("groups").select("*");
+			if (error) console.error(error);
+			setGroups(data || []);
+		} finally {
 			setLoading(false);
 		}
+	};
 
-		fetchGroups();
+	useEffect(() => {
+		(async () => {
+			await fetchGroups();
+		})();
 	}, []);
 
-	return { groups, loading };
+	return { groups, loading, refetch: fetchGroups };
 }
