@@ -1,12 +1,17 @@
 import { createClient } from "@/utils/supabase/client";
 import { useEffect, useState } from "react";
 
-export interface Recipe {
+export interface BaseRecipe {
 	id: string;
 	title: string;
 	time: string;
 	ingredients: string[];
 	steps: string[];
+}
+
+export interface Recipe extends BaseRecipe {
+	user_id: string;
+	username?: string;
 }
 
 export interface RecipeAssignment {
@@ -33,7 +38,7 @@ export function useAssignedRecipes(groupId: string) {
 
 			const { data, error } = await supabase
 				.from("recipe_assignments")
-				.select(`*, recipes(id, title, time, ingredients, steps)`)
+				.select(`*, recipes(id, title, time, ingredients, steps, user_id)`)
 				.eq("group_id", groupId)
 				.eq("assigned_to", user.id)
 				.order("for_date", { ascending: true });
@@ -49,6 +54,15 @@ export function useAssignedRecipes(groupId: string) {
 				setLoading(false);
 				return;
 			}
+
+			const userIds = Array.from(
+				new Set(data.map((item) => item.recipes?.user_id).filter(Boolean))
+			);
+
+			const { data: profiles } = await supabase
+				.from("profiles")
+				.select("user_id, username")
+				.in("user_id", userIds);
 
 			const today = new Date();
 			today.setHours(0, 0, 0, 0);
@@ -68,6 +82,10 @@ export function useAssignedRecipes(groupId: string) {
 						time: item.recipes.time,
 						ingredients: item.recipes.ingredients,
 						steps: item.recipes.steps,
+						user_id: item.recipes.user_id,
+						username:
+							profiles?.find((p) => p.user_id === item.recipes.user_id)
+								?.username ?? "Unknown",
 					},
 				}))
 				.filter(isVisibleToday);

@@ -1,7 +1,7 @@
 "use client";
 
 import { deleteRecipe } from "@/app/groups/[groupId]/recipes/[recipeId]/actions";
-import { Recipe } from "@/hooks/useAssignedRecipes";
+import { BaseRecipe, Recipe } from "@/hooks/useAssignedRecipes";
 import { useToastStore } from "@/stores/toastStore";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { IconButton, Typography } from "@mui/material";
@@ -13,7 +13,7 @@ import ConfirmModal from "../confirmModal";
 import RecipeRevealCard from "./recipeRevealCard";
 
 interface RecipeCardProps {
-	recipe: Recipe;
+	recipe: Recipe | BaseRecipe;
 	groupId: string;
 }
 
@@ -41,6 +41,7 @@ export default function RecipeCard({ recipe, groupId }: RecipeCardProps) {
 			</IconButton>
 			<RecipeRevealCard
 				recipe={recipe}
+				showUsername
 				actions={
 					<>
 						<Typography variant="body2" color={"var(--text)"}>

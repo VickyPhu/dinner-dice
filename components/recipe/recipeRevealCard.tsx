@@ -1,4 +1,4 @@
-import { Recipe } from "@/hooks/useAssignedRecipes";
+import { BaseRecipe, Recipe } from "@/hooks/useAssignedRecipes";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import {
 	Box,
@@ -12,13 +12,15 @@ import {
 } from "@mui/material";
 
 interface RecipeRevealProps {
-	recipe: Recipe;
+	recipe: Recipe | BaseRecipe;
 	actions?: React.ReactNode;
+	showUsername?: boolean;
 }
 
 export default function RecipeRevealCard({
 	recipe,
 	actions,
+	showUsername,
 }: RecipeRevealProps) {
 	if (!recipe) return null;
 
@@ -48,6 +50,11 @@ export default function RecipeRevealCard({
 						<AccessTimeIcon sx={{ fontSize: 20 }} />
 						{recipe.time}
 					</Typography>
+					{showUsername && "username" in recipe && recipe.username && (
+						<Typography variant="body1" color="var(--text)">
+							By: {recipe.username}
+						</Typography>
+					)}
 
 					<Stack direction={{ xs: "column", md: "row" }} spacing={4}>
 						<Box sx={{ flex: 1 }}>
