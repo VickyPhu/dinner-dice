@@ -11,14 +11,14 @@ import useUser from "@/hooks/useUser";
 
 export default function RenderGroups() {
 	const [open, setOpen] = useState(false);
-	const { groups, loading } = useGroups();
+	const { groups, loading, refetch } = useGroups();
 	const { profile, loading: profileLoading } = useUser();
 
 	if (loading || profileLoading) return <p>Loading...</p>;
 	if (loading) return <p>Loading groups...</p>;
 
 	return (
-		<Container sx={{mb: "3rem"}}>
+		<Container sx={{ mb: "3rem" }}>
 			<Stack
 				direction="row"
 				justifyContent="space-between"
@@ -44,7 +44,11 @@ export default function RenderGroups() {
 				</IconButton>
 			</Stack>
 
-			<CreateGroupModal open={open} onClose={() => setOpen(false)} />
+			<CreateGroupModal
+				open={open}
+				onClose={() => setOpen(false)}
+				refetchGroups={refetch}
+			/>
 
 			<Stack>
 				{groups.map(
