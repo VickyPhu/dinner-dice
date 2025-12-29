@@ -1,3 +1,5 @@
+"use client";
+
 import { Weekday } from "@/utils/calculateNextSharing";
 import { createClient } from "@/utils/supabase/client";
 import { useEffect, useState } from "react";
