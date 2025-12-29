@@ -36,7 +36,7 @@ export default function RecipeCard({ recipe, groupId }: RecipeCardProps) {
 
 	return (
 		<>
-			<IconButton onClick={() => setOpen(true)}>
+			<IconButton aria-label="Delete recipe" onClick={() => setOpen(true)}>
 				<DeleteOutlineIcon />
 			</IconButton>
 			<RecipeRevealCard
