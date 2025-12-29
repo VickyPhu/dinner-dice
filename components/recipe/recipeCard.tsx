@@ -42,6 +42,7 @@ export default function RecipeCard({ recipe, groupId }: RecipeCardProps) {
 			<RecipeRevealCard
 				recipe={recipe}
 				showUsername
+				titleVariant="h1"
 				actions={
 					<>
 						<Typography variant="body2" color={"var(--text)"}>

@@ -9,18 +9,21 @@ import {
 	ListItem,
 	Stack,
 	Typography,
+	TypographyProps,
 } from "@mui/material";
 
 interface RecipeRevealProps {
 	recipe: Recipe | BaseRecipe;
 	actions?: React.ReactNode;
 	showUsername?: boolean;
+	titleVariant?: TypographyProps["variant"];
 }
 
 export default function RecipeRevealCard({
 	recipe,
 	actions,
 	showUsername,
+	titleVariant = "h2",
 }: RecipeRevealProps) {
 	if (!recipe) return null;
 
@@ -35,7 +38,11 @@ export default function RecipeRevealCard({
 		>
 			<CardContent>
 				<Stack spacing={1}>
-					<Typography variant="h2" sx={{ color: "var(--text)" }}>
+					<Typography
+						variant={titleVariant ?? "h2"}
+						component={titleVariant === "h1" ? "h1" : "h2"}
+						sx={{ color: "var(--text)" }}
+					>
 						{recipe.title}
 					</Typography>
 					<Typography
@@ -58,7 +65,7 @@ export default function RecipeRevealCard({
 
 					<Stack direction={{ xs: "column", md: "row" }} spacing={4}>
 						<Box sx={{ flex: 1 }}>
-							<Typography variant="h3" color={"var(--text)"}>
+							<Typography variant="h3" component="h2" color={"var(--text)"}>
 								Ingredients
 							</Typography>
 							<List
@@ -84,7 +91,7 @@ export default function RecipeRevealCard({
 						</Box>
 
 						<Box sx={{ flex: 2 }}>
-							<Typography variant="h3" color={"var(--text)"}>
+							<Typography variant="h3" component="h2" color={"var(--text)"}>
 								Steps
 							</Typography>
 							<List disablePadding>
