@@ -15,7 +15,7 @@ export default async function SpecificRecipePage({
 
 	const { data: recipe, error } = await supabase
 		.from("recipes")
-		.select("id, title, time, ingredients, steps")
+		.select("id, title, time, ingredients, steps, user_id")
 		.eq("id", recipeId)
 		.single();
 
@@ -23,10 +23,19 @@ export default async function SpecificRecipePage({
 		notFound();
 	}
 
+	const { data: profile } = await supabase
+		.from("profiles")
+		.select("username")
+		.eq("user_id", recipe.user_id)
+		.single();
+
 	return (
 		<Box>
 			<Header variant="back" backHref={`/groups/${groupId}/recipes`} />
-			<RecipeCard recipe={recipe} groupId={groupId} />
+			<RecipeCard
+				recipe={{ ...recipe, username: profile?.username }}
+				groupId={groupId}
+			/>
 		</Box>
 	);
 }

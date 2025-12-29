@@ -1,17 +1,19 @@
 "use client";
 
 import { deleteRecipe } from "@/app/groups/[groupId]/recipes/[recipeId]/actions";
-import { Recipe } from "@/hooks/useAssignedRecipes";
+import { BaseRecipe, Recipe } from "@/hooks/useAssignedRecipes";
 import { useToastStore } from "@/stores/toastStore";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { Button, IconButton } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import PrimaryButton from "../buttons/primaryButton";
+import SecondaryButton from "../buttons/secondaryButton";
 import ConfirmModal from "../confirmModal";
 import RecipeRevealCard from "./recipeRevealCard";
 
 interface RecipeCardProps {
-	recipe: Recipe;
+	recipe: Recipe | BaseRecipe;
 	groupId: string;
 }
 
@@ -34,26 +36,50 @@ export default function RecipeCard({ recipe, groupId }: RecipeCardProps) {
 
 	return (
 		<>
-			<IconButton onClick={() => setOpen(true)}>
-				<DeleteOutlineIcon />
-			</IconButton>
-			<RecipeRevealCard
-				recipe={recipe}
-				actions={
-					<>
-						<Button>Rate recipe</Button>
-						<Button>See reviews</Button>
-					</>
-				}
-			/>
-			<ConfirmModal
-				open={open}
-				title="Delete recipe?"
-				description="Are you sure you want to delete this recipe? This action can't be undone"
-				confirmText="Delete"
-				onConfirm={handleDelete}
-				onClose={() => setOpen(false)}
-			/>
+			<Box sx={{ margin: "1rem 1.5rem" }}>
+				<Box
+					sx={{
+						display: "flex",
+						justifyContent: "flex-end",
+						alignItems: "center",
+					}}
+				>
+					<IconButton
+						aria-label="Delete recipe"
+						onClick={() => setOpen(true)}
+						sx={{
+							transition: "transform 0.2s ease",
+							"&:hover": {
+								transform: "scale(1.05)",
+							},
+						}}
+					>
+						<DeleteOutlineIcon sx={{ color: "var(--text)", fontSize: 30 }} />
+					</IconButton>
+				</Box>
+				<RecipeRevealCard
+					recipe={recipe}
+					showUsername
+					titleVariant="h1"
+					actions={
+						<>
+							<Typography variant="body2" color={"var(--text)"}>
+								Coming soon...
+							</Typography>
+							<PrimaryButton disabled>Rate recipe</PrimaryButton>
+							<SecondaryButton disabled>See reviews</SecondaryButton>
+						</>
+					}
+				/>
+				<ConfirmModal
+					open={open}
+					title="Delete recipe?"
+					description="Are you sure you want to delete this recipe? This action can't be undone"
+					confirmText="Delete"
+					onConfirm={handleDelete}
+					onClose={() => setOpen(false)}
+				/>
+			</Box>
 		</>
 	);
 }

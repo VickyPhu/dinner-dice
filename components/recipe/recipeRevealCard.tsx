@@ -1,4 +1,4 @@
-import { Recipe } from "@/hooks/useAssignedRecipes";
+import { BaseRecipe, Recipe } from "@/hooks/useAssignedRecipes";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import {
 	Box,
@@ -9,16 +9,21 @@ import {
 	ListItem,
 	Stack,
 	Typography,
+	TypographyProps,
 } from "@mui/material";
 
 interface RecipeRevealProps {
-	recipe: Recipe;
+	recipe: Recipe | BaseRecipe;
 	actions?: React.ReactNode;
+	showUsername?: boolean;
+	titleVariant?: TypographyProps["variant"];
 }
 
 export default function RecipeRevealCard({
 	recipe,
 	actions,
+	showUsername,
+	titleVariant = "h2",
 }: RecipeRevealProps) {
 	if (!recipe) return null;
 
@@ -33,7 +38,11 @@ export default function RecipeRevealCard({
 		>
 			<CardContent>
 				<Stack spacing={1}>
-					<Typography variant="h2" sx={{ color: "var(--text)" }}>
+					<Typography
+						variant={titleVariant ?? "h2"}
+						component={titleVariant === "h1" ? "h1" : "h2"}
+						sx={{ color: "var(--text)" }}
+					>
 						{recipe.title}
 					</Typography>
 					<Typography
@@ -48,10 +57,15 @@ export default function RecipeRevealCard({
 						<AccessTimeIcon sx={{ fontSize: 20 }} />
 						{recipe.time}
 					</Typography>
+					{showUsername && "username" in recipe && recipe.username && (
+						<Typography variant="body1" color="var(--text)">
+							By: {recipe.username}
+						</Typography>
+					)}
 
 					<Stack direction={{ xs: "column", md: "row" }} spacing={4}>
 						<Box sx={{ flex: 1 }}>
-							<Typography variant="h3" color={"var(--text)"}>
+							<Typography variant="h3" component="h2" color={"var(--text)"}>
 								Ingredients
 							</Typography>
 							<List
@@ -77,7 +91,7 @@ export default function RecipeRevealCard({
 						</Box>
 
 						<Box sx={{ flex: 2 }}>
-							<Typography variant="h3" color={"var(--text)"}>
+							<Typography variant="h3" component="h2" color={"var(--text)"}>
 								Steps
 							</Typography>
 							<List disablePadding>
@@ -94,7 +108,13 @@ export default function RecipeRevealCard({
 					</Stack>
 				</Stack>
 			</CardContent>
-			{actions && <CardActions>{actions}</CardActions>}
+			{actions && (
+				<CardActions
+					sx={{ display: "flex", justifyContent: "flex-end", gap: 1 }}
+				>
+					{actions}
+				</CardActions>
+			)}
 		</Card>
 	);
 }
