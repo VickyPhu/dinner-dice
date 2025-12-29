@@ -1,3 +1,4 @@
+import Footer from "@/components/footer";
 import Toast from "@/components/toast";
 import type { Metadata } from "next";
 import { Atma, Inter } from "next/font/google";
@@ -29,6 +30,7 @@ export default function RootLayout({
 			<body>
 				<Providers>
 					<main className="page-container">{children}</main>
+					<Footer />
 					<Toast />
 				</Providers>
 			</body>
