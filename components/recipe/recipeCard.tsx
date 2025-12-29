@@ -4,7 +4,7 @@ import { deleteRecipe } from "@/app/groups/[groupId]/recipes/[recipeId]/actions"
 import { BaseRecipe, Recipe } from "@/hooks/useAssignedRecipes";
 import { useToastStore } from "@/stores/toastStore";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { IconButton, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import PrimaryButton from "../buttons/primaryButton";
@@ -36,9 +36,17 @@ export default function RecipeCard({ recipe, groupId }: RecipeCardProps) {
 
 	return (
 		<>
-			<IconButton aria-label="Delete recipe" onClick={() => setOpen(true)}>
-				<DeleteOutlineIcon />
-			</IconButton>
+			<Box
+				sx={{
+					display: "flex",
+					justifyContent: "flex-end",
+					alignItems: "center",
+				}}
+			>
+				<IconButton aria-label="Delete recipe" onClick={() => setOpen(true)}>
+					<DeleteOutlineIcon />
+				</IconButton>
+			</Box>
 			<RecipeRevealCard
 				recipe={recipe}
 				showUsername
