@@ -43,8 +43,17 @@ export default function RecipeCard({ recipe, groupId }: RecipeCardProps) {
 					alignItems: "center",
 				}}
 			>
-				<IconButton aria-label="Delete recipe" onClick={() => setOpen(true)}>
-					<DeleteOutlineIcon />
+				<IconButton
+					aria-label="Delete recipe"
+					onClick={() => setOpen(true)}
+					sx={{
+						transition: "transform 0.2s ease",
+						"&:hover": {
+							transform: "scale(1.05)",
+						},
+					}}
+				>
+					<DeleteOutlineIcon sx={{ color: "var(--text)", fontSize: 30 }} />
 				</IconButton>
 			</Box>
 			<RecipeRevealCard
