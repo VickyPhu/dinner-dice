@@ -7,11 +7,26 @@ interface Recipe {
 
 const daysAhead = 7;
 
+function startOfDayLocal(date: Date) {
+	const d = new Date(date);
+	d.setHours(0, 0, 0, 0);
+	return d;
+}
+
+function toDateString(d: Date) {
+	// sv-SE => YYYY-MM-DD
+	return d.toLocaleDateString("sv-SE");
+}
+
+function dateFromString(date: string) {
+	return new Date(`${date}T00:00:00`);
+}
+
 export async function assignRecipes() {
 	const groups = await getGroups();
 	if (!groups.length) return;
 
-	const today = startOfDay(new Date());
+	const today = startOfDayLocal(new Date());
 
 	for (const group of groups) {
 		const sharingDates = getSharingDates(today, group.weekdays, daysAhead);
@@ -50,7 +65,7 @@ function getSharingDates(
 
 		const weekday = d.toLocaleDateString("en-US", { weekday: "short" });
 		if (weekdays.includes(weekday)) {
-			dates.push(d.toISOString().slice(0, 10));
+			dates.push(toDateString(d));
 		}
 	}
 
@@ -59,8 +74,6 @@ function getSharingDates(
 
 // Assign recipe for one group + one day
 async function assignForGroupAndDate(groupId: string, forDate: string) {
-	if (await assignmentsExist(groupId, forDate)) return;
-
 	const recipes = await getRecipesForDate(groupId, forDate);
 	if (!recipes.length) return;
 
@@ -68,6 +81,14 @@ async function assignForGroupAndDate(groupId: string, forDate: string) {
 	if (!members.length) return;
 
 	for (const member of members) {
+		const alreadyAssigned = await assignmentExistsForUser(
+			groupId,
+			forDate,
+			member.user_id
+		);
+
+		if (alreadyAssigned) continue;
+
 		const recipe = pickRandomRecipe(recipes, member.user_id);
 		if (!recipe) continue;
 
@@ -80,13 +101,18 @@ async function assignForGroupAndDate(groupId: string, forDate: string) {
 	}
 }
 
-// Check to see if assignment already exists
-async function assignmentsExist(groupId: string, forDate: string) {
+// Check to see if assignment already exists for member
+async function assignmentExistsForUser(
+	groupId: string,
+	forDate: string,
+	userId: string
+) {
 	const { data } = await supabaseAdmin
 		.from("recipe_assignments")
 		.select("id")
 		.eq("group_id", groupId)
 		.eq("for_date", forDate)
+		.eq("assigned_to", userId)
 		.limit(1);
 
 	return !!data?.length;
@@ -137,7 +163,7 @@ async function createAssignment({
 	recipeId: string;
 	assignedTo: string;
 }) {
-	const revealAt = new Date(forDate);
+	const revealAt = dateFromString(forDate);
 	revealAt.setDate(revealAt.getDate() - 2);
 
 	await supabaseAdmin.from("recipe_assignments").insert({
@@ -145,13 +171,6 @@ async function createAssignment({
 		recipe_id: recipeId,
 		assigned_to: assignedTo,
 		for_date: forDate,
-		reveal_at: revealAt.toISOString(),
+		reveal_at: toDateString(revealAt),
 	});
-}
-
-// Help with the date
-function startOfDay(date: Date) {
-	const d = new Date(date);
-	d.setHours(0, 0, 0, 0);
-	return d;
 }
