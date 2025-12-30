@@ -28,6 +28,9 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en" className={`${atma.variable} ${inter.variable}`}>
+			<head>
+				<link rel="icon" href="/dinnerdice_symbol.png" />
+			</head>
 			<body>
 				<Providers>
 					<main className="page-container">{children}</main>
