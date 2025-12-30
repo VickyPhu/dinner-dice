@@ -1,12 +1,13 @@
 "use client";
 
+import { Weekday } from "@/utils/calculateNextSharing";
 import { createClient } from "@/utils/supabase/client";
 import { useEffect, useState } from "react";
 
 export type GroupData = {
 	id: string;
 	name: string;
-	weekdays: string[];
+	weekdays: Weekday[];
 	sharing_frequency: number;
 	created_by: string;
 };
