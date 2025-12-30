@@ -1,5 +1,6 @@
 "use server";
 
+import { assignRecipes } from "@/utils/assignRecipes";
 import { createClient } from "@/utils/supabase/server";
 
 export interface RecipeFormProp {
@@ -36,6 +37,8 @@ export async function submitRecipe(
 		console.error(error);
 		throw new Error(error.message);
 	}
+	// Trigger assign recipes directly
+	await assignRecipes();
 }
 
 export async function updateRecipe(
