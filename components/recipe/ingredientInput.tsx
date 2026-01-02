@@ -3,6 +3,7 @@
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import {
 	Box,
+	FormHelperText,
 	IconButton,
 	List,
 	ListItem,
@@ -14,13 +15,19 @@ import { useState } from "react";
 import PrimaryButton from "../buttons/primaryButton";
 import TextInput from "../textInput";
 
+interface Props {
+	value: string[];
+	onChange: (ingredients: string[]) => void;
+	error?: boolean;
+	helperText?: string;
+}
+
 export default function IngredientInput({
 	value,
 	onChange,
-}: {
-	value: string[];
-	onChange: (ingredients: string[]) => void;
-}) {
+	error,
+	helperText,
+}: Props) {
 	const [input, setInput] = useState("");
 
 	function addIngredient() {
@@ -49,11 +56,17 @@ export default function IngredientInput({
 							addIngredient();
 						}
 					}}
+					error={error}
 				/>
 				<PrimaryButton variant="contained" onClick={addIngredient}>
 					Add
 				</PrimaryButton>
 			</Stack>
+			{helperText && (
+				<FormHelperText error sx={{ paddingLeft: 2, background:"white", borderRadius: 1,}}>
+					{helperText}
+				</FormHelperText>
+			)}
 			<List dense sx={{ mt: 2 }}>
 				{value.map((ingredient, index) => (
 					<ListItem

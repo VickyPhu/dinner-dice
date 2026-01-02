@@ -1,19 +1,13 @@
 "use server";
 
+import { recipeSchema } from "@/schemas/recipeSchema";
 import { assignRecipes } from "@/utils/assignRecipes";
 import { createClient } from "@/utils/supabase/server";
-
-export interface RecipeFormProp {
-	title: string;
-	time: string;
-	ingredients: string[];
-	steps: string[];
-}
 
 export async function submitRecipe(
 	groupId: string,
 	date: string,
-	recipe: RecipeFormProp
+	recipe: unknown
 ) {
 	const supabase = await createClient();
 
@@ -23,14 +17,22 @@ export async function submitRecipe(
 
 	if (!user) throw new Error("Not logged in");
 
+	const parsed = recipeSchema.safeParse(recipe);
+
+	if (!parsed.success) {
+		throw new Error("Invalid recipe data");
+	}
+
+	const { title, time, ingredients, steps } = parsed.data;
+
 	const { error } = await supabase.from("recipes").insert({
 		group_id: groupId,
 		user_id: user.id,
 		for_date: date,
-		title: recipe.title,
-		time: recipe.time,
-		ingredients: recipe.ingredients,
-		steps: recipe.steps,
+		title,
+		time,
+		ingredients,
+		steps,
 	});
 
 	if (error) {
@@ -44,7 +46,7 @@ export async function submitRecipe(
 export async function updateRecipe(
 	groupId: string,
 	date: string,
-	recipe: RecipeFormProp
+	recipe: unknown
 ) {
 	const supabase = await createClient();
 
@@ -54,13 +56,20 @@ export async function updateRecipe(
 
 	if (!user) throw new Error("Not authenticated");
 
+	const parsed = recipeSchema.safeParse(recipe);
+	if (!parsed.success) {
+		throw new Error("Invalid recipe data");
+	}
+
+	const { title, time, ingredients, steps } = parsed.data;
+
 	const { error } = await supabase
 		.from("recipes")
 		.update({
-			title: recipe.title,
-			time: recipe.time,
-			ingredients: recipe.ingredients,
-			steps: recipe.steps,
+			title,
+			time,
+			ingredients,
+			steps,
 		})
 		.eq("group_id", groupId)
 		.eq("user_id", user.id)

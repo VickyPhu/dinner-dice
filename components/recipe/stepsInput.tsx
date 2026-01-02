@@ -4,6 +4,7 @@ import ArrowUpwardOutlinedIcon from "@mui/icons-material/ArrowUpwardOutlined";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutlined";
 import {
 	Box,
+	FormHelperText,
 	IconButton,
 	List,
 	ListItem,
@@ -15,13 +16,19 @@ import { useState } from "react";
 import PrimaryButton from "../buttons/primaryButton";
 import TextInput from "../textInput";
 
+interface StepsInputProps {
+	value: string[];
+	onChange: (steps: string[]) => void;
+	error?: boolean;
+	helperText?: string;
+}
+
 export default function StepsInput({
 	value,
 	onChange,
-}: {
-	value: string[];
-	onChange: (steps: string[]) => void;
-}) {
+	error,
+	helperText,
+}: StepsInputProps) {
 	const [input, setInput] = useState("");
 
 	function addStep() {
@@ -66,11 +73,20 @@ export default function StepsInput({
 							addStep();
 						}
 					}}
+					error={error}
 				/>
 				<PrimaryButton variant="contained" onClick={addStep}>
 					Add
 				</PrimaryButton>
 			</Stack>
+			{helperText && (
+				<FormHelperText
+					error
+					sx={{ paddingLeft: 2, background: "white", borderRadius: 1 }}
+				>
+					{helperText}
+				</FormHelperText>
+			)}
 			<List dense sx={{ mt: 2 }}>
 				{value.map((step, index) => (
 					<ListItem

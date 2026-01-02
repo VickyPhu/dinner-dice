@@ -1,26 +1,22 @@
 "use client";
 
+import { timeOptions } from "@/constants/timeoptions";
 import { Box, MenuItem, Typography } from "@mui/material";
 import TextInput from "../textInput";
-
-const timeOptions = [
-	"0-10 min",
-	"10-20 min",
-	"20-30 min",
-	"30-40 min",
-	"40-50 min",
-	"50-60 min",
-	"60-75 min",
-	"75-90 min",
-	"90+ min",
-];
 
 interface Props {
 	value: string;
 	onChange: (value: string) => void;
+	error?: boolean;
+	helperText?: string;
 }
 
-export default function TimeInput({ value, onChange }: Props) {
+export default function TimeInput({
+	value,
+	onChange,
+	error,
+	helperText,
+}: Props) {
 	return (
 		<Box>
 			<Typography variant="body1">Prep- and cooking time</Typography>
@@ -29,6 +25,8 @@ export default function TimeInput({ value, onChange }: Props) {
 				fullWidth
 				value={value}
 				onChange={(e) => onChange(e.target.value)}
+				error={error}
+				helperText={helperText}
 			>
 				{timeOptions.map((t) => (
 					<MenuItem key={t} value={t}>
