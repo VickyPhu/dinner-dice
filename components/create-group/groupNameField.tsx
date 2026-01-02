@@ -1,6 +1,6 @@
 "use client";
 
-import { createGroupData } from "@/utils/validation";
+import { createGroupData } from "@/schemas/createGroupSchema";
 import { Control, Controller, FieldErrors } from "react-hook-form";
 import TextInput from "../textInput";
 

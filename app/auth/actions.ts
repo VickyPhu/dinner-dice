@@ -1,7 +1,7 @@
 "use server";
 
+import { logInSchema, signUpSchema } from "@/schemas/authSchema";
 import { createClient } from "@/utils/supabase/server";
-import { logInSchema, signUpSchema } from "@/utils/validation";
 import { redirect } from "next/navigation";
 
 export async function signUp(formData: FormData) {
