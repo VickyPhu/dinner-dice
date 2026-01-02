@@ -1,12 +1,13 @@
 "use client";
 
 import {
-	Button,
 	Dialog,
 	DialogActions,
 	DialogContent,
 	DialogTitle,
 } from "@mui/material";
+import PrimaryButton from "./buttons/primaryButton";
+import SecondaryButton from "./buttons/secondaryButton";
 
 interface Props {
 	open: boolean;
@@ -26,12 +27,23 @@ export default function ConfirmModal({
 	onClose,
 }: Props) {
 	return (
-		<Dialog open={open} onClose={onClose} autoFocus={true}>
+		<Dialog
+			open={open}
+			onClose={onClose}
+			autoFocus={true}
+			PaperProps={{
+				sx: {
+					backgroundColor: "var(--card-bg)",
+					borderRadius: "var(--card-radius)",
+					color: "var(--text)",
+				},
+			}}
+		>
 			<DialogTitle>{title}</DialogTitle>
 			{description && <DialogContent>{description}</DialogContent>}
-			<DialogActions>
-				<Button onClick={onClose}>Cancel</Button>
-				<Button onClick={onConfirm}>{confirmText}</Button>
+			<DialogActions sx={{padding: 2, gap: 1}}>
+				<SecondaryButton onClick={onClose}>Cancel</SecondaryButton>
+				<PrimaryButton onClick={onConfirm}>{confirmText}</PrimaryButton>
 			</DialogActions>
 		</Dialog>
 	);

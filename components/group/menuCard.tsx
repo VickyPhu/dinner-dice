@@ -6,13 +6,13 @@ import { ReactNode } from "react";
 
 export default function MenuCard({
 	children,
-	onClick,
+	href,
 }: {
 	children: ReactNode;
-	onClick?: () => void;
+	href: string;
 }) {
 	return (
-		<Box component={Link} onClick={onClick} sx={{ textDecoration: "none" }}>
+		<Box component={Link} href={href} sx={{ textDecoration: "none" }}>
 			<Stack
 				direction="row"
 				alignItems="center"
@@ -38,7 +38,7 @@ export default function MenuCard({
 				{/* Content to the left */}
 				{children}
 				{/* Arrow to the right */}
-				<ArrowForwardIosIcon sx={{marginLeft:{xs: 0, md: 1}}} />
+				<ArrowForwardIosIcon sx={{ marginLeft: { xs: 0, md: 1 } }} />
 			</Stack>
 		</Box>
 	);

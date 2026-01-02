@@ -31,6 +31,10 @@ Start sharing recipes at [Dinner Dice](https://dinner-dice.vercel.app/)
   - Automatically once per day via a Vercel Cron job, or
   - Immediately when the final required recipe is submitted
 - Supabase Row Level Security (RLS) ensures users can only access data they are authorized to see.
+- CRUD operations (Create, Read, Update, Delete) are fully implemented with secure data handling:
+  - Users can only view, update, or delete their own data.
+  - Admin roles can manage group-level data.
+  - Unauthorized access attempts are automatically blocked.
 
 ## Getting Started
 
@@ -94,27 +98,62 @@ This will compile the project and optimize it for production.
 This project was developed as part of a final examination assignment and demonstrates modern full-stack web development, accessibility and professional deployment workflows.
 
 ## Checklist for G
+### Planering & Research:
 - [x] Målgruppsanalys utförd
 - [x] Projekthantering via Github Projects
+### Design & Prototyping:
 - [x] Wireframes och prototyp i Figma
 - [x] Responsiv design (mobil + desktop)
 - [x] Följer WCAG 2.1-standarder
+### Applikationsutveckling
 - [x] Next.js med React
 - [x] Databas används: Supabase
 - [x] State-hantering implementerad
 - [x] Dynamiska komponenter och interaktivitet
-- [x] Semantisk HTML
+- [x] Semantisk HTML + WCAG 2.1 standarder
+- [x] Responsiv, mobil, tablet + desktop
+- [x] README med projektbeskrivning (info hur projektet körs, publik länk, checklista med betygskriterier)
+### Versionshantering: 
 - [x] Versionshantering med GIT
+### Slutrapport
+- [x] Abstract på engelska
+- [x] Tech stack och motivering av valen
+- [x] Dokumentation av arbetsprocess, planering och research
+### Deploy:
 - [x] Deployed och tillgängligt publikt
+### Helhetsupplevelse
 - [x] Helhetsupplevelse, fri från buggar
 
 ## Checklist for VG
-- [x] Interaktiv prototyp i Figma som är lik färdig produkt
-- [x] WCAG 2.1 nivå A och AA testad med WebAIM WAVE
+- [x] Allt för G godkänt
+### Design och prototyping:
+- [x] Interaktiv prototyp
+- [x] Prototypen är lik den färdiga produkten
+- [x] WCAG 2.1 nivå A och AA
+### Applikationsutveckling
 - [x] State management med global lösning genom Zustand
+- [x] Koden följer WCAG 2.1 standarder för nivå A och AA
+- [x] Testad i WebAIM WAVE utan fel på error- och varningsnivåer
+- [x] Optimerad, återanvänder kod och komponenter
 - [x] CRUD operationer implementerade
 - [x] Säker autentisering (Supabase Auth)
 - [x] Fullt responsiv på alla skärmstorlekar (Mobile, desktop, tablet)
+### Versionshantering
 - [x] Skapat feature branches och pull requests
+- [x] Dokumenterat varje steg i commit-historik
+### Deploy:
 - [x] Automatiserat deploy flöde
-- [x] Optimerad och professionell användarupplevelse
+### Slutrapport
+- [x] I rapporten, gå igenom varje steg i din arbetsprocess och reflektera över de
+utmaningar du stött på. Beskriv hur du överkommit tekniska och
+designrelaterade hinder och vad du lärt dig
+- [x] Inkludera detaljer om de verktyg och tekniker du använt, och varför du valt dessa
+över andra alternativ, till exempel varför du valde React istället för Vue
+- [x] Förklara och motivera dina beslut inom UX/UI-design och tillgänglighet, och hur
+dessa har förbättrat användarupplevelsen.
+### Helhetsupplevelse
+- [x] Helhetsupplevelsen: Applikationen ska, utöver att uppfylla G-kraven, erbjuda en
+professionell och optimerad användarupplevelse med minimala laddningstider, tydlig
+återkoppling vid alla användarinteraktioner samt vara testad för enhetlig funktion och
+design på flera enheter och webbläsare.
+
