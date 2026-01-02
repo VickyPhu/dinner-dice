@@ -26,7 +26,18 @@ export default function ConfirmModal({
 	onClose,
 }: Props) {
 	return (
-		<Dialog open={open} onClose={onClose} autoFocus={true}>
+		<Dialog
+			open={open}
+			onClose={onClose}
+			autoFocus={true}
+			PaperProps={{
+				sx: {
+					backgroundColor: "var(--card-bg)",
+					borderRadius: "var(--card-radius)",
+					color: "var(--text)"
+				},
+			}}
+		>
 			<DialogTitle>{title}</DialogTitle>
 			{description && <DialogContent>{description}</DialogContent>}
 			<DialogActions>
