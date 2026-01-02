@@ -4,8 +4,8 @@ import { GroupData } from "@/hooks/useGroups";
 import { useGroupSubmissions } from "@/hooks/useGroupSubmissions";
 import { calculateNextSharing } from "@/utils/calculateNextSharing";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { Box, Link, Stack, Typography } from "@mui/material";
-import { useRouter } from "next/navigation";
+import { Box, Stack, Typography } from "@mui/material";
+import Link from "next/link";
 
 export default function GroupCard({
 	group,
@@ -14,13 +14,12 @@ export default function GroupCard({
 	group: GroupData;
 	isLast?: boolean;
 }) {
-	const router = useRouter();
 	const { submittedCount, requiredCount, loading } = useGroupSubmissions(group);
 
 	return (
 		<Box
 			component={Link}
-			onClick={() => router.push(`/groups/${group.id}`)}
+			href={`/groups/${group.id}`}
 			sx={{
 				background: "var(--card-bg)",
 				borderBottom: "1px solid var(--button2-shadow)",
