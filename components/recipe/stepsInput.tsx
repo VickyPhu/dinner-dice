@@ -60,9 +60,6 @@ export default function StepsInput({
 			<Typography variant="body1">Steps</Typography>
 			<Stack direction="row" gap={1}>
 				<TextInput
-					multiline
-					minRows={1}
-					maxRows={6}
 					fullWidth
 					label="e.g Cut the onion in cubes"
 					value={input}
