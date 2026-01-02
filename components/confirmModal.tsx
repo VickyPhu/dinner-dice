@@ -41,7 +41,7 @@ export default function ConfirmModal({
 		>
 			<DialogTitle>{title}</DialogTitle>
 			{description && <DialogContent>{description}</DialogContent>}
-			<DialogActions>
+			<DialogActions sx={{padding: 2, gap: 1}}>
 				<SecondaryButton onClick={onClose}>Cancel</SecondaryButton>
 				<PrimaryButton onClick={onConfirm}>{confirmText}</PrimaryButton>
 			</DialogActions>
