@@ -1,7 +1,7 @@
 "use client";
 
-import { RecipeFormProp } from "@/app/groups/[groupId]/submit-recipe/actions";
-import { Box, Typography } from "@mui/material";
+import { RecipeFormData, recipeSchema } from "@/schemas/recipeSchema";
+import { Box } from "@mui/material";
 import { useState } from "react";
 import PrimaryButton from "../buttons/primaryButton";
 import TextInput from "../textInput";
@@ -10,8 +10,8 @@ import StepsInput from "./stepsInput";
 import TimeInput from "./timeInput";
 
 type SubmitRecipeFormProps = {
-	onSubmit: (values: RecipeFormProp) => void;
-	defaultValues?: RecipeFormProp;
+	onSubmit: (values: RecipeFormData) => void;
+	defaultValues?: RecipeFormData;
 	mode: "create" | "edit";
 };
 
@@ -26,25 +26,60 @@ export default function SubmitRecipeForm({
 		defaultValues?.ingredients ?? []
 	);
 	const [steps, setSteps] = useState<string[]>(defaultValues?.steps ?? []);
+	const [errors, setErrors] = useState<
+		Partial<Record<keyof RecipeFormData, string>>
+	>({});
+
+	const handleSubmit = () => {
+		const result = recipeSchema.safeParse({ title, time, ingredients, steps });
+		if (!result.success) {
+			const fieldErrors: Partial<Record<keyof RecipeFormData, string>> = {};
+			result.error.issues.forEach((issue) => {
+				const path = issue.path[0] as keyof RecipeFormData;
+				fieldErrors[path] = issue.message;
+			});
+			setErrors(fieldErrors);
+			return;
+		}
+		setErrors({});
+		onSubmit(result.data);
+	};
 
 	return (
 		<Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
 			<Box>
-				<Typography variant="body1">Recipe title</Typography>
 				<TextInput
 					fullWidth
+					label="Recipe title"
 					value={title}
 					onChange={(e) => setTitle(e.target.value)}
+					error={!!errors.title}
+					helperText={errors.title}
 				/>
 			</Box>
-			<TimeInput value={time} onChange={setTime} />
-			<IngredientInput value={ingredients} onChange={setIngredients} />
-			<StepsInput value={steps} onChange={setSteps} />
+			<TimeInput
+				value={time}
+				onChange={setTime}
+				error={!!errors.time}
+				helperText={errors.time}
+			/>
+			<IngredientInput
+				value={ingredients}
+				onChange={setIngredients}
+				error={!!errors.ingredients}
+				helperText={errors.ingredients}
+			/>
+			<StepsInput
+				value={steps}
+				onChange={setSteps}
+				error={!!errors.steps}
+				helperText={errors.steps}
+			/>
 			<Box sx={{ display: "flex", justifyContent: "flex-end" }}>
 				<PrimaryButton
 					variant="contained"
 					sx={{ mt: 2, maxWidth: "10rem" }}
-					onClick={() => onSubmit({ title, time, ingredients, steps })}
+					onClick={handleSubmit}
 				>
 					{mode === "edit" ? "Save changes" : "Submit recipe"}
 				</PrimaryButton>

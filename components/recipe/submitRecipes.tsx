@@ -1,9 +1,9 @@
 "use client";
 
-import { RecipeFormProp } from "@/app/groups/[groupId]/submit-recipe/actions";
 import { submitRecipeProxy } from "@/app/groups/[groupId]/submit-recipe/submitRecipeProxy";
 import { updateRecipeProxy } from "@/app/groups/[groupId]/submit-recipe/updateRecipeProxy";
 import theme from "@/app/theme";
+import { RecipeFormData } from "@/schemas/recipeSchema";
 import { useToastStore } from "@/stores/toastStore";
 import {
 	Box,
@@ -21,7 +21,7 @@ import SubmitRecipeForm from "./submitRecipeForm";
 interface SubmitRecipeClientProps {
 	groupId: string;
 	dates: string[];
-	recipeMap: Record<string, RecipeFormProp | null>;
+	recipeMap: Record<string, RecipeFormData | null>;
 }
 
 export default function SubmitRecipeClient({

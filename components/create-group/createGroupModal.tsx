@@ -1,8 +1,8 @@
 "use client";
 
 import { createGroup } from "@/app/groups/actions";
+import { createGroupData, createGroupSchema } from "@/schemas/createGroupSchema";
 import { useToastStore } from "@/stores/toastStore";
-import { createGroupData, createGroupSchema } from "@/utils/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
 	Box,

@@ -1,7 +1,7 @@
 "use server";
 
+import { createGroupSchema } from "@/schemas/createGroupSchema";
 import { createClient } from "@/utils/supabase/server";
-import { createGroupSchema } from "@/utils/validation";
 import { redirect } from "next/navigation";
 import { Resend } from "resend";
 import { InviteEmail } from "../emails/inviteEmail";
