@@ -20,9 +20,6 @@ export default function SmallRecipeCard({
 }) {
 	return (
 		<Box sx={{ margin: "1rem 1.5rem" }}>
-			<Typography variant="h1" sx={{ mb: 2 }}>
-				All recipes
-			</Typography>
 			<Box
 				sx={{
 					display: "grid",
