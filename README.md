@@ -31,6 +31,10 @@ Start sharing recipes at [Dinner Dice](https://dinner-dice.vercel.app/)
   - Automatically once per day via a Vercel Cron job, or
   - Immediately when the final required recipe is submitted
 - Supabase Row Level Security (RLS) ensures users can only access data they are authorized to see.
+- CRUD operations (Create, Read, Update, Delete) are fully implemented with secure data handling:
+  - Users can only view, update, or delete their own data.
+  - Admin roles can manage group-level data.
+  - Unauthorized access attempts are automatically blocked.
 
 ## Getting Started
 
