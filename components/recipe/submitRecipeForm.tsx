@@ -1,7 +1,7 @@
 "use client";
 
 import { RecipeFormData, recipeSchema } from "@/schemas/recipeSchema";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { useState } from "react";
 import PrimaryButton from "../buttons/primaryButton";
 import TextInput from "../textInput";
@@ -48,9 +48,9 @@ export default function SubmitRecipeForm({
 	return (
 		<Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
 			<Box>
-				<Typography variant="body1">Recipe title</Typography>
 				<TextInput
 					fullWidth
+					label="Recipe title"
 					value={title}
 					onChange={(e) => setTitle(e.target.value)}
 					error={!!errors.title}
